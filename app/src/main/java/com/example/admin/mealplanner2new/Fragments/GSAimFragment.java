@@ -45,6 +45,11 @@ public class GSAimFragment extends Fragment {
         button_next.setVisibility(View.GONE);
         rvList = view_main.findViewById(R.id.rvList);
 
+        // Reset list
+        if(healthTypesArrayList!=null){
+            healthTypesArrayList.clear();
+        }
+
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +103,7 @@ public class GSAimFragment extends Fragment {
         final HealthTypes healthTypes2 = new HealthTypes();
         healthTypes2.setCategoryName("Body Composition");
         healthTypes2.setId("1");
-        healthTypes2.setHealthName("Loose Fat and Gain Muscle");
+        healthTypes2.setHealthName("Gain Weight");
 
 
         final HealthTypes healthTypes3 = new HealthTypes();
@@ -151,7 +156,7 @@ public class GSAimFragment extends Fragment {
         public void onBindViewHolder(final MyViewHolder holder, int position) {
 
 
-            if (position > 0 && healthTypes.get(position).equals(healthTypes.get(position + 1))) {
+            if (position > 0 && healthTypes.get(position).getCategoryName().equals(healthTypes.get(position-1).getCategoryName())) {
                 holder.tvCatName.setVisibility(View.GONE);
             } else {
                 holder.tvCatName.setVisibility(View.VISIBLE);
@@ -160,8 +165,11 @@ public class GSAimFragment extends Fragment {
 
             if (healthTypes.get(position).isChecked()) {
                 holder.simpleCheckedTextView.setChecked(true);
+                holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.ic_check_circle_black_24dp);
             } else {
                 holder.simpleCheckedTextView.setChecked(false);
+                holder.simpleCheckedTextView.setCheckMarkDrawable(null);
+
             }
 
 
@@ -191,8 +199,24 @@ public class GSAimFragment extends Fragment {
                 simpleCheckedTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Boolean value = simpleCheckedTextView.isChecked();
-                        healthTypes.get(getAdapterPosition()).setChecked(value);
+                        boolean value = simpleCheckedTextView.isChecked();
+                        if (value) {
+                            // set check mark drawable and set checked property to false
+                            //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check_ic);
+                            simpleCheckedTextView.setChecked(false);
+                            healthTypes.get(getAdapterPosition()).setChecked(false);
+                            simpleCheckedTextView.setCheckMarkDrawable(null);
+                        } else {
+                            // set check mark drawable and set checked property to true
+
+                            //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
+                            simpleCheckedTextView.setChecked(true);
+                            healthTypes.get(getAdapterPosition()).setChecked(true);
+                            simpleCheckedTextView.setCheckMarkDrawable(R.drawable.ic_check_circle_black_24dp);
+
+
+                        }
+
 
                         boolean isChecked = false;
 
@@ -210,18 +234,6 @@ public class GSAimFragment extends Fragment {
                             button_next.setVisibility(View.GONE);
                         }
 
-
-                        if (value) {
-                            // set check mark drawable and set checked property to false
-                            //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check_ic);
-                            simpleCheckedTextView.setChecked(false);
-                        } else {
-                            // set check mark drawable and set checked property to true
-
-                            //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
-                            simpleCheckedTextView.setChecked(true);
-                        }
-
                     }
                 });
 
@@ -233,5 +245,10 @@ public class GSAimFragment extends Fragment {
 
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
 
+
+    }
 }
