@@ -1,0 +1,39 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/mainColorPrimary</item>
+        <item name="colorPrimaryDark">@color/mainColorPrimaryDark</item>
+        <item name="colorAccent">@color/mainColorAccent</item>
+    </style>
+
+    <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/mainColorPrimary</item>
+        <item name="colorPrimaryDark">@color/mainColorPrimaryDark</item>
+        <item name="colorAccent">@color/dark_white</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="Dash2Theme" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/db2ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/db2ColorPrimaryDark</item>
+        <item name="colorAccent">@color/db2ColorAccent</item>
+    </style>
+
+    <style name="ExTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/db2ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/db2ColorPrimaryDark</item>
+        <item name="colorAccent">@color/db2ColorAccent</item>
+    </style>
+
+</resources>

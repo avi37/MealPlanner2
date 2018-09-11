@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.AddTodayMealActivity">
+
+
+    <ProgressBar
+        android:id="@+id/addTodayMeal_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/addTodayMeal_ll_todayDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/addTodayMeal_tv_todayDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="DATE"
+            android:textColor="@color/raisinBlackLight"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/addTodayMeal_tv_todayDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="DAY"
+            android:textColor="@color/raisinBlackLight"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <com.example.admin.mealplanner2new.Common.AddMealViewPager
+        android:id="@+id/addTodayMeal_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addTodayMeal_ll_todayDate"
+        android:background="@color/white"/>
+
+    <!--<android.support.v4.view.ViewPager
+        android:id="@+id/addTodayMeal_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addTodayMeal_ll_todayDate" />-->
+
+</RelativeLayout>

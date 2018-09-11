@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.admin.mealplanner2new">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Views.GetStartedActivity"
+            android:label="Exercises"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Views.LoginActivity"
+            android:label="MealPlanner 2"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme"/>
+        <activity
+            android:name=".Views.ChooseDashActivity"
+            android:theme="@style/LoginTheme" />
+        <activity
+            android:name=".Views.DietMainNavigationActivity"
+            android:label="Diet Manager"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.AboutDevActivity"
+            android:label="About Developers"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.AddTodayMealActivity"
+            android:label="Add Today&apos;s Meal"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.SelectIngredItemActivity"
+            android:label="Select Ingredient"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.SelectRecipeActivity"
+            android:label="Select Recipe"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.TodayMenuActivity"
+            android:label="Today&apos;s Menu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.MealHistoryActivity"
+            android:label="Meal History"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.AddRecipeActivity"
+            android:label="Recipes"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.AddIngredientActivity"
+            android:label="Ingredients"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.SignUpActivity"
+            android:label="Sign up"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme" />
+        <activity
+            android:name=".Views.MealTimesActivity"
+            android:label="Meal Times"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.AddNewMealTimeActivity"
+            android:label="Add New"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.ExNavigationActivity"
+            android:label="@string/title_activity_ex_navigation"
+            android:theme="@style/Dash2Theme" />
+        <activity
+            android:name=".Views.ShowExercisesActivity"
+            android:label="Exercises"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.ExerciseDetailActivity"
+            android:label="Exercises"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+    </application>
+
+</manifest>
