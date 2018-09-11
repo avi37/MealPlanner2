@@ -46,7 +46,7 @@ public class GSAimFragment extends Fragment {
         rvList = view_main.findViewById(R.id.rvList);
 
         // Reset list
-        if(healthTypesArrayList!=null){
+        if (healthTypesArrayList != null) {
             healthTypesArrayList.clear();
         }
 
@@ -70,6 +70,7 @@ public class GSAimFragment extends Fragment {
 
                     Fragment someFragment = new GSBodyDetailsFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                     transaction.replace(R.id.content_get_started, someFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -156,7 +157,7 @@ public class GSAimFragment extends Fragment {
         public void onBindViewHolder(final MyViewHolder holder, int position) {
 
 
-            if (position > 0 && healthTypes.get(position).getCategoryName().equals(healthTypes.get(position-1).getCategoryName())) {
+            if (position > 0 && healthTypes.get(position).getCategoryName().equals(healthTypes.get(position - 1).getCategoryName())) {
                 holder.tvCatName.setVisibility(View.GONE);
             } else {
                 holder.tvCatName.setVisibility(View.VISIBLE);
@@ -202,34 +203,31 @@ public class GSAimFragment extends Fragment {
                         boolean value = simpleCheckedTextView.isChecked();
 
 
-                        for(int i = 0;i<healthTypesArrayList.size();i++){
-                              healthTypesArrayList.get(i).setChecked(false);
+                        for (int i = 0; i < healthTypesArrayList.size(); i++) {
+                            healthTypesArrayList.get(i).setChecked(false);
 
                         }
 
 
+                        if (value) {
+                            // set check mark drawable and set checked property to false
+                            //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check_ic);
+                            simpleCheckedTextView.setChecked(false);
+                            healthTypes.get(getAdapterPosition()).setChecked(false);
+                            simpleCheckedTextView.setCheckMarkDrawable(null);
+                        } else {
+                            // set check mark drawable and set checked property to true
 
-                            if (value) {
-                                // set check mark drawable and set checked property to false
-                                //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check_ic);
-                                simpleCheckedTextView.setChecked(false);
-                                healthTypes.get(getAdapterPosition()).setChecked(false);
-                                simpleCheckedTextView.setCheckMarkDrawable(null);
-                            } else {
-                                // set check mark drawable and set checked property to true
-
-                                //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
-                                simpleCheckedTextView.setChecked(true);
-                                healthTypes.get(getAdapterPosition()).setChecked(true);
-                                simpleCheckedTextView.setCheckMarkDrawable(R.drawable.ic_check_circle_black_24dp);
-
-
-                            }
+                            //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
+                            simpleCheckedTextView.setChecked(true);
+                            healthTypes.get(getAdapterPosition()).setChecked(true);
+                            simpleCheckedTextView.setCheckMarkDrawable(R.drawable.ic_check_circle_black_24dp);
 
 
+                        }
 
-                         notifyDataSetChanged();
 
+                        notifyDataSetChanged();
 
 
                         boolean isChecked = false;

@@ -17,7 +17,7 @@
         android:textColor="@color/white"
         android:textSize="15sp" />
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -50,7 +50,46 @@
             android:textColor="@color/white"
             android:textSize="15sp" />
 
-    </LinearLayout>
+    </LinearLayout>-->
+
+    <RadioGroup
+        android:id="@+id/gsEx_RG_workout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/gsEx_radio_gym"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_male_female"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="GYM"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/gsEx_radio_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_male_female"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="HOME"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/gsEx_btn_next"
@@ -61,6 +100,7 @@
         android:layout_marginEnd="25dp"
         android:background="@color/mainColorPrimary"
         android:text="Next"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
 </LinearLayout>

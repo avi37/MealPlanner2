@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onClick(View v) {
                 finish();
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+                startActivity(new Intent(LoginActivity.this, GetStartedActivity.class));
             }
         });
 

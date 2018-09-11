@@ -85,23 +85,26 @@ public class GSBodyDetailsFragment extends Fragment {
         final TextView tvField = alertLayout.findViewById(R.id.GSBD_edit_tv_field);
         final EditText etField = alertLayout.findViewById(R.id.GSBD_edit_et_field);
 
-        if (type.equals("height")) {
-            tvField.setText("Height");
-            etField.setText(textView_height.getText().toString());
-        } else if (type.equals("age")) {
-            tvField.setText("Age");
-            etField.setText(textView_age.getText().toString());
-        } else {
-            tvField.setText("Weight");
-            etField.setText(textView_weight.getText().toString());
+        switch (type) {
+            case "height":
+                tvField.setText("Height (cms)");
+                etField.setText(textView_height.getText().toString());
+                break;
+            case "age":
+                tvField.setText("Age (years)");
+                etField.setText(textView_age.getText().toString());
+                break;
+            default:
+                tvField.setText("Weight (kg)");
+                etField.setText(textView_weight.getText().toString());
+                break;
         }
-
 
         etField.setSelection(etField.getText().length());
 
         final AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setView(alertLayout)
-                .setTitle("Confirm your meal")
+                .setTitle("Edit field")
                 .setPositiveButton("Submit", null)   //Set to null. Will be overridden while the onclick
                 .setNegativeButton("Cancel", null)
                 .create();
@@ -117,31 +120,43 @@ public class GSBodyDetailsFragment extends Fragment {
                     public void onClick(View view) {
                         boolean wantToCloseDialog = false;
 
-                        String nOp, recipe_name;
+                        String fieldTxt;
 
-                        nOp = etField.getText().toString();
-                        recipe_name = tvField.getText().toString();
+                        fieldTxt = etField.getText().toString();
 
-                        if (nOp.equals("")) {
-                            etField.setError("value required");
+                        if (fieldTxt.equals("")) {
+                            etField.setError("Value required");
                             etField.requestFocus();
-                        } else if (Integer.parseInt(nOp) > 15) {
+                        } else if (Integer.parseInt(fieldTxt) < 12) {
                             etField.setError("Enter proper value");
                             etField.requestFocus();
-                        } else if (recipe_name.equals("")) {
-                            tvField.setError("Recipe name required");
-                            tvField.requestFocus();
                         } else {
                             wantToCloseDialog = true;
                         }
 
                         //if both fields are validate
                         if (wantToCloseDialog) {
+
+                            switch (type) {
+                                case "height":
+                                    textView_height.setText(fieldTxt);
+                                    break;
+                                case "age":
+                                    textView_age.setText(fieldTxt);
+                                    break;
+                                default:
+                                    textView_weight.setText(fieldTxt);
+                                    break;
+                            }
+
                             dialog.dismiss();
                         }
+
                     }
+
                 });
             }
+
         });
 
         dialog.setCancelable(false);
