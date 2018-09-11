@@ -16,42 +16,47 @@
         android:textColor="@color/white"
         android:textSize="15sp" />
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/rgMaleFemale"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:padding="10dp"
         android:weightSum="2">
 
-        <TextView
+        <RadioButton
             android:id="@+id/gsGender_tv_male"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:background="@color/db2ColorPrimary"
             android:gravity="center"
             android:padding="15dp"
+            android:background="@drawable/bg_male_female"
+            android:button="@android:color/transparent"
             android:text="MALE"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
-        <TextView
+        <RadioButton
             android:id="@+id/gsGender_tv_female"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/db2ColorAccent"
+            android:background="@drawable/bg_male_female"
             android:gravity="center"
             android:padding="15dp"
+            android:button="@android:color/transparent"
             android:text="FEMALE"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
-    </LinearLayout>
+    </RadioGroup>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/gsGender_btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
