@@ -200,22 +200,36 @@ public class GSAimFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         boolean value = simpleCheckedTextView.isChecked();
-                        if (value) {
-                            // set check mark drawable and set checked property to false
-                            //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check_ic);
-                            simpleCheckedTextView.setChecked(false);
-                            healthTypes.get(getAdapterPosition()).setChecked(false);
-                            simpleCheckedTextView.setCheckMarkDrawable(null);
-                        } else {
-                            // set check mark drawable and set checked property to true
 
-                            //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
-                            simpleCheckedTextView.setChecked(true);
-                            healthTypes.get(getAdapterPosition()).setChecked(true);
-                            simpleCheckedTextView.setCheckMarkDrawable(R.drawable.ic_check_circle_black_24dp);
 
+                        for(int i = 0;i<healthTypesArrayList.size();i++){
+                              healthTypesArrayList.get(i).setChecked(false);
 
                         }
+
+
+
+                            if (value) {
+                                // set check mark drawable and set checked property to false
+                                //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check_ic);
+                                simpleCheckedTextView.setChecked(false);
+                                healthTypes.get(getAdapterPosition()).setChecked(false);
+                                simpleCheckedTextView.setCheckMarkDrawable(null);
+                            } else {
+                                // set check mark drawable and set checked property to true
+
+                                //  holder.simpleCheckedTextView.setCheckMarkDrawable(R.drawable.check);
+                                simpleCheckedTextView.setChecked(true);
+                                healthTypes.get(getAdapterPosition()).setChecked(true);
+                                simpleCheckedTextView.setCheckMarkDrawable(R.drawable.ic_check_circle_black_24dp);
+
+
+                            }
+
+
+
+                         notifyDataSetChanged();
+
 
 
                         boolean isChecked = false;
