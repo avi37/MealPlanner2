@@ -37,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     EditText editText_name, editText_email, editText_number, editText_password1, editText_password2;
     Spinner spinner_date, spinner_month, spinner_year;
-    Button button_login;
+    Button button_signup;
     TextView textView_login_here;
 
     String name, email, number, password1, password2, dob;
@@ -57,14 +57,14 @@ public class SignUpActivity extends AppCompatActivity {
         spinner_date = findViewById(R.id.signUp_spinnerDOB_date);
         spinner_month = findViewById(R.id.signUp_spinnerDOB_month);
         spinner_year = findViewById(R.id.signUp_spinnerDOB_year);
-        button_login = findViewById(R.id.signUp_btn_signUp);
+        button_signup = findViewById(R.id.signUp_btn_signUp);
         textView_login_here = findViewById(R.id.signUp_tv_login_here);
 
         initDateSpinner();
         initMonthSpinner();
         initYearSpinner();
 
-        button_login.setOnClickListener(new View.OnClickListener() {
+        button_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 methodSignUp();

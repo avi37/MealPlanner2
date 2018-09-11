@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragments.GSBodyDetailsFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/raisinBlackLight"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Tell a bit about yourself"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Body Details"
+            android:textColor="@color/mainColorAccent"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/gsBD_btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:background="@color/mainColorPrimary"
+        android:text="Next"
+        android:textColor="@color/white" />
+
+</LinearLayout>
