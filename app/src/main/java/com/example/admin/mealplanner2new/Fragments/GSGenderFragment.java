@@ -27,13 +27,12 @@ public class GSGenderFragment extends Fragment {
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Fragment someFragment = new GSAimFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                 transaction.replace(R.id.content_get_started, someFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-
             }
         });
 

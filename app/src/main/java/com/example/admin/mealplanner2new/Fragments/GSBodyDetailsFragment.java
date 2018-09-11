@@ -31,6 +31,7 @@ public class GSBodyDetailsFragment extends Fragment {
 
                 Fragment someFragment = new GSLevelFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                 transaction.replace(R.id.content_get_started, someFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();

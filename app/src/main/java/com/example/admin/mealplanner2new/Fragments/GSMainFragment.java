@@ -29,6 +29,7 @@ public class GSMainFragment extends Fragment {
 
                 Fragment someFragment = new GSExFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                 transaction.replace(R.id.content_get_started, someFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();

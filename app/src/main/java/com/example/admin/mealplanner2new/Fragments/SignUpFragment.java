@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
@@ -19,7 +17,6 @@ import com.example.admin.mealplanner2new.Models.BodySignUp;
 import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.DietMainNavigationActivity;
-import com.example.admin.mealplanner2new.Views.SignUpActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,9 +37,7 @@ public class SignUpFragment extends Fragment {
 
 
     EditText editText_name, editText_email, editText_number, editText_password1, editText_password2;
-    Spinner spinner_date, spinner_month, spinner_year;
-    Button button_login;
-    TextView textView_login_here;
+    Button button_finish;
 
     String name, email, number, password1, password2, dob;
 
@@ -57,7 +52,14 @@ public class SignUpFragment extends Fragment {
         editText_number = view_main.findViewById(R.id.gs_signUp_et_number);
         editText_password1 = view_main.findViewById(R.id.gs_signUp_et_password1);
         editText_password2 = view_main.findViewById(R.id.gs_signUp_et_password2);
-        button_login = view_main.findViewById(R.id.gs_signUp_btn_finish);
+        button_finish = view_main.findViewById(R.id.gs_signUp_btn_finish);
+
+        button_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                methodSignUp();
+            }
+        });
 
         return view_main;
     }
@@ -101,6 +103,7 @@ public class SignUpFragment extends Fragment {
         } else if (!(password1.equals(password2))) {
             editText_password2.setError("Passwords must be same");
             editText_password2.requestFocus();
+
         } else {
 
             final ProgressDialog progressDialog = new ProgressDialog(getContext());

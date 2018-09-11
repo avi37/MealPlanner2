@@ -28,13 +28,12 @@ public class GSExFragment extends Fragment {
         button_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Fragment someFragment = new GSGenderFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                 transaction.replace(R.id.content_get_started, someFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-
             }
         });
 
