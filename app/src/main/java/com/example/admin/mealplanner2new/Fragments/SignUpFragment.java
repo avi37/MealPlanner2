@@ -28,6 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public class SignUpFragment extends Fragment {
@@ -38,7 +39,7 @@ public class SignUpFragment extends Fragment {
 
     //http://127.0.0.1:8000/api/auth/
     SignUpAPI signUpAPI;
-    private static final String BASE_URL = "http://192.168.0.103/laravel/public/api/auth/";
+    private static final String BASE_URL = "http://www.code-fuel.in/meal/api/auth/";
 
 
     EditText editText_name, editText_email, editText_number, editText_password1, editText_password2;
@@ -134,9 +135,9 @@ public class SignUpFragment extends Fragment {
             week_minutes = prefRegister.getWeekMinutes();
             ex_days = prefRegister.getExDays();
 
-            BodyRegister bodyRegister = new BodyRegister(place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days, name, email, number, password1);
+            BodyRegister bodyRegister = new BodyRegister(place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days, "1", name, email, number, password1, password2);
 
-            Log.d("aaaaaaaaa", new Gson().toJson(bodyRegister));
+            Log.d("LOG_BodyRegister", new Gson().toJson(bodyRegister));
 
             signUpAPI.register_user(bodyRegister).enqueue(new Callback<ResCommon>() {
                 @Override
@@ -160,6 +161,10 @@ public class SignUpFragment extends Fragment {
                             }
 
                         }
+
+                    } else if (response.code() == 422) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), "You are already registered", Toast.LENGTH_SHORT).show();
 
                     } else {
                         progressDialog.dismiss();
@@ -207,6 +212,7 @@ public class SignUpFragment extends Fragment {
     }
 
     interface SignUpAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
         @POST("signup")
         Call<ResCommon> register_user(@Body BodyRegister bodyRegister);
     }

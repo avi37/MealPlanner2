@@ -61,7 +61,7 @@ public class GSScheduleFragment extends Fragment {
                 prefRegister.setSchedule(selectedOpt);
 
                 if (selectedOpt.equals("0")) {
-                    Fragment someFragment = new SignUpFragment();
+                    Fragment someFragment = new GSAddCoachFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
                     transaction.replace(R.id.content_get_started, someFragment);

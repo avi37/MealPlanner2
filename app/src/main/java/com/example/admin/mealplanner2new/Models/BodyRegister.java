@@ -49,6 +49,10 @@ public class BodyRegister {
     @Expose
     private String ex_days;
 
+    @SerializedName("coach_id")
+    @Expose
+    private String coach_id;
+
 
     @SerializedName("name")
     @Expose
@@ -58,16 +62,20 @@ public class BodyRegister {
     @Expose
     private String email;
 
-    @SerializedName("number")
+    @SerializedName("mobile")
     @Expose
-    private String number;
+    private String mobile;
 
     @SerializedName("password")
     @Expose
     private String password;
 
+    @SerializedName("password_confirmation")
+    @Expose
+    private String password_confirmation;
 
-    public BodyRegister(String workout_place, String gender, String aim, String height, String age, String weight, String training_level, String past_ex_ex, String schedule, String week_minutes, String ex_days, String name, String email, String number, String password) {
+
+    public BodyRegister(String workout_place, String gender, String aim, String height, String age, String weight, String training_level, String past_ex_ex, String schedule, String week_minutes, String ex_days, String coach_id, String name, String email, String mobile, String password, String password_confirmation) {
         this.workout_place = workout_place;
         this.gender = gender;
         this.aim = aim;
@@ -79,12 +87,13 @@ public class BodyRegister {
         this.schedule = schedule;
         this.week_minutes = week_minutes;
         this.ex_days = ex_days;
+        this.coach_id = coach_id;
         this.name = name;
         this.email = email;
-        this.number = number;
+        this.mobile = mobile;
         this.password = password;
+        this.password_confirmation = password_confirmation;
     }
-
 
     public String getWorkout_place() {
         return workout_place;
@@ -102,7 +111,7 @@ public class BodyRegister {
         this.gender = gender;
     }
 
-    public String isAim() {
+    public String getAim() {
         return aim;
     }
 
@@ -126,7 +135,7 @@ public class BodyRegister {
         this.age = age;
     }
 
-    public String isWeight() {
+    public String getWeight() {
         return weight;
     }
 
@@ -150,7 +159,7 @@ public class BodyRegister {
         this.past_ex_ex = past_ex_ex;
     }
 
-    public String isSchedule() {
+    public String getSchedule() {
         return schedule;
     }
 
@@ -174,7 +183,15 @@ public class BodyRegister {
         this.ex_days = ex_days;
     }
 
-    public String isName() {
+    public String getCoach_id() {
+        return coach_id;
+    }
+
+    public void setCoach_id(String coach_id) {
+        this.coach_id = coach_id;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -190,20 +207,28 @@ public class BodyRegister {
         this.email = email;
     }
 
-    public String getNumber() {
-        return number;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String isPassword() {
+    public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPassword_confirmation() {
+        return password_confirmation;
+    }
+
+    public void setPassword_confirmation(String password_confirmation) {
+        this.password_confirmation = password_confirmation;
     }
 }
 
