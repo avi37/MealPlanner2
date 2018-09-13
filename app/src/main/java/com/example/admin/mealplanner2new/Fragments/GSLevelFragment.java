@@ -95,6 +95,8 @@ public class GSLevelFragment extends Fragment implements View.OnClickListener {
 
     private void selectLevel(String level) {
 
+        selectedLevel = level;
+
         if (isAnySelected) {
             resetAll();
         } else {
@@ -104,32 +106,28 @@ public class GSLevelFragment extends Fragment implements View.OnClickListener {
         button_next.setVisibility(View.VISIBLE);
         switch (level) {
             case "1":
-                selectedLevel = "1";
                 textView_1.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 
             case "2":
-                selectedLevel = "2";
                 textView_2.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 
             case "3":
-                selectedLevel = "3";
                 textView_3.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 
             case "4":
-                selectedLevel = "4";
                 textView_4.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 
             case "5":
-                selectedLevel = "5";
                 textView_5.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
-
         }
+
     }
+
 
     private void resetAll() {
         textView_1.setBackgroundColor(getResources().getColor(R.color.level_red1));
@@ -138,5 +136,6 @@ public class GSLevelFragment extends Fragment implements View.OnClickListener {
         textView_4.setBackgroundColor(getResources().getColor(R.color.level_red4));
         textView_5.setBackgroundColor(getResources().getColor(R.color.level_red5));
     }
+
 
 }

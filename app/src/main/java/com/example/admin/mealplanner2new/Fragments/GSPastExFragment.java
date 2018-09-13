@@ -48,7 +48,7 @@ public class GSPastExFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 
-                prefRegister.setLevel(selectedLevel);
+                prefRegister.setPastEx(selectedLevel);
 
                 Fragment someFragment = new GSScheduleFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -95,6 +95,8 @@ public class GSPastExFragment extends Fragment implements View.OnClickListener {
 
     private void selectLevel(String level) {
 
+        selectedLevel = level;
+
         if (isAnySelected) {
             resetAll();
         } else {
@@ -104,27 +106,22 @@ public class GSPastExFragment extends Fragment implements View.OnClickListener {
         button_next.setVisibility(View.VISIBLE);
         switch (level) {
             case "1":
-                selectedLevel = "1";
                 textView_1.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 
             case "2":
-                selectedLevel = "2";
                 textView_2.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 
             case "3":
-                selectedLevel = "3";
                 textView_3.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 
             case "4":
-                selectedLevel = "4";
                 textView_4.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 
             case "5":
-                selectedLevel = "5";
                 textView_5.setBackgroundColor(getResources().getColor(R.color.mainColorPrimaryDark));
                 break;
 

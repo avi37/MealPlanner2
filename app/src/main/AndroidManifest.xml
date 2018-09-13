@@ -15,7 +15,7 @@
             android:name=".Views.GetStartedActivity"
             android:label="Health Botics"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme">
+            android:theme="@style/RegisterTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

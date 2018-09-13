@@ -23,6 +23,7 @@ public class PrefRegister {
     private static final String TRAINING_LEVEL = "training_level";
     private static final String PAST_EX_EX = "past_ex_ex";
     private static final String SCHEDULE = "schedule";
+    private static final String COACH_ID = "coach_id";
     private static final String WEEK_MINUTES = "week_minutes";
     private static final String EX_DAYS = "ex_days";
 
@@ -68,6 +69,11 @@ public class PrefRegister {
 
     public void setSchedule(String schedule) {
         editor.putString(SCHEDULE, schedule);
+        editor.commit();
+    }
+
+    public void setCoachId(String coachId) {
+        editor.putString(COACH_ID, coachId);
         editor.commit();
     }
 
@@ -121,6 +127,10 @@ public class PrefRegister {
 
     public String getExDays() {
         return regPref.getString(EX_DAYS, null);
+    }
+
+    public String getCoachId() {
+        return regPref.getString(COACH_ID, null);
     }
 
     public void deleteRegisterPref() {

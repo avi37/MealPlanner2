@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResCommon {
 
-    @SerializedName("msg")
+    @SerializedName("message")
     @Expose
-    private String msg;
+    private String message;
 
     @SerializedName("access_token")
     @Expose
@@ -59,10 +59,10 @@ public class ResCommon {
 
 
     public String getMsg() {
-        return msg;
+        return message;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
+        this.message = msg;
     }
 }

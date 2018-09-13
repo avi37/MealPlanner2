@@ -23,12 +23,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     LoginAPI loginAPI;
-    private static final String BASE_URL = "http://192.168.0.106/meal/public/api/auth/";
+    private static final String BASE_URL = "http://www.code-fuel.in/meal/api/auth/";
 
     SessionManager sessionManager;
 
@@ -87,8 +88,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.login_btn_login:
-                //method_login();
-                fake_login();
+                method_login();
+                //fake_login();
                 break;
 
             case R.id.login_tv_forgot_pwd:
@@ -238,6 +239,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     interface LoginAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
         @POST("login")
         Call<ResCommon> login_user(@Body BodyLogin bodyLogin);
     }
