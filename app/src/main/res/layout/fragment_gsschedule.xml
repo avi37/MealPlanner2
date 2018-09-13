@@ -16,40 +16,44 @@
         android:textColor="@color/white"
         android:textSize="15sp" />
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/rgSchedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:orientation="horizontal"
         android:padding="10dp"
         android:weightSum="2">
 
-        <TextView
-            android:id="@+id/gsSchedule_tv_auto"
+        <RadioButton
+            android:id="@+id/gsSchedule_RB_auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:background="@color/db2ColorPrimary"
+            android:background="@drawable/bg_male_female"
+            android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="15dp"
             android:text="Plan it\n for me"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/gsSchedule_tv_manual"
+        <RadioButton
+            android:id="@+id/gsSchedule_RB_manual"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/db2ColorAccent"
+            android:background="@drawable/bg_male_female"
+            android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="15dp"
             android:text="I'll manage\nmyself"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
-    </LinearLayout>
+    </RadioGroup>
 
     <Button
         android:id="@+id/gsSchedule_btn_next"
@@ -60,6 +64,7 @@
         android:layout_marginEnd="25dp"
         android:background="@color/mainColorPrimary"
         android:text="Next"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
 </LinearLayout>

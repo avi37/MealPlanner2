@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Views.GetStartedActivity"
-            android:label="Exercises"
+            android:label="Health Botics"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme">
             <intent-filter>

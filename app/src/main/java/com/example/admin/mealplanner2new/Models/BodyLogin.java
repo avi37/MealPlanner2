@@ -25,7 +25,6 @@ public class BodyLogin {
     }
 
     public void setEmail(String email) {
-
         this.email = email;
     }
 
@@ -38,7 +37,6 @@ public class BodyLogin {
     }
 
     public String getEmail() {
-
         return email;
     }
 

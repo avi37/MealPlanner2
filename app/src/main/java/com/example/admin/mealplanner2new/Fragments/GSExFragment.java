@@ -11,21 +11,29 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.admin.mealplanner2new.Common.PrefRegister;
 import com.example.admin.mealplanner2new.R;
 
 
 public class GSExFragment extends Fragment {
 
+    PrefRegister prefRegister;
+
     View view_main;
     RadioGroup radioGroup_workout;
     RadioButton rbGYM;
     RadioButton rbHOME;
-    boolean isChecked;
     Button button_next;
+
+    boolean isChecked;
+    String selectedPlace = "0";
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_gsex, container, false);
+
+        prefRegister = new PrefRegister(getContext());
 
         radioGroup_workout = view_main.findViewById(R.id.gsEx_RG_workout);
         rbGYM = view_main.findViewById(R.id.gsEx_radio_gym);
@@ -37,13 +45,23 @@ public class GSExFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 button_next.setVisibility(View.VISIBLE);
-                isChecked =true;
+                isChecked = true;
+
+                if (checkedId == R.id.gsEx_radio_gym) {
+                    selectedPlace = "0";
+                } else {
+                    selectedPlace = "1";
+                }
+
             }
         });
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                prefRegister.setWorkoutPlace(selectedPlace);
+
                 Fragment someFragment = new GSGenderFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);

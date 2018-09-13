@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.admin.mealplanner2new.Common.PrefRegister;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
-import com.example.admin.mealplanner2new.Models.BodySignUp;
+import com.example.admin.mealplanner2new.Models.BodyRegister;
 import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.DietMainNavigationActivity;
+import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,21 +32,25 @@ import retrofit2.http.POST;
 
 public class SignUpFragment extends Fragment {
 
+    PrefRegister prefRegister;
+
     View view_main;
 
     //http://127.0.0.1:8000/api/auth/
     SignUpAPI signUpAPI;
-    private static final String BASE_URL = "http://192.168.0.106/meal/public/api/auth/";
+    private static final String BASE_URL = "http://192.168.0.103/laravel/public/api/auth/";
 
 
     EditText editText_name, editText_email, editText_number, editText_password1, editText_password2;
     Button button_finish;
 
-    String name, email, number, password1, password2, dob;
+    String name, email, number, password1, password2;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_sign_up, container, false);
+
+        prefRegister = new PrefRegister(getContext());
 
         signUpAPI = getSignUpAPIService(BASE_URL);
 
@@ -107,14 +114,31 @@ public class SignUpFragment extends Fragment {
         } else {
 
             final ProgressDialog progressDialog = new ProgressDialog(getContext());
-            progressDialog.setMessage("Loading");
+            progressDialog.setMessage("Wait while we register you...");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
+            //BodySignUp bodySignUp = new BodySignUp(name, email, password1, password2, number, dob, "");
 
-            BodySignUp bodySignUp = new BodySignUp(name, email, password1, password2, number, dob, "");
+            String place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days;
 
-            signUpAPI.signUp_user(bodySignUp).enqueue(new Callback<ResCommon>() {
+            place = prefRegister.getWorkoutPlace();
+            gender = prefRegister.getGENDER();
+            aim = prefRegister.getAIM();
+            height = prefRegister.getHEIGHT();
+            age = prefRegister.getAGE();
+            weight = prefRegister.getWEIGHT();
+            tr_level = prefRegister.getTrainingLevel();
+            ex_level = prefRegister.getPastExEx();
+            schedule = prefRegister.getSCHEDULE();
+            week_minutes = prefRegister.getWeekMinutes();
+            ex_days = prefRegister.getExDays();
+
+            BodyRegister bodyRegister = new BodyRegister(place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days, name, email, number, password1);
+
+            Log.d("aaaaaaaaa", new Gson().toJson(bodyRegister));
+
+            signUpAPI.register_user(bodyRegister).enqueue(new Callback<ResCommon>() {
                 @Override
                 public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
 
@@ -184,7 +208,7 @@ public class SignUpFragment extends Fragment {
 
     interface SignUpAPI {
         @POST("signup")
-        Call<ResCommon> signUp_user(@Body BodySignUp bodySignUp);
+        Call<ResCommon> register_user(@Body BodyRegister bodyRegister);
     }
 
 }

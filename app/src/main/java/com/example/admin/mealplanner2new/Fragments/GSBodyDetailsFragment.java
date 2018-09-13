@@ -3,11 +3,9 @@ package com.example.admin.mealplanner2new.Fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.admin.mealplanner2new.Common.PrefRegister;
 import com.example.admin.mealplanner2new.R;
-
-import java.util.Arrays;
 
 
 public class GSBodyDetailsFragment extends Fragment {
+
+    PrefRegister prefRegister;
 
     View view_main;
     TextView textView_height, textView_age, textView_weight;
@@ -30,6 +29,8 @@ public class GSBodyDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_gsbody_details, container, false);
+
+        prefRegister = new PrefRegister(getContext());
 
         textView_height = view_main.findViewById(R.id.gsBD_tv_height);
         textView_age = view_main.findViewById(R.id.gsBD_tv_age);
@@ -61,6 +62,8 @@ public class GSBodyDetailsFragment extends Fragment {
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                prefRegister.setBodyDetails(textView_height.getText().toString(), textView_age.getText().toString(), textView_weight.getText().toString());
 
                 Fragment someFragment = new GSLevelFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -149,6 +152,7 @@ public class GSBodyDetailsFragment extends Fragment {
                                     break;
                             }
 
+                            button_next.setVisibility(View.VISIBLE);
                             dialog.dismiss();
                         }
 

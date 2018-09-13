@@ -16,6 +16,7 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.mealplanner2new.Common.PrefRegister;
 import com.example.admin.mealplanner2new.Models.HealthTypes;
 import com.example.admin.mealplanner2new.R;
 
@@ -24,16 +25,21 @@ import java.util.ArrayList;
 
 public class GSAimFragment extends Fragment {
 
+    PrefRegister prefRegister;
+
     View view_main;
     Button button_next;
     private RecyclerView rvList;
     private ArrayList<HealthTypes> healthTypesArrayList = new ArrayList<>();
     private ArrayList<Integer> selectedList = new ArrayList<>();
 
+    String selectedAim;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        prefRegister = new PrefRegister(getContext());
     }
 
 
@@ -60,6 +66,9 @@ public class GSAimFragment extends Fragment {
                 for (int i = 0; i < healthTypesArrayList.size(); i++) {
 
                     if (healthTypesArrayList.get(i).isChecked()) {
+
+                        selectedAim = healthTypesArrayList.get(i).getHealthName();
+
                         isChecked = true;
                         break;
                     }
@@ -67,6 +76,8 @@ public class GSAimFragment extends Fragment {
 
 
                 if (isChecked) {
+
+                    prefRegister.setAim(selectedAim);
 
                     Fragment someFragment = new GSBodyDetailsFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();

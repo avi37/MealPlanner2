@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MealPlanner 2</string>
+    <string name="app_name">Health Botics</string>
     <string name="title_activity_main_navigation">Diet Manager</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
