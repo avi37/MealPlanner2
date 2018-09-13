@@ -27,7 +27,7 @@
             android:name=".Views.LoginActivity"
             android:label="MealPlanner 2"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme"/>
+            android:theme="@style/LoginTheme" />
         <activity
             android:name=".Views.ChooseDashActivity"
             android:theme="@style/LoginTheme" />
@@ -95,6 +95,10 @@
             android:label="Exercises"
             android:screenOrientation="portrait"
             android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.StartExerciseActivity"
+            android:label="@string/title_activity_start_exercise"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
