@@ -22,6 +22,9 @@
     <color name="db2Secondary_text">#757575</color>
 
 
+    <color name="gs_blue">#1565C0</color>
+    <color name="gs_grey">#393E41</color>
+
     <color name="level_red1">#ffb3b3</color>
     <color name="level_red2">#ff8080</color>
     <color name="level_red3">#ff4d4d</color>

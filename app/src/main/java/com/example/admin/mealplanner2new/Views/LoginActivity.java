@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     LoginAPI loginAPI;
     private static final String BASE_URL = "http://www.code-fuel.in/meal/api/auth/";
+    //http://192.168.0.103/laravel/public/api/auth/login     local URL
 
     SessionManager sessionManager;
 
@@ -88,8 +89,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.login_btn_login:
-                method_login();
-                //fake_login();
+                //method_login();
+                fake_login();
                 break;
 
             case R.id.login_tv_forgot_pwd:

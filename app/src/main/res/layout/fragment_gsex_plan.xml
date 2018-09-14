@@ -1,200 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Fragments.GSExPlanFragment">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/raisinBlackLight"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="How long can you exercise each a week?"
-        android:textColor="@color/white"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/gsExPlan_tv_minutes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Time per week: xx min"
-        android:textSize="15sp" />
-
-    <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/gsExPlan_seekBar_min"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
-        android:padding="10dp"
-        android:progress="40"
-        android:progressDrawable="@drawable/bg_seekbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="3">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@color/main_bg_light_primary"
+            android:elevation="5dp"
             android:gravity="center"
-            android:text="Low\n effectiveness"
+            android:padding="15dp"
+            android:text="How long can you exercise each a week?"
+            android:textColor="@color/raisinBlackDark"
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/gsExPlan_tv_minutes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="High\n efficiency"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Time per week: xx min"
             android:textSize="15sp" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/gsExPlan_seekBar_min"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Low\n efficiency"
-            android:textSize="15sp" />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:text="When can you exercise?"
-        android:textColor="@color/raisinBlack"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:padding="10dp"
+            android:progress="40"
+            android:progressDrawable="@drawable/bg_seekbar" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp">
+            android:weightSum="3">
 
             <TextView
-                android:id="@+id/gsExPlan_tv_mon"
-                android:layout_width="55dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:background="@drawable/bg_circle"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:padding="10dp"
-                android:text="Mon"
-                android:textColor="@color/font_grey"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:text="Low\n effectiveness"
+                android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/gsExPlan_tv_tue"
-                android:layout_width="55dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:background="@drawable/bg_circle"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:padding="10dp"
-                android:text="Tue"
-                android:textColor="@color/font_grey"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:text="High\n efficiency"
+                android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/gsExPlan_tv_wed"
-                android:layout_width="55dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:background="@drawable/bg_circle"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:padding="10dp"
-                android:text="Wed"
-                android:textColor="@color/font_grey"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:id="@+id/gsExPlan_tv_thu"
-                android:layout_width="55dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:background="@drawable/bg_circle"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Thu"
-                android:textColor="@color/font_grey"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/gsExPlan_tv_fri"
-                android:layout_width="55dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:background="@drawable/bg_circle"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Fri"
-                android:textColor="@color/font_grey"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/gsExPlan_tv_sat"
-                android:layout_width="55dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:background="@drawable/bg_circle"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Sat"
-                android:textColor="@color/font_grey"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/gsExPlan_tv_sun"
-                android:layout_width="55dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:background="@drawable/bg_circle"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Sun"
-                android:textColor="@color/font_grey"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:text="Low\n efficiency"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
-    </HorizontalScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="When can you exercise?"
+            android:textColor="@color/raisinBlack"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/gsExPlan_btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="25dp"
-        android:background="@color/mainColorPrimary"
-        android:text="Next"
-        android:textColor="@color/white" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/gsExPlan_tv_mon"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/bg_circle"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Mon"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gsExPlan_tv_tue"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/bg_circle"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Tue"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gsExPlan_tv_wed"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/bg_circle"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Wed"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/gsExPlan_tv_thu"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/bg_circle"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Thu"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gsExPlan_tv_fri"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/bg_circle"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Fri"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gsExPlan_tv_sat"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/bg_circle"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Sat"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gsExPlan_tv_sun"
+                    android:layout_width="55dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/bg_circle"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Sun"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="350dp"
+                android:layout_gravity="start"
+                android:src="@drawable/week_plan" />
+
+            <Button
+                android:id="@+id/gsExPlan_btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="25dp"
+                android:background="@color/mainColorPrimary"
+                android:text="Next"
+                android:textColor="@color/white" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

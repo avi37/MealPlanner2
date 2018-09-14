@@ -63,7 +63,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="25dp"
             android:gravity="center"
-            android:text="Already have an account? Login here."
+            android:text="Already have an account?\nLogin here."
             android:textColor="@color/db2ColorPrimaryDark"
             android:textStyle="bold" />
 
