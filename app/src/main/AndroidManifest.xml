@@ -98,7 +98,7 @@
         <activity
             android:name=".Views.StartExerciseActivity"
             android:label="@string/title_activity_start_exercise"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/LoginTheme"/>
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ class StartExerciseFragment : Fragment() {
     var remainingTime = endValue
     var isCountDownTimerEnable = false
     var progressStatus = 0
+    var isfromPauseButton = false
 
 
     override fun onAttach(context: Context?) {
@@ -36,25 +37,25 @@ class StartExerciseFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setProgress(progressStatus,remainingTime.toInt())
-         ivPlay.setOnClickListener {
+        setProgress(progressStatus,endValue.toInt())
+         ivPlay?.setOnClickListener {
 
-             if(!isCountDownTimerEnable && (remainingTime).toInt() > 0){
+             if(!isCountDownTimerEnable && remainingTime > 0 ){
 
                   startCountDown(remainingTime)
-                  ivPlay.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
+                  ivPlay?.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
 
 
 
              }
-             else{
+             else if(remainingTime > 0){
 
                  if (countDownTimer!=null){
                      countDownTimer!!.cancel()
                      countDownTimer!!.onFinish()
                  }
 
-                 ivPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
+                 ivPlay?.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
 
              }
 
@@ -75,7 +76,7 @@ class StartExerciseFragment : Fragment() {
                 val minutes = (remainingTime*1000 / (1000 * 60) % 60).toInt()
                 val hours = (remainingTime*1000 / (1000 * 60 * 60) % 24).toInt()
                 val newtime = hours.toString() + ":" + minutes + ":" + seconds
-                tvCountDown.text = newtime.toString()
+                tvCountDown?.text = newtime.toString()
                 progressStatus = 0
                 setProgress(progressStatus,remainingTime.toInt())
             }
@@ -99,17 +100,46 @@ class StartExerciseFragment : Fragment() {
         countDownTimer = object:CountDownTimer(endTime*1000,1000){
             override fun onFinish() {
 
-                isCountDownTimerEnable = false
-                ivPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
-                //setProgress(progressStatus,endTime.toInt())
-              //  Log.e("progress",progressStatus.toString())
+                if(remainingTime.toInt() == 1){
+                    isCountDownTimerEnable = false
+                    progressStatus += 1
+                    remainingTime -= 1
+                    ivPlay?.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
+
+                    setProgress(progressStatus,endValue.toInt())
+                     Log.e("progress",progressStatus.toString())
+
+                    val seconds = (remainingTime*1000 / 1000).toInt() % 60
+                    val minutes = (remainingTime*1000 / (1000 * 60) % 60).toInt()
+                    val hours = (remainingTime*1000 / (1000 * 60 * 60) % 24).toInt()
+                    val newtime = hours.toString() + ":" + minutes + ":" + seconds
+                    tvCountDown.text = newtime.toString()
+
+
+                }
+                else{
+                    isCountDownTimerEnable = false
+
+                    ivPlay?.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
+
+                    setProgress(progressStatus,endValue.toInt())
+                    //  Log.e("progress",progressStatus.toString())
+
+                    val seconds = (remainingTime*1000 / 1000).toInt() % 60
+                    val minutes = (remainingTime*1000 / (1000 * 60) % 60).toInt()
+                    val hours = (remainingTime*1000 / (1000 * 60 * 60) % 24).toInt()
+                    val newtime = hours.toString() + ":" + minutes + ":" + seconds
+                    tvCountDown?.text = newtime.toString()
+                }
+
+
 
             }
 
             override fun onTick(millisUntilFinished: Long) {
 
                 progressStatus += 1
-                setProgress(progressStatus,endTime.toInt())
+                setProgress(progressStatus,endValue.toInt())
                 Log.e("progress",progressStatus.toString())
 
                 remainingTime = millisUntilFinished/1000
@@ -119,7 +149,7 @@ class StartExerciseFragment : Fragment() {
                 val hours = (millisUntilFinished / (1000 * 60 * 60) % 24).toInt()
                 val newtime = hours.toString() + ":" + minutes + ":" + seconds
 
-                tvCountDown.text = newtime
+                tvCountDown?.text = newtime
 
 
             }
@@ -131,9 +161,11 @@ class StartExerciseFragment : Fragment() {
     }
 
     fun setProgress(startTime: Int, endTime: Int) {
-        progress_bar.setMax(endTime)
-        progress_bar.setSecondaryProgress(endTime)
-        progress_bar.setProgress(startTime)
+
+
+
+        progress_bar?.progress = startTime.toFloat()
+        progress_bar?.progressMax = endTime.toFloat()
 
     }
 }

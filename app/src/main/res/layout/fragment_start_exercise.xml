@@ -43,12 +43,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNoOfRep">
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
                 android:layout_width="150dp"
+                android:id="@+id/progress_bar"
                 android:layout_height="150dp"
-                android:progressDrawable="@drawable/progressbar_states" />
+                app:cpb_background_progressbar_color="#FFCDD2"
+                app:cpb_background_progressbar_width="5dp"
+                app:cpb_progressbar_color="#F44336"
+                app:cpb_progressbar_width="10dp" />
 
             <TextView
                 android:id="@+id/tvCountDown"

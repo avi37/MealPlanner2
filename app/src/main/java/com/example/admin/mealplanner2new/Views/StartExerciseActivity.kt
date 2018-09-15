@@ -15,10 +15,18 @@ class StartExerciseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start_exercise)
         setSupportActionBar(toolbar)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+
+            finish()
+
+        }
+
+
         val startExerciseFragment = StartExerciseFragment()
 
         fragmentManager.beginTransaction()
-                .replace(R.id.container_exercise,startExerciseFragment,startExerciseFragment::class.java.simpleName)
+                .replace(R.id.container_exercise, startExerciseFragment, startExerciseFragment::class.java.simpleName)
                 .commit()
 
 
