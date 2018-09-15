@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.login_btn_login:
-                method_login();
-                //fake_login();
+                //method_login();
+                fake_login();
                 break;
 
             case R.id.login_tv_forgot_pwd:

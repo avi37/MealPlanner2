@@ -10,9 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Common.PrefRegister;
+import com.example.admin.mealplanner2new.Models.ModelCoachList;
 import com.example.admin.mealplanner2new.R;
+
+import java.util.ArrayList;
 
 
 public class GSAddCoachFragment extends Fragment {
@@ -23,6 +27,8 @@ public class GSAddCoachFragment extends Fragment {
     TextView textView_noFound;
     RecyclerView recyclerView_coachList;
     Button button_next;
+
+    private ArrayList<ModelCoachList> coachArrayList = new ArrayList<>();
 
     String selected_coachId;
 
@@ -37,10 +43,36 @@ public class GSAddCoachFragment extends Fragment {
         recyclerView_coachList = view_main.findViewById(R.id.gs_coach_recView);
         button_next = view_main.findViewById(R.id.gs_coach_btn_next);
 
+        // Reset list
+        if (coachArrayList != null) {
+            coachArrayList.clear();
+        }
+
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                boolean isChecked = false;
+
+                for (int i = 0; i < coachArrayList.size(); i++) {
+
+                    if (coachArrayList.get(i).isChecked()) {
+
+                        selected_coachId = coachArrayList.get(i).getcId();
+
+                        isChecked = true;
+                        break;
+                    }
+                }
+
+
+                if (isChecked) {
+
+                } else {
+                    Toast.makeText(getActivity(), "Please select one coach", Toast.LENGTH_LONG).show();
+
+                }
 
                 prefRegister.setCoachId(selected_coachId);
 
