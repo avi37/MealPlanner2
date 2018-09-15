@@ -4,6 +4,7 @@ import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ class StartExerciseFragment : Fragment() {
 
 
     var countDownTimer : CountDownTimer? = null
-    val endValue = 60L
+    val endValue = 30L
     var remainingTime = endValue
     var isCountDownTimerEnable = false
     var progressStatus = 0
@@ -100,15 +101,16 @@ class StartExerciseFragment : Fragment() {
 
                 isCountDownTimerEnable = false
                 ivPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
-                setProgress(progressStatus,endValue.toInt())
-
+                //setProgress(progressStatus,endTime.toInt())
+              //  Log.e("progress",progressStatus.toString())
 
             }
 
             override fun onTick(millisUntilFinished: Long) {
 
                 progressStatus += 1
-                setProgress(progressStatus,endValue.toInt())
+                setProgress(progressStatus,endTime.toInt())
+                Log.e("progress",progressStatus.toString())
 
                 remainingTime = millisUntilFinished/1000
                 isCountDownTimerEnable = true
