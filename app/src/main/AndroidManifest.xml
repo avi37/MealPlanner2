@@ -39,7 +39,8 @@
         <activity
             android:name=".Views.AboutDevActivity"
             android:label="About Developers"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/CommonTheme" />
         <activity
             android:name=".Views.AddTodayMealActivity"
             android:label="Add Today&apos;s Meal"
@@ -84,6 +85,7 @@
         <activity
             android:name=".Views.ExNavigationActivity"
             android:label="@string/title_activity_ex_navigation"
+            android:screenOrientation="portrait"
             android:theme="@style/Dash2Theme" />
         <activity
             android:name=".Views.ShowExercisesActivity"
@@ -98,7 +100,13 @@
         <activity
             android:name=".Views.StartExerciseActivity"
             android:label="@string/title_activity_start_exercise"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.MyProfileActivity"
+            android:label="My Profile"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommonTheme" />
     </application>
 
 </manifest>

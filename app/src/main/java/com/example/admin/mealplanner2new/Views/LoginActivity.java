@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         sessionManager = new SessionManager(this);
 
-        //sessionManager.checkLogin();
         if (sessionManager.checkLogin()) {
             Intent i = new Intent(this, ChooseDashActivity.class);
 
@@ -89,8 +88,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
 
             case R.id.login_btn_login:
-                //method_login();
-                fake_login();
+                method_login();
+                //fake_login();
                 break;
 
             case R.id.login_tv_forgot_pwd:

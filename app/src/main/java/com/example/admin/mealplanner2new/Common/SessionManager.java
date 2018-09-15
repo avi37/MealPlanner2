@@ -70,19 +70,9 @@ public class SessionManager {
         return status;
     }
 
-    public void logoutUser() {
+    public void deleteSession() {
         editor.clear();
         editor.commit();
-
-        Intent i = new Intent(_context, LoginActivity.class);
-
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        Toast.makeText(_context, "User Logged out", Toast.LENGTH_SHORT).show();
-
-        _context.startActivity(i);
     }
 
     // Get Login State

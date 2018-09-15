@@ -42,4 +42,11 @@
         <item name="colorAccent">@color/db2ColorAccent</item>
     </style>
 
+    <style name="CommonTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/db2ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/gs_blue</item>
+        <item name="colorAccent">@color/gs_grey</item>
+    </style>
+
+
 </resources>

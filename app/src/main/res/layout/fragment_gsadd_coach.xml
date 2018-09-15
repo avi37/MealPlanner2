@@ -6,6 +6,19 @@
     tools:context=".Fragments.GSAddCoachFragment">
 
     <TextView
+        android:id="@+id/gs_coach_tv_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@color/main_bg_light_primary"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Select a coach / trainer"
+        android:textColor="@color/raisinBlackDark"
+        android:textSize="15sp" />
+
+    <TextView
         android:id="@+id/gs_coach_tv_noCoach"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +30,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gs_coach_recView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/gs_coach_tv_header" />
 
     <Button
         android:id="@+id/gs_coach_btn_next"
