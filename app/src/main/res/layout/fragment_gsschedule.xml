@@ -9,18 +9,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/raisinBlackLight"
+        android:background="@color/main_bg_light_primary"
+        android:elevation="5dp"
         android:gravity="center"
         android:padding="15dp"
         android:text="How do you want to manage your schedule?"
-        android:textColor="@color/white"
+        android:textColor="@color/raisinBlackDark"
         android:textSize="15sp" />
 
     <RadioGroup
         android:id="@+id/rgSchedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:padding="10dp"
         android:weightSum="2">
@@ -37,7 +38,7 @@
             android:padding="15dp"
             android:text="Plan it\n for me"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <RadioButton
             android:id="@+id/gsSchedule_RB_manual"
@@ -51,7 +52,7 @@
             android:padding="15dp"
             android:text="I'll manage\nmyself"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
     </RadioGroup>
 
@@ -60,11 +61,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
         android:background="@color/mainColorPrimary"
         android:text="Next"
         android:textColor="@color/white"
-        android:visibility="gone" />
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/schedule" />
 
 </LinearLayout>

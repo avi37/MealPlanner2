@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     LoginAPI loginAPI;
     private static final String BASE_URL = "http://www.code-fuel.in/meal/api/auth/";
+    //http://192.168.0.103/laravel/public/api/auth/login     local URL
 
     SessionManager sessionManager;
 
@@ -49,7 +50,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         sessionManager = new SessionManager(this);
 
-        //sessionManager.checkLogin();
         if (sessionManager.checkLogin()) {
             Intent i = new Intent(this, ChooseDashActivity.class);
 

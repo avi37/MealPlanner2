@@ -45,6 +45,7 @@ public class GSMainFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), LoginActivity.class);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 

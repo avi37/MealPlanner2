@@ -148,7 +148,7 @@ public class SignUpFragment extends Fragment {
 
                             if (response.body().getMsg().equals("true")) {
                                 progressDialog.dismiss();
-                                //finish();
+                                getActivity().finish();
                                 startActivity(new Intent(getContext(), DietMainNavigationActivity.class));
 
                             } else if (response.body().getMsg().equals("The given data was invalid.")) {

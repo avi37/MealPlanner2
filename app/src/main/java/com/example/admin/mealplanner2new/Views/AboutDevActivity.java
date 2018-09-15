@@ -32,9 +32,6 @@ public class AboutDevActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_dev);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         textView_website = findViewById(R.id.about_us_tv_website);
         textView_email = findViewById(R.id.about_us_tv_email);
         textView_number = findViewById(R.id.about_us_tv_number);
@@ -87,15 +84,6 @@ public class AboutDevActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void goToWebsite() {

@@ -46,7 +46,7 @@ public class GSExPlanFragment extends Fragment implements View.OnClickListener {
         tv_sun = view_main.findViewById(R.id.gsExPlan_tv_sun);
         button_next = view_main.findViewById(R.id.gsExPlan_btn_next);
 
-        textView_minutes.setText("45");
+        textView_minutes.setText("Time per week: 45 min");
 
         tv_mon.setOnClickListener(this);
         tv_tue.setOnClickListener(this);

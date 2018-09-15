@@ -8,36 +8,31 @@
 
     <TextView
         android:id="@+id/tvLable"
-        android:layout_alignParentStart="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/raisinBlackLight"
+        android:layout_alignParentStart="true"
+        android:background="@color/main_bg_light_primary"
+        android:elevation="5dp"
         android:gravity="center"
         android:padding="15dp"
         android:text="What would you like to do?"
-        android:textColor="@color/white"
+        android:textColor="@color/raisinBlackDark"
         android:textSize="15sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvList"
-        android:layout_above="@+id/gsAim_btn_next"
-        android:layout_below="@+id/tvLable"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/gsAim_btn_next"
+        android:layout_below="@+id/tvLable" />
 
 
     <Button
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:id="@+id/gsAim_btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="end"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
