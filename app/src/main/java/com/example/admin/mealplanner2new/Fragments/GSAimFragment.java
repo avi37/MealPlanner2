@@ -105,6 +105,7 @@ public class GSAimFragment extends Fragment {
 
         rvList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+
         // Dummy Data
 
         final HealthTypes healthTypes1 = new HealthTypes();
@@ -145,6 +146,12 @@ public class GSAimFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
+
+//------------------------------------- Adapter Class -----------------------------------------//
 
     public class HealthAdapter extends RecyclerView.Adapter<HealthAdapter.MyViewHolder> {
 
@@ -268,10 +275,4 @@ public class GSAimFragment extends Fragment {
 
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-
-
-    }
 }
