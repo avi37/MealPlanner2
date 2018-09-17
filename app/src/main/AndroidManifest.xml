@@ -98,7 +98,17 @@
         <activity
             android:name=".Views.StartExerciseActivity"
             android:label="@string/title_activity_start_exercise"
-            android:theme="@style/LoginTheme"/>
+            android:theme="@style/LoginTheme" />
+        <activity
+            android:name=".Views.ExHelpActivity"
+            android:label="Help"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.ExQueItemActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme"></activity>
     </application>
 
 </manifest>

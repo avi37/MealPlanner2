@@ -265,6 +265,7 @@ public class GSAimFragment extends Fragment {
                         }
 
                     }
+
                 });
 
             }
