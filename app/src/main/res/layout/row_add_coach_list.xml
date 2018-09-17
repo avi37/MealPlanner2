@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/row_add_coach_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/bg_softGrey"
+        android:orientation="vertical">
+
+        <CheckedTextView
+            android:id="@+id/row_addCoach_tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:padding="3dp"
+            android:text="name"
+            android:textColor="@color/raisinBlackDark" />
+
+        <TextView
+            android:id="@+id/row_addCoach_tv_gym"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="2dp"
+            android:text="GYM Name"
+            android:textColor="@color/raisinBlack" />
+
+    </LinearLayout>
+
+</FrameLayout>
