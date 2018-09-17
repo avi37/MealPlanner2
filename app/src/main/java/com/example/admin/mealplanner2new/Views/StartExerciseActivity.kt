@@ -1,5 +1,7 @@
 package com.example.admin.mealplanner2new.Views
 
+import android.app.FragmentManager
+import android.app.FragmentTransaction
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.admin.mealplanner2new.Fragments.StartExerciseFragment
@@ -28,7 +30,12 @@ class StartExerciseActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
 
-            finish()
+            if (fragmentManager.backStackEntryCount > 0){
+            fragmentManager.popBackStack()
+            }
+            else{
+              finish()
+            }
 
         }
 
@@ -42,6 +49,7 @@ class StartExerciseActivity : AppCompatActivity() {
         startExerciseFragment.arguments = bundle
 
         fragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .add(R.id.container_exercise, startExerciseFragment, id.toString())
                 //.addToBackStack(id.toString())
                 .commit()
