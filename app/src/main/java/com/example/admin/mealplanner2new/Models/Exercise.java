@@ -33,6 +33,19 @@ public class Exercise implements Parcelable {
     String name;
     String reps;
 
+    public Long getTimeOfRep() {
+        return timeOfRep;
+    }
+
+    public void setTimeOfRep(Long timeOfRep) {
+        this.timeOfRep = timeOfRep;
+    }
+
+    Long timeOfRep;
+
+    public Exercise() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -43,15 +56,14 @@ public class Exercise implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.reps);
-    }
-
-    public Exercise() {
+        dest.writeValue(this.timeOfRep);
     }
 
     protected Exercise(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
         this.reps = in.readString();
+        this.timeOfRep = (Long) in.readValue(Long.class.getClassLoader());
     }
 
     public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {

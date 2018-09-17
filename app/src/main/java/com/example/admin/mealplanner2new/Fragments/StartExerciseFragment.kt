@@ -5,30 +5,49 @@ import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.admin.mealplanner2new.Models.Exercise
 import com.example.admin.mealplanner2new.R
+import com.example.admin.mealplanner2new.Views.StartExerciseActivity
 import kotlinx.android.synthetic.main.fragment_start_exercise.*
 
 class StartExerciseFragment : Fragment() {
 
 
     var countDownTimer : CountDownTimer? = null
-    val endValue = 30L
+    var endValue = 30L
     var remainingTime = endValue
     var isCountDownTimerEnable = false
     var progressStatus = 0
     var isfromPauseButton = false
+    var exersiceName = ""
+    var exerciseId = 0
+    var exerciseReps = ""
+    lateinit var contexts:Context
+    lateinit var  exerciseList:ArrayList<Exercise>
+    var timeInMilliseconds = 0L
 
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
+        contexts = context!! as StartExerciseActivity
+        exerciseList = (contexts as StartExerciseActivity).exerciseList
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (arguments != null){
+            endValue = arguments.getLong("time",0L)
+            exerciseId = arguments.getInt("ex_id")
+            exerciseReps = arguments.getString("ex_rep")
+            exersiceName = arguments.getString("ex_name")
+            remainingTime = endValue
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,6 +58,74 @@ class StartExerciseFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setProgress(progressStatus,endValue.toInt())
+
+        val seconds = (endValue*1000 / 1000).toInt() % 60
+        val minutes = (endValue*1000 / (1000 * 60) % 60).toInt()
+        val hours = (endValue*1000 / (1000 * 60 * 60) % 24).toInt()
+        val newtime = hours.toString() + ":" + minutes + ":" + seconds
+        tvCountDown?.text = newtime.toString()
+        tvExerciseName?.text = exersiceName
+        tvNoOfRep?.text = exerciseReps
+
+
+        btnSkip?.setOnClickListener {
+
+
+            if (SystemClock.elapsedRealtime() - timeInMilliseconds < 1000){
+                return@setOnClickListener
+            }
+            timeInMilliseconds = SystemClock.elapsedRealtime()
+
+            if (exerciseId < exerciseList.size-1 && !isCountDownTimerEnable){
+
+
+
+                val startExerciseFragment = StartExerciseFragment()
+                val bundle = Bundle()
+                bundle.putLong("time",exerciseList[exerciseId+1].timeOfRep)
+                bundle.putString("ex_name", exerciseList[exerciseId+1].name)
+                bundle.putString("ex_rep", exerciseList[exerciseId+1].reps)
+                bundle.putInt("ex_id", exerciseId+1)
+                startExerciseFragment.arguments = bundle
+
+                fragmentManager.beginTransaction()
+                        .add(R.id.container_exercise, startExerciseFragment, (exerciseId).toString())
+                        .addToBackStack((exerciseId).toString())
+                        .hide(this@StartExerciseFragment)
+                        .commit()
+            }
+
+
+
+
+        }
+
+
+        btnNext?.setOnClickListener {
+
+                 if (!isCountDownTimerEnable && remainingTime == 0L && exerciseId < exerciseList.size-1 ){
+
+                     val startExerciseFragment = StartExerciseFragment()
+                     val bundle = Bundle()
+                     bundle.putLong("time",exerciseList[exerciseId+1].timeOfRep)
+                     bundle.putString("ex_name", exerciseList[exerciseId+1].name)
+                     bundle.putString("ex_rep", exerciseList[exerciseId+1].reps)
+                     bundle.putInt("ex_id", exerciseId+1)
+                     startExerciseFragment.arguments = bundle
+
+                     fragmentManager.beginTransaction()
+                             .add(R.id.container_exercise, startExerciseFragment, (exerciseId).toString())
+                             .addToBackStack((exerciseId).toString())
+                             .hide(this@StartExerciseFragment)
+                             .commit()
+
+
+                 }
+
+
+        }
+
+
          ivPlay?.setOnClickListener {
 
              if(!isCountDownTimerEnable && remainingTime > 0 ){
@@ -170,8 +257,13 @@ class StartExerciseFragment : Fragment() {
 
 
 
+
         progress_bar?.progress = startTime.toFloat()
         progress_bar?.progressMax = endTime.toFloat()
 
     }
+
+
+
+
 }

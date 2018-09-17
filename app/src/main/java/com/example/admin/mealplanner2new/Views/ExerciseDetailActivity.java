@@ -23,8 +23,8 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
     RecyclerView recyclerView_exercises;
     CustomAdapter customAdapter;
-    private Button btnStart;
     ArrayList<Exercise> exercises;
+    private Button btnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,41 +43,51 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         Exercise exercise1 = new Exercise();
         exercise1.setName("Push ups");          // 1
         exercise1.setReps("30 Reps");
+        exercise1.setTimeOfRep(60L);
         exercises.add(exercise1);
 
         Exercise exercise2 = new Exercise();
         exercise2.setName("Flat bench barbell");         // 2
         exercise2.setReps("3*12 Reps");
+        exercise2.setTimeOfRep(30L);
         exercises.add(exercise2);
 
         Exercise exercise3 = new Exercise();
         exercise3.setName("Inclined bench barbell");         // 3
         exercise3.setReps("3*12 Reps");
+        exercise3.setTimeOfRep(120L);
         exercises.add(exercise3);
 
         Exercise exercise4 = new Exercise();
         exercise4.setName("Cable fly");          // 4
         exercise4.setReps("2*12 Reps");
+        exercise4.setTimeOfRep(180L);
         exercises.add(exercise4);
 
         Exercise exercise5 = new Exercise();
         exercise5.setName("Dec fly machine");          // 5
         exercise5.setReps("4*12");
+        exercise5.setTimeOfRep(120L);
         exercises.add(exercise5);
 
         Exercise exercise6 = new Exercise();
         exercise6.setName("Hip twister");          // 6
         exercise6.setReps("50 Reps");
+        exercise6.setTimeOfRep(300L);
         exercises.add(exercise6);
 
         Exercise exercise7 = new Exercise();
         exercise7.setName("dumbbell side bend");           // 7
         exercise7.setReps("3*10");
+        exercise7.setTimeOfRep(200L);
+
         exercises.add(exercise7);
 
         Exercise exercise8 = new Exercise();
         exercise8.setName("dumbbell fly floor");           // 8
         exercise8.setReps("3*10");
+        exercise8.setTimeOfRep(600L);
+
         exercises.add(exercise8);
 
         recyclerView_exercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
@@ -91,9 +101,9 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Intent intent = new Intent(ExerciseDetailActivity.this,StartExerciseActivity.class);
+                Intent intent = new Intent(ExerciseDetailActivity.this, StartExerciseActivity.class);
+                intent.putParcelableArrayListExtra("data", exercises);
                 startActivity(intent);
-
 
 
             }
@@ -116,27 +126,9 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
         private ArrayList<Exercise> mDataSet;
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            private final TextView textView_name, textView_reps;
-
-            public ViewHolder(View v) {
-                super(v);
-                v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
-                    }
-                });
-                textView_name = (TextView) v.findViewById(R.id.tvExerciseName);
-                textView_reps = v.findViewById(R.id.tvRep);
-            }
-
-        }
-
         public CustomAdapter(ArrayList<Exercise> dataSet) {
             mDataSet = dataSet;
         }
-
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -153,6 +145,23 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return mDataSet.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            private final TextView textView_name, textView_reps;
+
+            public ViewHolder(View v) {
+                super(v);
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
+                    }
+                });
+                textView_name = (TextView) v.findViewById(R.id.tvExerciseName);
+                textView_reps = v.findViewById(R.id.tvRep);
+            }
+
         }
 
     }
