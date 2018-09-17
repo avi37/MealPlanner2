@@ -4,6 +4,7 @@ import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -42,10 +43,8 @@ class StartExerciseFragment : Fragment() {
 
              if(!isCountDownTimerEnable && remainingTime > 0 ){
 
-                  startCountDown(remainingTime)
-                  ivPlay?.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
-
-
+                 startCountDown(remainingTime)
+                 ivPlay?.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
 
              }
              else if(remainingTime > 0){
@@ -140,9 +139,11 @@ class StartExerciseFragment : Fragment() {
 
                 progressStatus += 1
                 setProgress(progressStatus,endValue.toInt())
-                Log.e("progress",progressStatus.toString())
+                //Log.e("progress",progressStatus.toString())
 
                 remainingTime = millisUntilFinished/1000
+                Log.e("remaining",remainingTime.toString())
+
                 isCountDownTimerEnable = true
                 val seconds = (millisUntilFinished / 1000).toInt() % 60
                 val minutes = (millisUntilFinished / (1000 * 60) % 60).toInt()
@@ -150,6 +151,11 @@ class StartExerciseFragment : Fragment() {
                 val newtime = hours.toString() + ":" + minutes + ":" + seconds
 
                 tvCountDown?.text = newtime
+
+//                if (remainingTime == 1L){
+//                    countDownTimer?.cancel()
+//                    countDownTimer?.onFinish()
+//                }
 
 
             }
