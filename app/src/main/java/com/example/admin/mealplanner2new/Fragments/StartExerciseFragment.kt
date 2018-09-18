@@ -1,5 +1,6 @@
 package com.example.admin.mealplanner2new.Fragments
 
+import android.annotation.SuppressLint
 import android.app.Fragment
 import android.app.FragmentManager
 import android.app.FragmentTransaction
@@ -21,7 +22,7 @@ import com.example.admin.mealplanner2new.Views.StartExerciseActivity
 import kotlinx.android.synthetic.main.fragment_start_exercise.*
 import com.example.admin.mealplanner2new.Models.WordDao
 import android.os.AsyncTask
-
+import android.widget.Toast
 
 
 class StartExerciseFragment : Fragment() {
@@ -110,6 +111,7 @@ class StartExerciseFragment : Fragment() {
                         .commit()
             } else if (exerciseId >= exerciseList.size - 1 && !isCountDownTimerEnable) {
 
+                Toast.makeText(activity!!,"End of Exercise",Toast.LENGTH_LONG).show()
                 //fragmentManager.popBackStack(StartExerciseFragment::class.java.simpleName,FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 val intent = Intent(activity, ShowExercisesActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -149,6 +151,9 @@ class StartExerciseFragment : Fragment() {
 
 
             } else if (!isCountDownTimerEnable && remainingTime == 0L && exerciseId >= exerciseList.size - 1) {
+
+                Toast.makeText(activity!!,"End of Exercise",Toast.LENGTH_LONG).show()
+
                 val intent = Intent(activity, ShowExercisesActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -297,11 +302,17 @@ class StartExerciseFragment : Fragment() {
     }
 
 
-    private class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<Exercise, Void, Void>() {
+    @SuppressLint("StaticFieldLeak")
+    private inner  class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<Exercise, Void, Void>() {
 
         override fun doInBackground(vararg params: Exercise): Void? {
             mAsyncTaskDao.insert(params[0])
             return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+            Toast.makeText(activity!!,"Successfully Saved",Toast.LENGTH_LONG).show()
         }
     }
 
