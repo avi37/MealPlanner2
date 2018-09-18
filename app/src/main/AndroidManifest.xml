@@ -108,6 +108,11 @@
             android:name=".Views.ExQueItemActivity"
             android:label=""
             android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.ExHistoryActivity"
+            android:label="Exercise History"
+            android:screenOrientation="portrait"
             android:theme="@style/ExTheme"></activity>
     </application>
 
