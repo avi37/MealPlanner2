@@ -51,8 +51,18 @@ public class ExHelpActivity extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
             indexes[i] = String.valueOf(i + 1);
-            questions[i] = "Question " + String.valueOf(i + 1) + " text here ...";
         }
+
+        questions[0] = "How can I start running if I'm a total beginner?";
+        questions[1] = "Is it okay to always run at the same place?";
+        questions[2] = "How can I increase my endurance and stamina?";
+        questions[3] = "What is the proper running posture?";
+        questions[4] = "I run out of breath fast and have to slow down, what can I do?";
+        questions[5] = "How should I breath during my runs?";
+        questions[6] = "How can I practice deep belly breathing";
+        questions[7] = "Nose or mouth breathing, which should I do?";
+        questions[8] = "Is there a recommended heart rate zone for my goal?";
+        questions[9] = "How can I calculate my maximum heart rate?";
 
         adapterQueList = new AdapterQueList(indexes, questions);
 
