@@ -25,11 +25,20 @@ public class ExerciseDetailActivity extends AppCompatActivity {
     CustomAdapter customAdapter;
     ArrayList<Exercise> exercises;
     private Button btnStart;
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_detail);
+
+        if (getIntent() != null) {
+
+            flag = getIntent().getBooleanExtra("flag", false);
+        }
+
+
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -37,6 +46,12 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
         recyclerView_exercises = findViewById(R.id.rvList);
         btnStart = findViewById(R.id.btnStart);
+
+        if (flag) {
+            btnStart.setVisibility(View.VISIBLE);
+        } else {
+            btnStart.setVisibility(View.GONE);
+        }
 
         exercises = new ArrayList<>();
 
