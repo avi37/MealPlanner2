@@ -1,8 +1,10 @@
 package com.example.admin.mealplanner2new.Fragments
 
 import android.app.Fragment
+import android.app.FragmentManager
 import android.app.FragmentTransaction
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -12,13 +14,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.admin.mealplanner2new.Models.Exercise
+import com.example.admin.mealplanner2new.Models.WordRoomDatabase
 import com.example.admin.mealplanner2new.R
+import com.example.admin.mealplanner2new.Views.ShowExercisesActivity
 import com.example.admin.mealplanner2new.Views.StartExerciseActivity
 import kotlinx.android.synthetic.main.fragment_start_exercise.*
+import com.example.admin.mealplanner2new.Models.WordDao
+import android.os.AsyncTask
+
+
 
 class StartExerciseFragment : Fragment() {
 
-
+    lateinit var roomDb:WordRoomDatabase
     var countDownTimer: CountDownTimer? = null
     var endValue = 30L
     var remainingTime = endValue
@@ -48,7 +56,11 @@ class StartExerciseFragment : Fragment() {
             exerciseReps = arguments.getString("ex_rep")
             exersiceName = arguments.getString("ex_name")
             remainingTime = endValue
+            roomDb = WordRoomDatabase.getDatabase(activity.applicationContext)
         }
+
+        GetExersiceTask(roomDb.wordDao()).execute()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -67,7 +79,7 @@ class StartExerciseFragment : Fragment() {
         tvCountDown?.text = newtime.toString()
         tvExerciseName?.text = exersiceName
         tvNoOfRep?.text = exerciseReps
-
+        btnNext?.visibility = View.GONE
 
         btnSkip?.setOnClickListener {
 
@@ -90,12 +102,19 @@ class StartExerciseFragment : Fragment() {
 
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(R.animator.fragment_slide_left_enter,
-                                R.animator.fragment_slide_left_exit,R.animator.fragment_slide_right_enter,
+                                R.animator.fragment_slide_left_exit, R.animator.fragment_slide_right_enter,
                                 R.animator.fragment_slide_right_exit)
                         .add(R.id.container_exercise, startExerciseFragment, (exerciseId).toString())
                         .addToBackStack((exerciseId).toString())
                         .hide(this@StartExerciseFragment)
                         .commit()
+            } else if (exerciseId >= exerciseList.size - 1 && !isCountDownTimerEnable) {
+
+                //fragmentManager.popBackStack(StartExerciseFragment::class.java.simpleName,FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                val intent = Intent(activity, ShowExercisesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+
             }
 
 
@@ -114,9 +133,14 @@ class StartExerciseFragment : Fragment() {
                 bundle.putInt("ex_id", exerciseId + 1)
                 startExerciseFragment.arguments = bundle
 
+
+                insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
+
+
+
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(R.animator.fragment_slide_right_enter,
-                                R.animator.fragment_slide_right_exit,R.animator.fragment_slide_right_enter,
+                        .setCustomAnimations(R.animator.fragment_slide_left_enter,
+                                R.animator.fragment_slide_left_exit, R.animator.fragment_slide_right_enter,
                                 R.animator.fragment_slide_right_exit)
                         .add(R.id.container_exercise, startExerciseFragment, (exerciseId).toString())
                         .addToBackStack((exerciseId).toString())
@@ -124,6 +148,10 @@ class StartExerciseFragment : Fragment() {
                         .commit()
 
 
+            } else if (!isCountDownTimerEnable && remainingTime == 0L && exerciseId >= exerciseList.size - 1) {
+                val intent = Intent(activity, ShowExercisesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
             }
 
 
@@ -186,6 +214,14 @@ class StartExerciseFragment : Fragment() {
     fun startCountDown(endTime: Long) {
         countDownTimer = object : CountDownTimer(endTime * 1000, 1000) {
             override fun onFinish() {
+
+
+                if (remainingTime.toInt() <= 1) {
+
+                    btnNext?.visibility = View.VISIBLE
+
+                }
+
 
                 if (remainingTime.toInt() == 1) {
                     isCountDownTimerEnable = false
@@ -260,5 +296,29 @@ class StartExerciseFragment : Fragment() {
 
     }
 
+
+    private class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<Exercise, Void, Void>() {
+
+        override fun doInBackground(vararg params: Exercise): Void? {
+            mAsyncTaskDao.insert(params[0])
+            return null
+        }
+    }
+
+
+    private class GetExersiceTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<Void, Void, List<Exercise>>() {
+        override fun doInBackground(vararg params: Void?): List<Exercise> {
+           var myList =  mAsyncTaskDao.allData
+            return myList
+
+        }
+
+        override fun onPostExecute(result: List<Exercise>?) {
+            super.onPostExecute(result)
+            Log.e("size",result?.size.toString())
+        }
+
+
+    }
 
 }

@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="10-9-2018"
+        android:text="18-9-2018"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

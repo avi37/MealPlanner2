@@ -1,8 +1,15 @@
 package com.example.admin.mealplanner2new.Models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
+
+@Entity(tableName = "exercise")
 public class Exercise implements Parcelable {
 
     public String getId() {
@@ -29,8 +36,15 @@ public class Exercise implements Parcelable {
         this.reps = reps;
     }
 
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    @NonNull
     String id;
+
+    @ColumnInfo(name = "ex_name")
     String name;
+
+    @ColumnInfo(name = "ex_rep")
     String reps;
 
     public Long getTimeOfRep() {
@@ -41,6 +55,7 @@ public class Exercise implements Parcelable {
         this.timeOfRep = timeOfRep;
     }
 
+    @ColumnInfo(name = "time")
     Long timeOfRep;
 
     public Exercise() {

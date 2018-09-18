@@ -13,6 +13,7 @@ import com.example.admin.mealplanner2new.R;
 public class ShowExercisesActivity extends AppCompatActivity {
 
     CardView cardView_monday;
+    CardView cardView_tuesDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +24,10 @@ public class ShowExercisesActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         cardView_monday = findViewById(R.id.cvMonday);
+        cardView_tuesDay = findViewById(R.id.cvTuesday);
 
 
-        cardView_monday.setOnClickListener(new View.OnClickListener() {
+        cardView_tuesDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ShowExercisesActivity.this, ExerciseDetailActivity.class));
