@@ -18,8 +18,9 @@
             android:layout_marginStart="8dp"
             android:gravity="center"
             android:padding="3dp"
-            android:text="name"
-            android:textColor="@color/raisinBlackDark" />
+            android:text="Name"
+            android:textColor="@color/raisinBlackDark"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/row_addCoach_tv_gym"

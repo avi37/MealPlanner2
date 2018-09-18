@@ -19,13 +19,15 @@ import android.widget.Toast;
 import com.example.admin.mealplanner2new.Common.PrefRegister;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Models.ModelCoachList;
-import com.example.admin.mealplanner2new.Models.ResCommon;
+import com.example.admin.mealplanner2new.Models.ResCoachList;
 import com.example.admin.mealplanner2new.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -43,6 +45,7 @@ public class GSAddCoachFragment extends Fragment {
     RecyclerView recyclerView_coachList;
     Button button_next;
 
+    MyAdapter myAdapter;
     private ArrayList<ModelCoachList> coachArrayList = new ArrayList<>();
 
     String selected_coachId;
@@ -93,7 +96,6 @@ public class GSAddCoachFragment extends Fragment {
 
 
                 if (isChecked) {
-
                     prefRegister.setCoachId(selected_coachId);
 
                     Fragment someFragment = new SignUpFragment();
@@ -105,60 +107,62 @@ public class GSAddCoachFragment extends Fragment {
 
                 } else {
                     Toast.makeText(getActivity(), "Please select one coach", Toast.LENGTH_LONG).show();
-
                 }
 
             }
         });
 
+
         return view_main;
     }
 
+
     private void getCoachList() {
-
-    }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         recyclerView_coachList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+        coachListAPI.get_coachList().enqueue(new Callback<List<ResCoachList>>() {
+            @Override
+            public void onResponse(Call<List<ResCoachList>> call, Response<List<ResCoachList>> response) {
 
-        // Dummy Data
+                if (response.isSuccessful()) {
 
-        final ModelCoachList healthTypes1 = new ModelCoachList();
-        healthTypes1.setcId("1");
-        healthTypes1.setcName("Name1");
-        healthTypes1.setGym_name("Loose Fat and Gain Muscle");
-
-        final ModelCoachList healthTypes2 = new ModelCoachList();
-        healthTypes2.setcId("2");
-        healthTypes2.setcName("Body Composition");
-        healthTypes2.setGym_name("Gain Weight");
+                    if (response.body() != null) {
 
 
-        final ModelCoachList healthTypes3 = new ModelCoachList();
-        healthTypes3.setcId("3");
-        healthTypes3.setcName("Health");
-        healthTypes3.setGym_name("Total Health");
+                        if (response.body().size() > 0) {
 
+                            for (int i = 0; i < response.body().size(); i++) {
+                                final ModelCoachList modelCoachList = new ModelCoachList();
 
-        final ModelCoachList healthTypes4 = new ModelCoachList();
-        healthTypes4.setcId("4");
-        healthTypes4.setcName("Health");
-        healthTypes4.setGym_name("Cognitive Health");
+                                modelCoachList.setcId(response.body().get(i).getId());
+                                modelCoachList.setcName(response.body().get(i).getName());
+                                modelCoachList.setGym_name(response.body().get(i).getGym_name());
 
-        coachArrayList.add(healthTypes1);
-        coachArrayList.add(healthTypes2);
-        coachArrayList.add(healthTypes3);
-        coachArrayList.add(healthTypes4);
+                                coachArrayList.add(modelCoachList);
+                            }
 
+                            myAdapter = new MyAdapter(getActivity(), coachArrayList);
+                            recyclerView_coachList.setAdapter(myAdapter);
 
-        recyclerView_coachList.setAdapter(new HealthAdapter(getActivity(), coachArrayList));
+                            myAdapter.notifyDataSetChanged();
 
+                        } else {
+                            textView_noFound.setVisibility(View.VISIBLE);
+                        }
 
+                    }
+
+                } else {
+                    Toast.makeText(getContext(), "Error in getting response", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ResCoachList>> call, Throwable t) {
+                Toast.makeText(getContext(), "onFailure", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -170,19 +174,19 @@ public class GSAddCoachFragment extends Fragment {
 
     interface CoachListAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
-        @POST("coach")
-        Call<ResCommon> get_coachList();
+        @POST("coache")
+        Call<List<ResCoachList>> get_coachList();
     }
 
 //--------------------------------------- Adapter Class -----------------------------------------//
 
-    public class HealthAdapter extends RecyclerView.Adapter<HealthAdapter.MyViewHolder> {
+    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         Context context;
         private ArrayList<ModelCoachList> coachArrayList;
 
 
-        public HealthAdapter(Context context, ArrayList<ModelCoachList> coachArrayList) {
+        public MyAdapter(Context context, ArrayList<ModelCoachList> coachArrayList) {
             this.coachArrayList = coachArrayList;
             this.context = context;
         }
@@ -190,8 +194,8 @@ public class GSAddCoachFragment extends Fragment {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_add_coach_list, parent, false);
-            return new MyViewHolder(itemView);
 
+            return new MyViewHolder(itemView);
         }
 
         @Override
@@ -203,12 +207,11 @@ public class GSAddCoachFragment extends Fragment {
             } else {
                 holder.simpleCheckedTextView.setChecked(false);
                 holder.simpleCheckedTextView.setCheckMarkDrawable(null);
-
             }
 
 
-            holder.tv_gym.setText(coachArrayList.get(position).getcName());
-            holder.simpleCheckedTextView.setText(coachArrayList.get(position).getGym_name());
+            holder.tv_gym.setText(coachArrayList.get(position).getGym_name());
+            holder.simpleCheckedTextView.setText(coachArrayList.get(position).getcName());
 
             // perform on Click Event Listener on CheckedTextView
 
@@ -220,7 +223,11 @@ public class GSAddCoachFragment extends Fragment {
             return coachArrayList.size();
         }
 
+
+        //----- Holder Class -----//
+
         class MyViewHolder extends RecyclerView.ViewHolder {
+
             CheckedTextView simpleCheckedTextView;
             TextView tv_gym;
 
@@ -235,10 +242,8 @@ public class GSAddCoachFragment extends Fragment {
                     public void onClick(View v) {
                         boolean value = simpleCheckedTextView.isChecked();
 
-
                         for (int i = 0; i < coachArrayList.size(); i++) {
                             coachArrayList.get(i).setChecked(false);
-
                         }
 
 
@@ -255,8 +260,6 @@ public class GSAddCoachFragment extends Fragment {
                             simpleCheckedTextView.setChecked(true);
                             coachArrayList.get(getAdapterPosition()).setChecked(true);
                             simpleCheckedTextView.setCheckMarkDrawable(R.drawable.ic_check_circle_black_24dp);
-
-
                         }
 
 

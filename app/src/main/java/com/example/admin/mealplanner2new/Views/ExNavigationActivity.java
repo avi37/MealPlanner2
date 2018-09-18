@@ -132,6 +132,10 @@ public class ExNavigationActivity extends AppCompatActivity implements Navigatio
             startActivity(new Intent(this, MyProfileActivity.class));
             navigationView.getMenu().getItem(0).setChecked(true);
 
+        } else if (id == R.id.nav2_help) {
+            startActivity(new Intent(this, ExHelpActivity.class));
+            navigationView.getMenu().getItem(0).setChecked(true);
+
         } else if (id == R.id.nav2_logout) {
             showLogoutAlert();
             navigationView.getMenu().getItem(0).setChecked(true);

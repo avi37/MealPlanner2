@@ -15,10 +15,10 @@
             android:icon="@drawable/ic_nav_my_profile"
             android:title="My Profile" />
 
-        <!--<item
-            android:id="@+id/nav2_meal_times"
-            android:icon="@drawable/ic_nav_meal_times"
-            android:title="Meal Times" />-->
+        <item
+            android:id="@+id/nav2_help"
+            android:icon="@drawable/ic_nav_help"
+            android:title="Help" />
 
         <group
             android:id="@+id/nav2_menu_logoutOpt"

@@ -23,13 +23,14 @@ public class GSPastExFragment extends Fragment implements View.OnClickListener {
     Button button_next;
 
     boolean isAnySelected = false;
-    String selectedLevel;
+    String selectedLevel, workoutPlace;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_gspast_ex, container, false);
 
         prefRegister = new PrefRegister(getContext());
+        workoutPlace = prefRegister.getWorkoutPlace();
 
         textView_1 = view_main.findViewById(R.id.gsPastEx_tv_1);
         textView_2 = view_main.findViewById(R.id.gsPastEx_tv_2);
@@ -50,14 +51,25 @@ public class GSPastExFragment extends Fragment implements View.OnClickListener {
 
                 prefRegister.setPastEx(selectedLevel);
 
-                Fragment someFragment = new GSScheduleFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
-                transaction.replace(R.id.content_get_started, someFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                if (workoutPlace.equals("0")) {
+                    Fragment someFragment = new GSAddCoachFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
+                    transaction.replace(R.id.content_get_started, someFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                } else {
+                    Fragment someFragment = new GSScheduleFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out);
+                    transaction.replace(R.id.content_get_started, someFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+
             }
         });
+
 
         return view_main;
     }
