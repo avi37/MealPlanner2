@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/scrollView"
+    android:layout_above="@+id/ivLogo"
+    android:layout_alignParentTop="true"
     tools:context=".Fragments.GSExFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -65,18 +73,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="25dp"
+            android:layout_marginTop="20dp"
             android:background="@color/mainColorPrimary"
             android:text="Next"
             android:textColor="@color/white"
             android:visibility="invisible" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/workout" />
+
 
     </LinearLayout>
 
 </ScrollView>
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+         android:id="@+id/ivLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:src="@drawable/workout" />
+</RelativeLayout>
