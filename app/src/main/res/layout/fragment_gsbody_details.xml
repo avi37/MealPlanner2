@@ -35,10 +35,11 @@
                 android:background="@color/raisinBlack" />
 
             <LinearLayout
+                android:id="@+id/gsBD_ll_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:weightSum="2">
 
                 <TextView
@@ -74,10 +75,11 @@
                 android:background="@color/raisinBlack" />
 
             <LinearLayout
+                android:id="@+id/gsBD_ll_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:weightSum="2">
 
                 <TextView
@@ -113,10 +115,11 @@
                 android:background="@color/raisinBlack" />
 
             <LinearLayout
+                android:id="@+id/gsBD_ll_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:weightSum="2">
 
                 <TextView

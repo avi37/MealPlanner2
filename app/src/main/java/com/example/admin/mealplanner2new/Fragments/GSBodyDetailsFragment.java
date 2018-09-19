@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.mealplanner2new.Common.PrefRegister;
@@ -22,6 +23,7 @@ public class GSBodyDetailsFragment extends Fragment {
     PrefRegister prefRegister;
 
     View view_main;
+    LinearLayout ll_height, ll_age, ll_weight;
     TextView textView_height, textView_age, textView_weight;
     Button button_next;
 
@@ -32,27 +34,30 @@ public class GSBodyDetailsFragment extends Fragment {
 
         prefRegister = new PrefRegister(getContext());
 
+        ll_height = view_main.findViewById(R.id.gsBD_ll_height);
+        ll_age = view_main.findViewById(R.id.gsBD_ll_age);
+        ll_weight = view_main.findViewById(R.id.gsBD_ll_weight);
         textView_height = view_main.findViewById(R.id.gsBD_tv_height);
         textView_age = view_main.findViewById(R.id.gsBD_tv_age);
         textView_weight = view_main.findViewById(R.id.gsBD_tv_weight);
         button_next = view_main.findViewById(R.id.gsBD_btn_next);
 
 
-        textView_height.setOnClickListener(new View.OnClickListener() {
+        ll_height.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showConfirmDialog("height");
             }
         });
 
-        textView_age.setOnClickListener(new View.OnClickListener() {
+        ll_age.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showConfirmDialog("age");
             }
         });
 
-        textView_weight.setOnClickListener(new View.OnClickListener() {
+        ll_weight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showConfirmDialog("weight");

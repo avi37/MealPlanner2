@@ -85,8 +85,8 @@
     </LinearLayout>
 
 </ScrollView>
-    <ImageView
 
+    <ImageView
         android:layout_alignParentBottom="true"
         android:id="@+id/ivLogo"
         android:layout_width="wrap_content"
