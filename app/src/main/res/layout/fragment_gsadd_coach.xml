@@ -13,10 +13,108 @@
         android:background="@color/main_bg_light_primary"
         android:elevation="5dp"
         android:gravity="center"
-        android:padding="15dp"
+        android:padding="5dp"
         android:text="Select a coach / trainer"
         android:textColor="@color/raisinBlackDark"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/gs_coach_ll_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gs_coach_tv_header"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginStart="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Country: " />
+
+                <Spinner
+                    android:id="@+id/gs_coach_spinner_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/raisinBlack" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="State: " />
+
+                <Spinner
+                    android:id="@+id/gs_coach_spinner_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/raisinBlack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City: " />
+
+            <Spinner
+                android:id="@+id/gs_coach_spinner_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/raisinBlack" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/gs_coach_tv_noCoach"
@@ -38,7 +136,7 @@
         android:id="@+id/gs_coach_recView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/gs_coach_tv_header" />
+        android:layout_below="@id/gs_coach_ll_filter" />
 
     <Button
         android:id="@+id/gs_coach_btn_next"

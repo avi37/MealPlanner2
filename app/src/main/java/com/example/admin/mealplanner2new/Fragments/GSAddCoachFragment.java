@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class GSAddCoachFragment extends Fragment {
 
 
     View view_main;
+    Spinner spinner_country, spinner_state, spinner_city;
     TextView textView_noFound;
     RecyclerView recyclerView_coachList;
     ProgressBar progressBar;
@@ -68,6 +70,9 @@ public class GSAddCoachFragment extends Fragment {
         view_main = inflater.inflate(R.layout.fragment_gsadd_coach, container, false);
 
 
+        spinner_country = view_main.findViewById(R.id.gs_coach_spinner_country);
+        spinner_state = view_main.findViewById(R.id.gs_coach_spinner_state);
+        spinner_city = view_main.findViewById(R.id.gs_coach_spinner_city);
         textView_noFound = view_main.findViewById(R.id.gs_coach_tv_noCoach);
         recyclerView_coachList = view_main.findViewById(R.id.gs_coach_recView);
         button_next = view_main.findViewById(R.id.gs_coach_btn_next);

@@ -145,6 +145,7 @@ public class SignUpFragment extends Fragment {
                 public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
 
                     if (response.isSuccessful()) {
+
                         if (response.body() != null) {
 
                             if (response.body().getMsg().equals("true")) {
