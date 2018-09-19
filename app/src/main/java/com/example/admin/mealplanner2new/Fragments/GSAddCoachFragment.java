@@ -52,7 +52,7 @@ public class GSAddCoachFragment extends Fragment {
     MyAdapter myAdapter;
     private ArrayList<ModelCoachList> coachArrayList = new ArrayList<>();
 
-    String selected_coachId;
+    String selected_coachId, selected_country, selected_state, selected_city;
 
 
     @Override
@@ -105,7 +105,7 @@ public class GSAddCoachFragment extends Fragment {
 
                 if (isChecked) {
                     prefRegister.setSchedule("0");
-                    prefRegister.setCoachId(selected_coachId);
+                    prefRegister.setCoachDetails(selected_coachId, selected_country, selected_state, selected_city);
 
                     Fragment someFragment = new SignUpFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();

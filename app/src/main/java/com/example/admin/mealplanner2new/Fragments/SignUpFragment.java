@@ -120,9 +120,9 @@ public class SignUpFragment extends Fragment {
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
-            //BodySignUp bodySignUp = new BodySignUp(name, email, password1, password2, number, dob, "");
 
             String place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days;
+            String coach_id, country, state, city;
 
             place = prefRegister.getWorkoutPlace();
             gender = prefRegister.getGENDER();
@@ -136,7 +136,12 @@ public class SignUpFragment extends Fragment {
             week_minutes = prefRegister.getWeekMinutes();
             ex_days = prefRegister.getExDays();
 
-            BodyRegister bodyRegister = new BodyRegister(place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days, "1", name, email, number, password1, password2);
+            coach_id = prefRegister.getCoachId();
+            country = prefRegister.getCountry();
+            state = prefRegister.getState();
+            city = prefRegister.getCity();
+
+            BodyRegister bodyRegister = new BodyRegister(place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days, coach_id, country, state, city, name, email, number, password1, password2);
 
             Log.d("LOG_BodyRegister", new Gson().toJson(bodyRegister));
 

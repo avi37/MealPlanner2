@@ -24,6 +24,9 @@ public class PrefRegister {
     private static final String PAST_EX_EX = "past_ex_ex";
     private static final String SCHEDULE = "schedule";
     private static final String COACH_ID = "coach_id";
+    private static final String COUNTRY = "country";
+    private static final String STATE = "state";
+    private static final String CITY = "city";
     private static final String WEEK_MINUTES = "week_minutes";
     private static final String EX_DAYS = "ex_days";
 
@@ -72,8 +75,12 @@ public class PrefRegister {
         editor.commit();
     }
 
-    public void setCoachId(String coachId) {
+    public void setCoachDetails(String coachId, String country, String state, String city) {
         editor.putString(COACH_ID, coachId);
+        editor.putString(COUNTRY, country);
+        editor.putString(STATE, state);
+        editor.putString(CITY, city);
+
         editor.commit();
     }
 
@@ -131,6 +138,18 @@ public class PrefRegister {
 
     public String getCoachId() {
         return regPref.getString(COACH_ID, null);
+    }
+
+    public String getCountry() {
+        return regPref.getString(COUNTRY, null);
+    }
+
+    public String getState() {
+        return regPref.getString(STATE, null);
+    }
+
+    public String getCity() {
+        return regPref.getString(CITY, null);
     }
 
     public void deleteRegisterPref() {
