@@ -18,6 +18,51 @@
     </string-array>
 
 
+    <string-array name="array_countryList">
+        <item>India</item>
+    </string-array>
+
+
+    <string-array name="array_stateList">
+        <item>ANDAMAN and NICOBAR ISLANDS</item>
+        <item>ANDHRA PRADESH</item>
+        <item>ARUNACHAL PRADESH</item>
+        <item>ASSAM</item>
+        <item>BIHAR</item>
+        <item>CHANDIGARH</item>
+        <item>CHATTISGARH</item>
+        <item>DADRA and NAGAR HAVELI</item>
+        <item>DAMAN and DIU</item>
+        <item>DELHI</item>
+        <item>GOA</item>
+        <item>GUJARAT</item>
+        <item>HARYANA</item>
+        <item>HIMACHAL PRADESH</item>
+        <item>JAMMU and KASHMIR</item>
+        <item>JHARKHAND</item>
+        <item>KARNATAKA</item>
+        <item>KERALA</item>
+        <item>LAKSHADWEEP</item>
+        <item>MADHYA PRADESH</item>
+        <item>MAHARASHTRA</item>
+        <item>MANIPUR</item>
+        <item>MEGHALAYA</item>
+        <item>MIZORAM</item>
+        <item>NAGALAND</item>
+        <item>ODISHA</item>
+        <item>PONDICHERRY</item>
+        <item>PUNJAB</item>
+        <item>RAJASTHAN</item>
+        <item>SIKKIM</item>
+        <item>TAMIL NADU</item>
+        <item>TELANGANA</item>
+        <item>TRIPURA</item>
+        <item>UTTAR PRADESH</item>
+        <item>UTTARAKHAND</item>
+        <item>WEST BENGAL</item>
+    </string-array>
+
+
     <string name="title_activity_ex_navigation">Exercise Manager</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
