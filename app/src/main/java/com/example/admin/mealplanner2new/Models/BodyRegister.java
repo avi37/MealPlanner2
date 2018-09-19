@@ -53,6 +53,18 @@ public class BodyRegister {
     @Expose
     private String coach_id;
 
+    @SerializedName("country")
+    @Expose
+    private String country;
+
+    @SerializedName("state")
+    @Expose
+    private String state;
+
+    @SerializedName("city")
+    @Expose
+    private String city;
+
 
     @SerializedName("name")
     @Expose
@@ -75,7 +87,7 @@ public class BodyRegister {
     private String password_confirmation;
 
 
-    public BodyRegister(String workout_place, String gender, String aim, String height, String age, String weight, String training_level, String past_ex_ex, String schedule, String week_minutes, String ex_days, String coach_id, String name, String email, String mobile, String password, String password_confirmation) {
+    public BodyRegister(String workout_place, String gender, String aim, String height, String age, String weight, String training_level, String past_ex_ex, String schedule, String week_minutes, String ex_days, String coach_id, String country, String state, String city, String name, String email, String mobile, String password, String password_confirmation) {
         this.workout_place = workout_place;
         this.gender = gender;
         this.aim = aim;
@@ -88,12 +100,16 @@ public class BodyRegister {
         this.week_minutes = week_minutes;
         this.ex_days = ex_days;
         this.coach_id = coach_id;
+        this.country = country;
+        this.state = state;
+        this.city = city;
         this.name = name;
         this.email = email;
         this.mobile = mobile;
         this.password = password;
         this.password_confirmation = password_confirmation;
     }
+
 
     public String getWorkout_place() {
         return workout_place;
@@ -191,6 +207,30 @@ public class BodyRegister {
         this.coach_id = coach_id;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getName() {
         return name;
     }
@@ -230,5 +270,7 @@ public class BodyRegister {
     public void setPassword_confirmation(String password_confirmation) {
         this.password_confirmation = password_confirmation;
     }
+
+
 }
 
