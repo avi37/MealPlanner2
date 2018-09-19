@@ -8,9 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ProgressBar;
@@ -18,11 +22,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admin.mealplanner2new.Adapters.BookAutoCompleteAdapter;
 import com.example.admin.mealplanner2new.Common.PrefRegister;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
+import com.example.admin.mealplanner2new.Models.CityList;
 import com.example.admin.mealplanner2new.Models.ModelCoachList;
 import com.example.admin.mealplanner2new.Models.ResCoachList;
 import com.example.admin.mealplanner2new.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,30 +39,29 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 
 public class GSAddCoachFragment extends Fragment {
 
-    PrefRegister prefRegister;
-
-    CoachListAPI coachListAPI;
     private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
-
-
+    PrefRegister prefRegister;
+    CoachListAPI coachListAPI;
     View view_main;
     Spinner spinner_country, spinner_state, spinner_city;
     TextView textView_noFound;
     RecyclerView recyclerView_coachList;
     ProgressBar progressBar;
     Button button_next;
-
     MyAdapter myAdapter;
+    String selected_coachId;
+    private AutoCompleteTextView edtSearchCity;
+    private TextView tvSelectedCity;
+    private GetCityName getCityName;
     private ArrayList<ModelCoachList> coachArrayList = new ArrayList<>();
-
-    String selected_coachId, selected_country, selected_state, selected_city;
-
+    private String selectedCity = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +70,8 @@ public class GSAddCoachFragment extends Fragment {
         prefRegister = new PrefRegister(getContext());
 
         coachListAPI = getCoachListAPIService(BASE_URL);
+
+        getCityName = RetrofitClient.getClient(BASE_URL).create(GetCityName.class);
 
     }
 
@@ -72,18 +82,109 @@ public class GSAddCoachFragment extends Fragment {
 
         spinner_country = view_main.findViewById(R.id.gs_coach_spinner_country);
         spinner_state = view_main.findViewById(R.id.gs_coach_spinner_state);
-        spinner_city = view_main.findViewById(R.id.gs_coach_spinner_city);
+        edtSearchCity = view_main.findViewById(R.id.gs_coach_spinner_city);
         textView_noFound = view_main.findViewById(R.id.gs_coach_tv_noCoach);
         recyclerView_coachList = view_main.findViewById(R.id.gs_coach_recView);
         button_next = view_main.findViewById(R.id.gs_coach_btn_next);
         progressBar = view_main.findViewById(R.id.gs_coach_progressBar);
+        tvSelectedCity = view_main.findViewById(R.id.tvSelectedCity);
+
+
+        spinner_state.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                progressBar.setVisibility(View.VISIBLE);
+
+
+                final JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("state", spinner_state.getSelectedItem().toString());
+
+                    getCityName.searchCity(jsonObject).cancel();
+
+                    getCityName.searchCity(jsonObject).enqueue(new Callback<ArrayList<CityList>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<CityList>> call, Response<ArrayList<CityList>> response) {
+
+                            progressBar.setVisibility(View.GONE);
+                            if (response.isSuccessful()) {
+
+                                final ArrayList<CityList> cityListArrayList = response.body();
+                                edtSearchCity.setAdapter(new BookAutoCompleteAdapter(getActivity(), cityListArrayList));
+
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<CityList>> call, Throwable t) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        edtSearchCity.setThreshold(3);
+
+
+
+
+        edtSearchCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Object item = parent.getItemAtPosition(position);
+                if (item instanceof CityList) {
+                    CityList cityList = (CityList) item;
+                    selectedCity = cityList.getCity();
+                    tvSelectedCity.setVisibility(View.VISIBLE);
+                    tvSelectedCity.setText(cityList.getCity());
+                    edtSearchCity.setText(cityList.getCity());
+
+                }
+
+
+            }
+        });
+
+        tvSelectedCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                selectedCity = null;
+                tvSelectedCity.setVisibility(View.GONE);
+
+
+            }
+        });
+
 
         // Reset list
         if (coachArrayList != null) {
             coachArrayList.clear();
         }
 
-        getCoachList();
+
+        if(selectedCity != null){
+            getCoachList();
+        }
+
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +206,7 @@ public class GSAddCoachFragment extends Fragment {
 
                 if (isChecked) {
                     prefRegister.setSchedule("0");
-                    prefRegister.setCoachDetails(selected_coachId, selected_country, selected_state, selected_city);
+                    prefRegister.setCoachId(selected_coachId);
 
                     Fragment someFragment = new SignUpFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -195,6 +296,13 @@ public class GSAddCoachFragment extends Fragment {
         @Headers("X-Requested-With:XMLHttpRequest")
         @POST("coache")
         Call<List<ResCoachList>> get_coachList();
+    }
+
+    interface GetCityName {
+        @POST("pincode")
+        Call<ArrayList<CityList>> searchCity(@Body JSONObject jsonObject);
+
+
     }
 
 //--------------------------------------- Adapter Class -----------------------------------------//
@@ -312,5 +420,6 @@ public class GSAddCoachFragment extends Fragment {
 
 
     }
+
 
 }
