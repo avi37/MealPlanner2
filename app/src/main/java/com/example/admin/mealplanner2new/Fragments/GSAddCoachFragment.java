@@ -8,8 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +24,10 @@ import com.example.admin.mealplanner2new.Adapters.BookAutoCompleteAdapter;
 import com.example.admin.mealplanner2new.Common.PrefRegister;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Models.CityList;
+import com.example.admin.mealplanner2new.Models.CitySendModel;
 import com.example.admin.mealplanner2new.Models.ModelCoachList;
 import com.example.admin.mealplanner2new.Models.ResCoachList;
 import com.example.admin.mealplanner2new.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,18 +46,19 @@ public class GSAddCoachFragment extends Fragment {
     PrefRegister prefRegister;
     CoachListAPI coachListAPI;
     View view_main;
-    Spinner spinner_country, spinner_state, spinner_city;
+    Spinner spinner_country, spinner_state;
     TextView textView_noFound;
     RecyclerView recyclerView_coachList;
     ProgressBar progressBar;
     Button button_next;
     MyAdapter myAdapter;
     String selected_coachId;
+
     private AutoCompleteTextView edtSearchCity;
     private TextView tvSelectedCity;
     private GetCityName getCityName;
     private ArrayList<ModelCoachList> coachArrayList = new ArrayList<>();
-    private String selectedCity = null;
+    private String selectedCountry, selectedState, selectedCity = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +86,9 @@ public class GSAddCoachFragment extends Fragment {
         progressBar = view_main.findViewById(R.id.gs_coach_progressBar);
         tvSelectedCity = view_main.findViewById(R.id.tvSelectedCity);
 
+        //------ Default State set in STATE_SPINNER ------//
+        spinner_state.setSelection(11);
+
 
         spinner_state.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -96,39 +96,30 @@ public class GSAddCoachFragment extends Fragment {
 
                 progressBar.setVisibility(View.VISIBLE);
 
+                final CitySendModel citySendModel = new CitySendModel(spinner_state.getSelectedItem().toString());
 
-                final JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("state", spinner_state.getSelectedItem().toString());
 
-                    getCityName.searchCity(jsonObject).cancel();
+                getCityName.searchCity(citySendModel).cancel();
 
-                    getCityName.searchCity(jsonObject).enqueue(new Callback<ArrayList<CityList>>() {
-                        @Override
-                        public void onResponse(Call<ArrayList<CityList>> call, Response<ArrayList<CityList>> response) {
+                getCityName.searchCity(citySendModel).enqueue(new Callback<ArrayList<CityList>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<CityList>> call, Response<ArrayList<CityList>> response) {
 
-                            progressBar.setVisibility(View.GONE);
-                            if (response.isSuccessful()) {
+                        progressBar.setVisibility(View.GONE);
+                        if (response.isSuccessful()) {
 
-                                final ArrayList<CityList> cityListArrayList = response.body();
-                                edtSearchCity.setAdapter(new BookAutoCompleteAdapter(getActivity(), cityListArrayList));
-
-                            }
-
+                            final ArrayList<CityList> cityListArrayList = response.body();
+                            edtSearchCity.setAdapter(new BookAutoCompleteAdapter(getActivity(), cityListArrayList));
 
                         }
 
-                        @Override
-                        public void onFailure(Call<ArrayList<CityList>> call, Throwable t) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    });
+                    }
 
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                    @Override
+                    public void onFailure(Call<ArrayList<CityList>> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
 
 
             }
@@ -141,8 +132,6 @@ public class GSAddCoachFragment extends Fragment {
 
 
         edtSearchCity.setThreshold(3);
-
-
 
 
         edtSearchCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -159,17 +148,15 @@ public class GSAddCoachFragment extends Fragment {
 
                 }
 
-
             }
         });
+
 
         tvSelectedCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 selectedCity = null;
                 tvSelectedCity.setVisibility(View.GONE);
-
 
             }
         });
@@ -181,7 +168,7 @@ public class GSAddCoachFragment extends Fragment {
         }
 
 
-        if(selectedCity != null){
+        if (selectedCity != null) {
             getCoachList();
         }
 
@@ -195,7 +182,6 @@ public class GSAddCoachFragment extends Fragment {
                 for (int i = 0; i < coachArrayList.size(); i++) {
 
                     if (coachArrayList.get(i).isChecked()) {
-
                         selected_coachId = coachArrayList.get(i).getcId();
 
                         isChecked = true;
@@ -205,8 +191,11 @@ public class GSAddCoachFragment extends Fragment {
 
 
                 if (isChecked) {
+                    selectedCountry = spinner_country.getSelectedItem().toString();
+                    selectedState = spinner_state.getSelectedItem().toString();
+
                     prefRegister.setSchedule("0");
-                    prefRegister.setCoachId(selected_coachId);
+                    prefRegister.setCoachDetails(selected_coachId, selectedCountry, selectedState, selectedCity);
 
                     Fragment someFragment = new SignUpFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -299,8 +288,9 @@ public class GSAddCoachFragment extends Fragment {
     }
 
     interface GetCityName {
+        @Headers("X-Requested-With:XMLHttpRequest")
         @POST("pincode")
-        Call<ArrayList<CityList>> searchCity(@Body JSONObject jsonObject);
+        Call<ArrayList<CityList>> searchCity(@Body CitySendModel citySendModel);
 
 
     }

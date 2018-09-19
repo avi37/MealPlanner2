@@ -13,7 +13,7 @@
         android:background="@color/main_bg_light_primary"
         android:elevation="5dp"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="8dp"
         android:text="Select a coach / trainer"
         android:textColor="@color/raisinBlackDark"
         android:textSize="18sp" />
@@ -44,7 +44,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Country: " />
+                    android:text="Country: "
+                    android:textSize="15sp" />
 
                 <Spinner
                     android:id="@+id/gs_coach_spinner_country"
@@ -72,7 +73,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="State: " />
+                    android:text="State: "
+                    android:textSize="15dp" />
 
                 <Spinner
                     android:id="@+id/gs_coach_spinner_state"
@@ -95,29 +97,35 @@
             android:layout_margin="5dp"
             android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City:  "
+                android:textSize="15sp" />
+
             <AutoCompleteTextView
-                android:layout_weight="1"
-                android:inputType="text"
-                android:hint="Search by city name"
                 android:id="@+id/gs_coach_spinner_city"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search by city name"
+                android:inputType="text" />
 
-             <TextView
-                 android:visibility="gone"
-                 android:lines="1"
-                 android:ellipsize="end"
-                 android:drawableEnd="@drawable/ic_clear_black_24dp"
-                 android:layout_marginStart="10dp"
-                 android:padding="5dp"
-                 android:textColor="@android:color/white"
-                 android:background="@drawable/bg_round_shape"
-                 android:gravity="center"
-                 android:layout_weight="1"
-                 tools:text="Ahmedabad dafdas adfa sadfd"
-                 android:id="@+id/tvSelectedCity"
-                 android:layout_width="0dp"
-                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tvSelectedCity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_round_shape"
+                android:drawableEnd="@drawable/ic_clear_black_24dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:padding="5dp"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                tools:text="Ahmedabad dafdas adfa sadfd" />
 
 
         </LinearLayout>
