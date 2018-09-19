@@ -37,11 +37,9 @@ import retrofit2.http.POST;
 
 public class DietMainNavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    SessionManager sessionManager;
-
-    LogoutAPI logoutAPI;
     private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
-
+    SessionManager sessionManager;
+    LogoutAPI logoutAPI;
     NavigationView navigationView;
     View header_view;
 
@@ -150,7 +148,7 @@ public class DietMainNavigationActivity extends AppCompatActivity implements Nav
 
                                                                                           sessionManager.deleteSession();
 
-                                                                                          finish();
+                                                                                          finishAffinity();
 
                                                                                           Intent i = new Intent(DietMainNavigationActivity.this, GetStartedActivity.class);
                                                                                           i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

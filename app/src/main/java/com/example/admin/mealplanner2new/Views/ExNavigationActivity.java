@@ -180,11 +180,13 @@ public class ExNavigationActivity extends AppCompatActivity implements Navigatio
 
                                                                                           sessionManager.deleteSession();
 
-                                                                                          finish();
+                                                                                          finishAffinity();
+
+
 
                                                                                           Intent i = new Intent(ExNavigationActivity.this, GetStartedActivity.class);
                                                                                           i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                                                          i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                                          i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                                                                                           Toast.makeText(ExNavigationActivity.this, "User Logged out", Toast.LENGTH_SHORT).show();
 
