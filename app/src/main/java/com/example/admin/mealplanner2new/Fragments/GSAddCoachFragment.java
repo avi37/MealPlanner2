@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,12 +38,13 @@ public class GSAddCoachFragment extends Fragment {
     PrefRegister prefRegister;
 
     CoachListAPI coachListAPI;
-    private static final String BASE_URL = "http://www.code-fuel.in/meal/api/auth/";
+    private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
 
 
     View view_main;
     TextView textView_noFound;
     RecyclerView recyclerView_coachList;
+    ProgressBar progressBar;
     Button button_next;
 
     MyAdapter myAdapter;
@@ -69,6 +71,7 @@ public class GSAddCoachFragment extends Fragment {
         textView_noFound = view_main.findViewById(R.id.gs_coach_tv_noCoach);
         recyclerView_coachList = view_main.findViewById(R.id.gs_coach_recView);
         button_next = view_main.findViewById(R.id.gs_coach_btn_next);
+        progressBar = view_main.findViewById(R.id.gs_coach_progressBar);
 
         // Reset list
         if (coachArrayList != null) {
@@ -96,6 +99,7 @@ public class GSAddCoachFragment extends Fragment {
 
 
                 if (isChecked) {
+                    prefRegister.setSchedule("0");
                     prefRegister.setCoachId(selected_coachId);
 
                     Fragment someFragment = new SignUpFragment();
@@ -118,6 +122,9 @@ public class GSAddCoachFragment extends Fragment {
 
 
     private void getCoachList() {
+
+        progressBar.setVisibility(View.VISIBLE);
+
         recyclerView_coachList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         coachListAPI.get_coachList().enqueue(new Callback<List<ResCoachList>>() {
@@ -146,13 +153,19 @@ public class GSAddCoachFragment extends Fragment {
 
                             myAdapter.notifyDataSetChanged();
 
+
+                            progressBar.setVisibility(View.INVISIBLE);
+
+
                         } else {
+                            progressBar.setVisibility(View.INVISIBLE);
                             textView_noFound.setVisibility(View.VISIBLE);
                         }
 
                     }
 
                 } else {
+                    progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(getContext(), "Error in getting response", Toast.LENGTH_SHORT).show();
                 }
 
@@ -160,6 +173,7 @@ public class GSAddCoachFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<ResCoachList>> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getContext(), "onFailure", Toast.LENGTH_SHORT).show();
             }
         });

@@ -19,6 +19,7 @@ import com.example.admin.mealplanner2new.Models.BodyRegister;
 import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.DietMainNavigationActivity;
+import com.example.admin.mealplanner2new.Views.LoginActivity;
 import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
@@ -39,7 +40,7 @@ public class SignUpFragment extends Fragment {
 
     //http://127.0.0.1:8000/api/auth/
     SignUpAPI signUpAPI;
-    private static final String BASE_URL = "http://www.code-fuel.in/meal/api/auth/";
+    private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
 
 
     EditText editText_name, editText_email, editText_number, editText_password1, editText_password2;
@@ -149,7 +150,7 @@ public class SignUpFragment extends Fragment {
                             if (response.body().getMsg().equals("true")) {
                                 progressDialog.dismiss();
                                 getActivity().finish();
-                                startActivity(new Intent(getContext(), DietMainNavigationActivity.class));
+                                startActivity(new Intent(getContext(), LoginActivity.class));
 
                             } else if (response.body().getMsg().equals("The given data was invalid.")) {
                                 progressDialog.dismiss();

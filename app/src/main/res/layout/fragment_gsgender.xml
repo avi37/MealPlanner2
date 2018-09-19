@@ -19,7 +19,7 @@
             android:padding="15dp"
             android:text="What is your gender?"
             android:textColor="@color/raisinBlackDark"
-            android:textSize="15sp" />
+            android:textSize="20sp" />
 
         <RadioGroup
             android:id="@+id/rgMaleFemale"

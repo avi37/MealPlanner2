@@ -16,10 +16,10 @@
             android:background="@color/main_bg_light_primary"
             android:elevation="5dp"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="How long can you exercise each a week?"
             android:textColor="@color/raisinBlackDark"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/gsExPlan_tv_minutes"

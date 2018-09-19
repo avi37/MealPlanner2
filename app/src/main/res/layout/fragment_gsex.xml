@@ -19,7 +19,7 @@
             android:padding="15dp"
             android:text="Where do you workout?"
             android:textColor="@color/raisinBlackDark"
-            android:textSize="15sp" />
+            android:textSize="20sp" />
 
         <RadioGroup
             android:id="@+id/gsEx_RG_workout"

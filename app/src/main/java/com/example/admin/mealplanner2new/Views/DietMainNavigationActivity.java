@@ -40,7 +40,7 @@ public class DietMainNavigationActivity extends AppCompatActivity implements Nav
     SessionManager sessionManager;
 
     LogoutAPI logoutAPI;
-    private static final String BASE_URL = "http://www.code-fuel.in/meal/api/auth/";
+    private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
 
     NavigationView navigationView;
     View header_view;
