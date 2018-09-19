@@ -40,6 +40,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -101,9 +103,9 @@ public class GSAddCoachFragment extends Fragment {
                 try {
                     jsonObject.put("state", spinner_state.getSelectedItem().toString());
 
-                    getCityName.searchCity(jsonObject).cancel();
+                    getCityName.searchCity(spinner_state.getSelectedItem().toString()).cancel();
 
-                    getCityName.searchCity(jsonObject).enqueue(new Callback<ArrayList<CityList>>() {
+                    getCityName.searchCity(spinner_state.getSelectedItem().toString()).enqueue(new Callback<ArrayList<CityList>>() {
                         @Override
                         public void onResponse(Call<ArrayList<CityList>> call, Response<ArrayList<CityList>> response) {
 
@@ -300,7 +302,8 @@ public class GSAddCoachFragment extends Fragment {
 
     interface GetCityName {
         @POST("pincode")
-        Call<ArrayList<CityList>> searchCity(@Body JSONObject jsonObject);
+        @FormUrlEncoded
+        Call<ArrayList<CityList>> searchCity(@Field("state") String state);
 
 
     }
