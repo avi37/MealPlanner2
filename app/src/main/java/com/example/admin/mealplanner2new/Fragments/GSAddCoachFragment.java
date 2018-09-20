@@ -36,6 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -145,6 +147,9 @@ public class GSAddCoachFragment extends Fragment {
                     tvSelectedCity.setVisibility(View.VISIBLE);
                     tvSelectedCity.setText(cityList.getCity());
                     edtSearchCity.setText(cityList.getCity());
+                    edtSearchCity.setSelection(selectedCity.length());
+
+                    getCoachList();
 
                 }
 
@@ -157,6 +162,10 @@ public class GSAddCoachFragment extends Fragment {
             public void onClick(View v) {
                 selectedCity = null;
                 tvSelectedCity.setVisibility(View.GONE);
+
+                edtSearchCity.setText("");
+                coachArrayList.clear();
+                myAdapter.notifyDataSetChanged();
 
             }
         });
@@ -222,7 +231,7 @@ public class GSAddCoachFragment extends Fragment {
 
         recyclerView_coachList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        coachListAPI.get_coachList().enqueue(new Callback<List<ResCoachList>>() {
+        coachListAPI.get_coachList(selectedCity).enqueue(new Callback<List<ResCoachList>>() {
             @Override
             public void onResponse(Call<List<ResCoachList>> call, Response<List<ResCoachList>> response) {
 
@@ -284,7 +293,8 @@ public class GSAddCoachFragment extends Fragment {
     interface CoachListAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
         @POST("coache")
-        Call<List<ResCoachList>> get_coachList();
+        @FormUrlEncoded
+        Call<List<ResCoachList>> get_coachList(@Field("city") String city);
     }
 
     interface GetCityName {

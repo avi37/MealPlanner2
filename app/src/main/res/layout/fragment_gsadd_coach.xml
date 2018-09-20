@@ -133,8 +133,17 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="3dp"
             android:background="@color/raisinBlack" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Coach List"
+            android:textColor="@color/raisinBlack"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
