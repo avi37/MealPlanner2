@@ -141,6 +141,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
 
+                    progressDialog.dismiss();
+
+
                     if (response.isSuccessful()) {
 
                         if (response.body() != null) {
@@ -152,7 +155,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     name = response.body().getName();
                                     token = response.body().getAccess_token();
 
-                                    progressDialog.dismiss();
                                     finish();
                                     sessionManager.createLoginSession(name, token);
 
@@ -163,39 +165,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     break;
 
                                 case "false":
-                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Your login credentials are not valid", Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case "block":
-                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Your account is currently blocked \nPlease contact administrative.", Toast.LENGTH_LONG).show();
                                     break;
 
                                 case "xxx":
-                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "You are not a registered user. \nPlease register first.", Toast.LENGTH_LONG).show();
                                     break;
 
                                 default:
-                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Some error occurred while signing you up \nPlease try after sometime", Toast.LENGTH_SHORT).show();
                                     break;
 
                             }
 
                         } else {
-                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Some error occurred while logging you in \nPlease try after sometime", Toast.LENGTH_SHORT).show();
                         }
 
                     } else if (response.code() == 401) {
-                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "You are not a registered user", Toast.LENGTH_SHORT).show();
 
-
                     } else {
-                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "Error in getting response", Toast.LENGTH_SHORT).show();
                     }
 
