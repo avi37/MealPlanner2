@@ -4,6 +4,8 @@ import android.app.FragmentManager
 import android.app.FragmentTransaction
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.example.admin.mealplanner2new.Common.SessionManager
+import com.example.admin.mealplanner2new.Fragments.FirstPhotoUploadFragment
 import com.example.admin.mealplanner2new.Fragments.StartExerciseFragment
 import com.example.admin.mealplanner2new.Models.Exercise
 import com.example.admin.mealplanner2new.R
@@ -48,13 +50,32 @@ class StartExerciseActivity : AppCompatActivity() {
         bundle.putInt("ex_id", id)
         startExerciseFragment.arguments = bundle
 
-        fragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .add(R.id.container_exercise, startExerciseFragment, id.toString())
-                //.addToBackStack(id.toString())
-                .commit()
+
+        if (SessionManager(this@StartExerciseActivity).isFirstPhotoUploaded){
+            fragmentManager.beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .add(R.id.container_exercise, startExerciseFragment, id.toString())
+                    //.addToBackStack(id.toString())
+                    .commit()
+
+
+        }
+        else{
+
+            fragmentManager.beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .add(R.id.container_exercise, FirstPhotoUploadFragment(), FirstPhotoUploadFragment::class.java.simpleName)
+                    //.addToBackStack(id.toString())
+                    .commit()
+
+
+        }
+
 
 
     }
+
+
+
 
 }

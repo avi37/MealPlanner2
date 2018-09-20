@@ -23,6 +23,7 @@ public class SessionManager {
     private static final String IS_LOGIN = "IsLoggedIn";
     private static final String KEY_NAME = "name";
     private static final String KEY_ACCESS_TOKEN = "access_token";
+    private static  final String IS_FIRST_PHOTO_UPLOAD = "first_photo";
 
 
     public SessionManager(Context context) {
@@ -40,6 +41,17 @@ public class SessionManager {
 
         editor.commit();
         Toast.makeText(_context, "Session Preference created", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public boolean isFirstPhotoUploaded(){
+
+        return mainPref.getBoolean(IS_FIRST_PHOTO_UPLOAD,false);
+
+    }
+
+    public void setFirstPhotoUploaded(){
+        editor.putBoolean(IS_FIRST_PHOTO_UPLOAD,true);
     }
 
     public String getUserName() {
