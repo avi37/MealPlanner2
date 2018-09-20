@@ -32,6 +32,15 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.v4.app.NotificationCompat.getExtras
 import com.bumptech.glide.Glide
+import com.example.admin.mealplanner2new.Common.RetrofitClient
+import com.example.admin.mealplanner2new.Models.ResCommon
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 
 
 class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks {
@@ -40,6 +49,8 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
     var mCurrentPhotoPath: String? = null
     val IMAGE_DIRECTORY = "HealthBotics"
     val FILE_NAME = "profile"
+    lateinit var uploadImageToServer: UploadImageToServer
+    private val BASE_URL = "http://code-fuel.in/healthbotics/api/auth/"
 
     companion object {
         const val RC_WRITE_STORAGE = 108
@@ -58,6 +69,8 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        uploadImageToServer = uploadImage(BASE_URL)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -76,6 +89,17 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
 
         btnUpload?.setOnClickListener {
+
+            if (mCurrentPhotoPath != null) {
+
+                val file = File(mCurrentPhotoPath)
+                val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
+                val fileToUpload = MultipartBody.Part.createFormData("file", file.name, requestBody)
+                val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
+                val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
+
+
+            }
 
 
         }
@@ -208,6 +232,17 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
         Glide.with(activity).load(BitmapFactory.decodeFile(mCurrentPhotoPath)).into(ivProfile)
 
 
+    }
+
+    interface UploadImageToServer {
+        @Multipart
+        @POST("member/uploadimageapi/")
+        fun uploadFile(@Part file: MultipartBody.Part, @Part("file") name: RequestBody, @Part("status") status: RequestBody,
+                       @Part("type") type: RequestBody): Call<ResCommon>
+    }
+
+    internal fun uploadImage(baseurl: String): UploadImageToServer {
+        return RetrofitClient.getClient(baseurl).create(UploadImageToServer::class.java)
     }
 
 }

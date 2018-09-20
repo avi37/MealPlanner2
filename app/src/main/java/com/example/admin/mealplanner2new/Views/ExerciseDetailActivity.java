@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.admin.mealplanner2new.Models.DayWiseExersice;
 import com.example.admin.mealplanner2new.Models.Exercise;
 import com.example.admin.mealplanner2new.R;
 
@@ -26,6 +27,8 @@ public class ExerciseDetailActivity extends AppCompatActivity {
     ArrayList<Exercise> exercises;
     private Button btnStart;
     private boolean flag = false;
+    private String ex_category;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +38,10 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         if (getIntent() != null) {
 
             flag = getIntent().getBooleanExtra("flag", false);
+            exercises = getIntent().getParcelableArrayListExtra("data");
+            ex_category = getIntent().getStringExtra("ex_title");
+
         }
-
-
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -53,63 +56,6 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             btnStart.setVisibility(View.GONE);
         }
 
-        exercises = new ArrayList<>();
-
-        Exercise exercise1 = new Exercise();
-        exercise1.setName("Push ups");          // 1
-        exercise1.setReps("30 Reps");
-        exercise1.setTimeOfRep(60L);
-        exercise1.setId("1");
-        exercises.add(exercise1);
-
-        Exercise exercise2 = new Exercise();
-        exercise2.setName("Flat bench barbell");         // 2
-        exercise2.setReps("3*12 Reps");
-        exercise2.setTimeOfRep(30L);
-        exercise2.setId("2");
-        exercises.add(exercise2);
-
-        Exercise exercise3 = new Exercise();
-        exercise3.setName("Inclined bench barbell");         // 3
-        exercise3.setReps("3*12 Reps");
-        exercise3.setTimeOfRep(120L);
-        exercise3.setId("3");
-        exercises.add(exercise3);
-
-        Exercise exercise4 = new Exercise();
-        exercise4.setName("Cable fly");          // 4
-        exercise4.setReps("2*12 Reps");
-        exercise4.setTimeOfRep(180L);
-        exercise4.setId("4");
-        exercises.add(exercise4);
-
-        Exercise exercise5 = new Exercise();
-        exercise5.setName("Dec fly machine");          // 5
-        exercise5.setReps("4*12");
-        exercise5.setTimeOfRep(120L);
-        exercise5.setId("5");
-        exercises.add(exercise5);
-
-        Exercise exercise6 = new Exercise();
-        exercise6.setName("Hip twister");          // 6
-        exercise6.setReps("50 Reps");
-        exercise6.setTimeOfRep(300L);
-        exercise6.setId("6");
-        exercises.add(exercise6);
-
-        Exercise exercise7 = new Exercise();
-        exercise7.setName("dumbbell side bend");           // 7
-        exercise7.setReps("3*10");
-        exercise7.setTimeOfRep(200L);
-        exercise7.setId("7");
-        exercises.add(exercise7);
-
-        Exercise exercise8 = new Exercise();
-        exercise8.setName("dumbbell fly floor");           // 8
-        exercise8.setReps("3*10");
-        exercise8.setTimeOfRep(600L);
-        exercise8.setId("8");
-        exercises.add(exercise8);
 
         recyclerView_exercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         customAdapter = new CustomAdapter(exercises);
@@ -147,7 +93,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
         private ArrayList<Exercise> mDataSet;
 
-        public CustomAdapter(ArrayList<Exercise> dataSet) {
+        CustomAdapter(ArrayList<Exercise> dataSet) {
             mDataSet = dataSet;
         }
 
@@ -168,10 +114,10 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             return mDataSet.size();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView textView_name, textView_reps;
 
-            public ViewHolder(View v) {
+            ViewHolder(View v) {
                 super(v);
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override
