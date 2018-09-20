@@ -113,7 +113,12 @@
             android:name=".Views.ExHistoryActivity"
             android:label="Exercise History"
             android:screenOrientation="portrait"
-            android:theme="@style/ExTheme"></activity>
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.ImageGalleryActivity"
+            android:label="Image Gallery"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
     </application>
 
 </manifest>

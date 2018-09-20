@@ -12,13 +12,14 @@ import android.view.ViewGroup;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.ExHistoryActivity;
 import com.example.admin.mealplanner2new.Views.ExNavigationActivity;
+import com.example.admin.mealplanner2new.Views.ImageGalleryActivity;
 import com.example.admin.mealplanner2new.Views.ShowExercisesActivity;
 
 
 public class ExDashboardFragment extends Fragment implements View.OnClickListener {
 
     View view_main;
-    CardView cardView_showExercise, cardView_showHistory;
+    CardView cardView_showExercise, cardView_showHistory, cardView_imageGallery;
 
 
     @Override
@@ -28,10 +29,13 @@ public class ExDashboardFragment extends Fragment implements View.OnClickListene
 
         cardView_showExercise = view_main.findViewById(R.id.dash_card_show_exercise);
         cardView_showHistory = view_main.findViewById(R.id.dash_card_ex_history);
+        cardView_imageGallery = view_main.findViewById(R.id.dash_card_image_gallery);
 
 
         cardView_showExercise.setOnClickListener(this);
         cardView_showHistory.setOnClickListener(this);
+        cardView_imageGallery.setOnClickListener(this);
+
 
         return view_main;
     }
@@ -50,6 +54,9 @@ public class ExDashboardFragment extends Fragment implements View.OnClickListene
                 methodShowHistory();
                 break;
 
+            case R.id.dash_card_image_gallery:
+                methodImageGallery();
+                break;
         }
 
     }
@@ -62,6 +69,11 @@ public class ExDashboardFragment extends Fragment implements View.OnClickListene
 
     private void methodShowHistory() {
         Intent i = new Intent(getContext(), ExHistoryActivity.class);
+        startActivity(i);
+    }
+
+    private void methodImageGallery() {
+        Intent i = new Intent(getContext(), ImageGalleryActivity.class);
         startActivity(i);
     }
 
