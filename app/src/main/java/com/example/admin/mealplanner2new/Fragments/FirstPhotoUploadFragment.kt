@@ -21,10 +21,14 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.content.Intent
 import android.app.Activity.RESULT_OK
+import android.app.FragmentTransaction
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.admin.mealplanner2new.Common.RetrofitClient
+import com.example.admin.mealplanner2new.Common.SessionManager
+import com.example.admin.mealplanner2new.Models.Exercise
 import com.example.admin.mealplanner2new.Models.ResCommon
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -43,6 +47,8 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
     val FILE_NAME = "profile"
     lateinit var uploadImageToServer: UploadImageToServer
     private val BASE_URL = "http://code-fuel.in/healthbotics/api/auth/"
+    private lateinit var exerciseList: ArrayList<Exercise>
+    private var idOf = 0
 
     companion object {
         const val RC_WRITE_STORAGE = 108
@@ -63,6 +69,10 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
         super.onCreate(savedInstanceState)
 
         uploadImageToServer = uploadImage(BASE_URL)
+
+        if (arguments != null){
+            exerciseList = arguments.getParcelableArrayList("data")
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -90,7 +100,31 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
                 val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
 
+           // -----------------------------Dummy start exercise  --------------------------------//
 
+
+                SessionManager(activity).setFirstPhotoUploaded()
+                val startExerciseFragment = StartExerciseFragment()
+                val bundle = Bundle()
+                bundle.putLong("time", exerciseList[0].timeOfRep)
+                bundle.putString("ex_name", exerciseList[0].name)
+                bundle.putString("ex_rep", exerciseList[0].reps)
+                bundle.putInt("ex_id", idOf)
+                startExerciseFragment.arguments = bundle
+
+                fragmentManager.beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.container_exercise, startExerciseFragment, id.toString())
+                        .hide(this@FirstPhotoUploadFragment)
+                        //.addToBackStack(id.toString())
+                        .commit()
+
+
+
+
+            }
+            else{
+                Toast.makeText(activity,"Please take photo",Toast.LENGTH_LONG).show()
             }
 
 
@@ -206,6 +240,14 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 setPic()
             }
 
+
+        }
+        else{
+            if (mCurrentPhotoPath!=null) {
+                val file = File(mCurrentPhotoPath)
+                file.delete()
+                mCurrentPhotoPath = null
+            }
 
         }
     }

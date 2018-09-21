@@ -62,9 +62,18 @@ class StartExerciseActivity : AppCompatActivity() {
         }
         else{
 
+            val bundle2 = Bundle()
+            bundle2.putParcelableArrayList("data",exerciseList)
+            bundle2.putLong("time", exerciseList[0].timeOfRep)
+            bundle2.putString("ex_name", exerciseList[0].name)
+            bundle2.putString("ex_rep", exerciseList[0].reps)
+            bundle2.putInt("ex_id", id)
+            val firstPhotoUploadFragment = FirstPhotoUploadFragment()
+            firstPhotoUploadFragment.arguments = bundle2
+
             fragmentManager.beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .add(R.id.container_exercise, FirstPhotoUploadFragment(), FirstPhotoUploadFragment::class.java.simpleName)
+                    .add(R.id.container_exercise, firstPhotoUploadFragment, FirstPhotoUploadFragment::class.java.simpleName)
                     //.addToBackStack(id.toString())
                     .commit()
 

@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {Exercise.class}, version = 1,exportSchema = false)
+@Database(entities = {Exercise.class,CategoryMaster.class}, version = 1,exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
    public abstract WordDao wordDao();

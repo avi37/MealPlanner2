@@ -11,19 +11,15 @@ import com.example.admin.mealplanner2new.Views.DietMainNavigationActivity;
 
 public class SessionManager {
 
-    SharedPreferences mainPref;
-    SharedPreferences.Editor editor;
-
-    Context _context;
-
-    int PRIVATE_MODE = 0;
-
     private static final String MAIN_PREF_NAME = "MainLoginPref";
-
     private static final String IS_LOGIN = "IsLoggedIn";
     private static final String KEY_NAME = "name";
     private static final String KEY_ACCESS_TOKEN = "access_token";
-    private static  final String IS_FIRST_PHOTO_UPLOAD = "first_photo";
+    private static final String IS_FIRST_PHOTO_UPLOAD = "first_photo";
+    SharedPreferences mainPref;
+    SharedPreferences.Editor editor;
+    Context _context;
+    int PRIVATE_MODE = 0;
 
 
     public SessionManager(Context context) {
@@ -44,14 +40,14 @@ public class SessionManager {
     }
 
 
-    public boolean isFirstPhotoUploaded(){
+    public boolean isFirstPhotoUploaded() {
 
-        return mainPref.getBoolean(IS_FIRST_PHOTO_UPLOAD,false);
+        return mainPref.getBoolean(IS_FIRST_PHOTO_UPLOAD, false);
 
     }
 
-    public void setFirstPhotoUploaded(){
-        editor.putBoolean(IS_FIRST_PHOTO_UPLOAD,true);
+    public void setFirstPhotoUploaded() {
+        editor.putBoolean(IS_FIRST_PHOTO_UPLOAD, true).commit();
     }
 
     public String getUserName() {

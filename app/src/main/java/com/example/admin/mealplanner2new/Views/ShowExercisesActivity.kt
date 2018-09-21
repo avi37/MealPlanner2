@@ -1,6 +1,8 @@
 package com.example.admin.mealplanner2new.Views
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.AsyncTask
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,8 +15,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.admin.mealplanner2new.Models.DayWiseExersice
-import com.example.admin.mealplanner2new.Models.Exercise
+import android.widget.Toast
+import com.example.admin.mealplanner2new.Models.*
 
 import com.example.admin.mealplanner2new.R
 
@@ -29,10 +31,13 @@ class ShowExercisesActivity : AppCompatActivity() {
     private var dayWiseExersice: DayWiseExersice? = null
     private var dayWiseExersiceArrayList: ArrayList<DayWiseExersice>? = null
     private var exercises: ArrayList<Exercise>? = null
+    private lateinit var roomDatabase: WordRoomDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_exercises)
+
+        roomDatabase = WordRoomDatabase.getDatabase(applicationContext)
 
         val actionBar = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -51,6 +56,7 @@ class ShowExercisesActivity : AppCompatActivity() {
         exercise1.reps = "30 Reps"
         exercise1.timeOfRep = 60L
         exercise1.id = "1"
+        exercise1.ref_master_cat_id = "1"
         exercises!!.add(exercise1)
 
         val exercise2 = Exercise()
@@ -58,6 +64,8 @@ class ShowExercisesActivity : AppCompatActivity() {
         exercise2.reps = "3*12 Reps"
         exercise2.timeOfRep = 30L
         exercise2.id = "2"
+        exercise2.ref_master_cat_id = "1"
+
         exercises!!.add(exercise2)
 
         val exercise3 = Exercise()
@@ -65,6 +73,8 @@ class ShowExercisesActivity : AppCompatActivity() {
         exercise3.reps = "3*12 Reps"
         exercise3.timeOfRep = 120L
         exercise3.id = "3"
+        exercise3.ref_master_cat_id = "1"
+
         exercises!!.add(exercise3)
 
         val exercise4 = Exercise()
@@ -72,6 +82,8 @@ class ShowExercisesActivity : AppCompatActivity() {
         exercise4.reps = "2*12 Reps"
         exercise4.timeOfRep = 180L
         exercise4.id = "4"
+        exercise4.ref_master_cat_id = "1"
+
         exercises!!.add(exercise4)
 
         val exercise5 = Exercise()
@@ -79,6 +91,8 @@ class ShowExercisesActivity : AppCompatActivity() {
         exercise5.reps = "4*12"
         exercise5.timeOfRep = 120L
         exercise5.id = "5"
+        exercise5.ref_master_cat_id = "1"
+
         exercises!!.add(exercise5)
 
         val exercise6 = Exercise()
@@ -86,6 +100,8 @@ class ShowExercisesActivity : AppCompatActivity() {
         exercise6.reps = "50 Reps"
         exercise6.timeOfRep = 300L
         exercise6.id = "6"
+        exercise6.ref_master_cat_id = "1"
+
         exercises!!.add(exercise6)
 
         val exercise7 = Exercise()
@@ -93,6 +109,7 @@ class ShowExercisesActivity : AppCompatActivity() {
         exercise7.reps = "3*10"
         exercise7.timeOfRep = 200L
         exercise7.id = "7"
+        exercise7.ref_master_cat_id = "1"
         exercises!!.add(exercise7)
 
         val exercise8 = Exercise()
@@ -100,24 +117,36 @@ class ShowExercisesActivity : AppCompatActivity() {
         exercise8.reps = "3*10"
         exercise8.timeOfRep = 600L
         exercise8.id = "8"
+        exercise8.ref_master_cat_id = "1"
         exercises!!.add(exercise8)
 
 
         dayWiseExersice = DayWiseExersice()
-        dayWiseExersice!!.setCat_name("Chest WorkOut")
-        dayWiseExersice!!.setId("1")
-        dayWiseExersice!!.setTitle("DAY - 1")
-        dayWiseExersice!!.setDateOfExercise("20-9-2018")
-        dayWiseExersice!!.setExerciseArrayList(exercises)
+        dayWiseExersice!!.cat_name = "Chest WorkOut"
+        dayWiseExersice!!.id = "1"
+        dayWiseExersice!!.title = "DAY - 1"
+        dayWiseExersice!!.dateOfExercise = "20-9-2018"
+        dayWiseExersice!!.exerciseArrayList = exercises
 
         dayWiseExersiceArrayList = java.util.ArrayList<DayWiseExersice>()
         dayWiseExersiceArrayList!!.add(dayWiseExersice!!)
 
 
+        val categoryMaster = CategoryMaster()
+        categoryMaster.cat_id = "1"
+        categoryMaster.id = "1"
+        categoryMaster.cat_name = "Chest WorkOut"
+        categoryMaster.dateOf = "21-9-2018"
+        categoryMaster.status = "0"
+        categoryMaster.title = "DAY 1"
+        categoryMaster.tottal_time = "30min"
+
+        insertAsyncTask(roomDatabase.wordDao()).execute(categoryMaster)
 
 
 
-        rvList.layoutManager = LinearLayoutManager(this@ShowExercisesActivity,LinearLayoutManager.VERTICAL,false)
+
+        rvList.layoutManager = LinearLayoutManager(this@ShowExercisesActivity, LinearLayoutManager.VERTICAL, false)
         rvList.adapter = CustomAdapter(dayWiseExersiceArrayList!!)
 
     }
@@ -165,10 +194,10 @@ class ShowExercisesActivity : AppCompatActivity() {
 
                 v.setOnClickListener {
 
-                    val intent = Intent(this@ShowExercisesActivity,ExerciseDetailActivity::class.java)
-                    intent.putParcelableArrayListExtra("data",dataSet[adapterPosition].exerciseArrayList)
-                    intent.putExtra("ex_title",dataSet[adapterPosition].title)
-                    intent.putExtra("flag",true)
+                    val intent = Intent(this@ShowExercisesActivity, ExerciseDetailActivity::class.java)
+                    intent.putParcelableArrayListExtra("data", dataSet[adapterPosition].exerciseArrayList)
+                    intent.putExtra("ex_title", dataSet[adapterPosition].title)
+                    intent.putExtra("flag", true)
                     startActivity(intent)
                 }
 
@@ -209,5 +238,18 @@ class ShowExercisesActivity : AppCompatActivity() {
         private val TAG = "CustomAdapter"
     }
 
+
+    @SuppressLint("StaticFieldLeak")
+    private inner class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<CategoryMaster, Void, Void>() {
+
+        override fun doInBackground(vararg params: CategoryMaster): Void? {
+              mAsyncTaskDao.insertCategory(params[0])
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+        }
+    }
 
 }
