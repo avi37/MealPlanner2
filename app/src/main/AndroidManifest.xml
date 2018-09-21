@@ -93,13 +93,13 @@
             android:theme="@style/ExTheme" />
         <activity
             android:name=".Views.ExerciseDetailActivity"
-            android:label="Exercises"
+            android:label="Workout Details"
             android:screenOrientation="portrait"
             android:theme="@style/ExTheme" />
         <activity
             android:name=".Views.StartExerciseActivity"
             android:label="@string/title_activity_start_exercise"
-            android:theme="@style/LoginTheme" />
+            android:theme="@style/StartExTheme" />
         <activity
             android:name=".Views.ExHelpActivity"
             android:label="Help"
@@ -120,7 +120,6 @@
             android:label="Image Gallery"
             android:screenOrientation="portrait"
             android:theme="@style/ExTheme" />
-            android:theme="@style/ExTheme"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -131,6 +130,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepath"/>
         </provider>
+
     </application>
 
 </manifest>

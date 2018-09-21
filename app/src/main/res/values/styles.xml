@@ -20,6 +20,12 @@
         <item name="colorAccent">@color/raisinBlack</item>
     </style>
 
+    <style name="StartExTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/db2ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/db2ColorPrimaryDark</item>
+        <item name="colorAccent">@color/db2ColorAccent</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

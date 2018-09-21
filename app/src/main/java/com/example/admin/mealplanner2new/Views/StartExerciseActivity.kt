@@ -1,6 +1,5 @@
 package com.example.admin.mealplanner2new.Views
 
-import android.app.FragmentManager
 import android.app.FragmentTransaction
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -11,6 +10,7 @@ import com.example.admin.mealplanner2new.Models.Exercise
 import com.example.admin.mealplanner2new.R
 
 import kotlinx.android.synthetic.main.activity_start_exercise.*
+
 
 class StartExerciseActivity : AppCompatActivity() {
 

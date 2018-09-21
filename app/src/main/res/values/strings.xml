@@ -70,7 +70,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_start_exercise">StartExerciseActivity</string>
+    <string name="title_activity_start_exercise">Start Exercise</string>
 
 
 </resources>
