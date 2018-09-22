@@ -6,15 +6,4 @@
     android:orientation="vertical"
     tools:context=".Fragments.QueAnsFragment">
 
-    <TextView
-        android:id="@+id/queAns_tv_index"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_bg_light_primary"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:padding="5dp"
-        android:textColor="@color/raisinBlackDark"
-        android:textSize="18sp" />
-
 </LinearLayout>

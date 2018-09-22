@@ -20,16 +20,6 @@ public class AdapterPagerQuestions extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        /*for (int i = 0; i < 50; i++) {
-
-            if (i == position) {
-                return QueAnsFragment.newInstance(i, "Page # " + i);
-                break;
-            }
-
-        }*/
-
-
         switch (position) {
 
             case 0:
