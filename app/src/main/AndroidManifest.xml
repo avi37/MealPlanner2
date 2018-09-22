@@ -70,11 +70,6 @@
             android:label="Ingredients"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Views.SignUpActivity"
-            android:label="Sign up"
-            android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme" />
-        <activity
             android:name=".Views.MealTimesActivity"
             android:label="Meal Times"
             android:screenOrientation="portrait" />

@@ -14,6 +14,7 @@ public class SessionManager {
     private static final String MAIN_PREF_NAME = "MainLoginPref";
     private static final String IS_LOGIN = "IsLoggedIn";
     private static final String KEY_NAME = "name";
+    private static final String KEY_U_ID = "u_id";
     private static final String KEY_ACCESS_TOKEN = "access_token";
     private static final String IS_FIRST_PHOTO_UPLOAD = "first_photo";
     SharedPreferences mainPref;
@@ -28,12 +29,13 @@ public class SessionManager {
         editor = mainPref.edit();
     }
 
-    public void createLoginSession(String name, String access_token) {
+    public void createLoginSession(String name, String access_token, String u_id) {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         editor.putString(KEY_NAME, name);
         editor.putString(KEY_ACCESS_TOKEN, access_token);
+        editor.putString(KEY_U_ID, u_id);
 
         editor.commit();
         Toast.makeText(_context, "Session Preference created", Toast.LENGTH_SHORT).show();
@@ -56,6 +58,10 @@ public class SessionManager {
 
     public String getAccessToken() {
         return mainPref.getString(KEY_ACCESS_TOKEN, null);
+    }
+
+    public String getKeyUId() {
+        return mainPref.getString(KEY_U_ID, null);
     }
 
     public boolean checkLogin() {

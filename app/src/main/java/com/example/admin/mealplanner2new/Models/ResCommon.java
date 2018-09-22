@@ -17,6 +17,26 @@ public class ResCommon {
     @Expose
     private String token_type;
 
+    @SerializedName("u_id")
+    @Expose
+    private String u_id;
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    @SerializedName("expires_at")
+    @Expose
+    private String expires_at;
+
+    public String getU_id() {
+        return u_id;
+    }
+
+    public void setU_id(String u_id) {
+        this.u_id = u_id;
+    }
+
     public String getName() {
         return name;
     }
@@ -24,10 +44,6 @@ public class ResCommon {
     public void setName(String name) {
         this.name = name;
     }
-
-    @SerializedName("name")
-    @Expose
-    private String name;
 
     public String getAccess_token() {
         return access_token;
@@ -53,11 +69,6 @@ public class ResCommon {
         this.expires_at = expires_at;
     }
 
-    @SerializedName("expires_at")
-    @Expose
-    private String expires_at;
-
-
     public String getMsg() {
         return message;
     }
@@ -65,4 +76,5 @@ public class ResCommon {
     public void setMsg(String msg) {
         this.message = msg;
     }
+
 }
