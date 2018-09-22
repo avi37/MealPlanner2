@@ -21,6 +21,17 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         onDelete = CASCADE))
 public class Exercise implements Parcelable {
 
+    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+        @Override
+        public Exercise createFromParcel(Parcel source) {
+            return new Exercise(source);
+        }
+
+        @Override
+        public Exercise[] newArray(int size) {
+            return new Exercise[size];
+        }
+    };
     @PrimaryKey
     @ColumnInfo(name = "id")
     @NonNull
@@ -43,6 +54,42 @@ public class Exercise implements Parcelable {
     @SerializedName("cat_id")
     @Expose
     private String ref_master_cat_id;
+    @Ignore
+    private boolean isCompleted;
+    @ColumnInfo(name = "day")
+    private String day;
+    @Ignore
+    private String status;
+
+    public Exercise() {
+    }
+
+    protected Exercise(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.reps = in.readString();
+        this.timeOfRep = (Long) in.readValue(Long.class.getClassLoader());
+        this.ref_master_cat_id = in.readString();
+        this.isCompleted = in.readByte() != 0;
+        this.day = in.readString();
+        this.status = in.readString();
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
 
     public String getStatus() {
         return status;
@@ -51,13 +98,6 @@ public class Exercise implements Parcelable {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    @Ignore
-    private String status;
-
-    public Exercise() {
-    }
-
 
     public String getId() {
         return id;
@@ -111,27 +151,8 @@ public class Exercise implements Parcelable {
         dest.writeString(this.reps);
         dest.writeValue(this.timeOfRep);
         dest.writeString(this.ref_master_cat_id);
+        dest.writeByte(this.isCompleted ? (byte) 1 : (byte) 0);
+        dest.writeString(this.day);
         dest.writeString(this.status);
     }
-
-    protected Exercise(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.reps = in.readString();
-        this.timeOfRep = (Long) in.readValue(Long.class.getClassLoader());
-        this.ref_master_cat_id = in.readString();
-        this.status = in.readString();
-    }
-
-    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
-        @Override
-        public Exercise createFromParcel(Parcel source) {
-            return new Exercise(source);
-        }
-
-        @Override
-        public Exercise[] newArray(int size) {
-            return new Exercise[size];
-        }
-    };
 }

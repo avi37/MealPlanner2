@@ -15,7 +15,9 @@ import kotlinx.android.synthetic.main.activity_start_exercise.*
 class StartExerciseActivity : AppCompatActivity() {
 
     lateinit var exerciseList: ArrayList<Exercise>
+    lateinit var workOutId:String
     private var id = 0
+    private var dateOf = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,8 @@ class StartExerciseActivity : AppCompatActivity() {
         if (intent != null) {
 
             exerciseList = intent.getParcelableArrayListExtra("data")
+            dateOf = intent.getStringExtra("day")
+            workOutId = intent.getStringExtra("work_id")
 
         }
 
@@ -32,11 +36,10 @@ class StartExerciseActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
 
-            if (fragmentManager.backStackEntryCount > 0){
-            fragmentManager.popBackStack()
-            }
-            else{
-              finish()
+            if (fragmentManager.backStackEntryCount > 0) {
+                fragmentManager.popBackStack()
+            } else {
+                finish()
             }
 
         }
@@ -48,10 +51,11 @@ class StartExerciseActivity : AppCompatActivity() {
         bundle.putString("ex_name", exerciseList[0].name)
         bundle.putString("ex_rep", exerciseList[0].reps)
         bundle.putInt("ex_id", id)
+        bundle.putString("day", dateOf)
         startExerciseFragment.arguments = bundle
 
 
-        if (SessionManager(this@StartExerciseActivity).isFirstPhotoUploaded){
+        if (SessionManager(this@StartExerciseActivity).isFirstPhotoUploaded) {
             fragmentManager.beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .add(R.id.container_exercise, startExerciseFragment, id.toString())
@@ -59,15 +63,16 @@ class StartExerciseActivity : AppCompatActivity() {
                     .commit()
 
 
-        }
-        else{
+        } else {
 
             val bundle2 = Bundle()
-            bundle2.putParcelableArrayList("data",exerciseList)
+            bundle2.putParcelableArrayList("data", exerciseList)
             bundle2.putLong("time", exerciseList[0].timeOfRep)
             bundle2.putString("ex_name", exerciseList[0].name)
             bundle2.putString("ex_rep", exerciseList[0].reps)
             bundle2.putInt("ex_id", id)
+            bundle2.putString("day", dateOf)
+
             val firstPhotoUploadFragment = FirstPhotoUploadFragment()
             firstPhotoUploadFragment.arguments = bundle2
 
@@ -81,10 +86,7 @@ class StartExerciseActivity : AppCompatActivity() {
         }
 
 
-
     }
-
-
 
 
 }

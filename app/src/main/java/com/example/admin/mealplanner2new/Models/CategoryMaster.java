@@ -12,10 +12,68 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "cat_master",indices = {@Index(value = {"cat_id"},
+import java.util.ArrayList;
+
+@Entity(tableName = "cat_master", indices = {@Index(value = {"cat_id"},
         unique = true)})
 public class CategoryMaster implements Parcelable {
 
+
+    public static final Creator<CategoryMaster> CREATOR = new Creator<CategoryMaster>() {
+        @Override
+        public CategoryMaster createFromParcel(Parcel source) {
+            return new CategoryMaster(source);
+        }
+
+        @Override
+        public CategoryMaster[] newArray(int size) {
+            return new CategoryMaster[size];
+        }
+    };
+    @Ignore
+    private String id;
+    @ColumnInfo(name = "cat_name")
+    @SerializedName("cat_name")
+    @Expose
+    private String cat_name;
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "cat_id")
+    @SerializedName("cat_id")
+    @Expose
+    private String cat_id;
+    @ColumnInfo(name = "total_time")
+    @SerializedName("total_time")
+    @Expose
+    private String total_time;
+    @ColumnInfo(name = "date")
+    @SerializedName("date")
+    @Expose
+    private String dateOf;
+    @ColumnInfo(name = "status")
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @ColumnInfo(name = "title")
+    @SerializedName("name")
+    @Expose
+    private String title;
+    @Ignore
+    private ArrayList<Exercise> exerciseArrayList;
+
+    public CategoryMaster() {
+    }
+
+    protected CategoryMaster(Parcel in) {
+        this.id = in.readString();
+        this.cat_name = in.readString();
+        this.cat_id = in.readString();
+        this.total_time = in.readString();
+        this.dateOf = in.readString();
+        this.status = in.readString();
+        this.title = in.readString();
+        this.exerciseArrayList = in.createTypedArrayList(Exercise.CREATOR);
+    }
 
     public String getId() {
         return id;
@@ -41,8 +99,6 @@ public class CategoryMaster implements Parcelable {
         this.cat_id = cat_id;
     }
 
-
-
     public String getDateOf() {
         return dateOf;
     }
@@ -67,22 +123,6 @@ public class CategoryMaster implements Parcelable {
         this.title = title;
     }
 
-    @Ignore
-    private String id;
-
-    @ColumnInfo(name = "cat_name")
-    @SerializedName("cat_name")
-    @Expose
-    private String cat_name;
-
-
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "cat_id")
-    @SerializedName("cat_id")
-    @Expose
-    private String cat_id;
-
     public String getTotal_time() {
         return total_time;
     }
@@ -91,25 +131,13 @@ public class CategoryMaster implements Parcelable {
         this.total_time = total_time;
     }
 
-    @ColumnInfo(name = "total_time")
-    @SerializedName("total_time")
-    @Expose
-    private String total_time;
+    public ArrayList<Exercise> getExerciseArrayList() {
+        return exerciseArrayList;
+    }
 
-    @ColumnInfo(name = "date")
-    @SerializedName("date")
-    @Expose
-    private String dateOf;
-
-    @ColumnInfo(name = "status")
-    @SerializedName("status")
-    @Expose
-    private String status;
-
-    @ColumnInfo(name = "title")
-    @SerializedName("name")
-    @Expose
-    private String title;
+    public void setExerciseArrayList(ArrayList<Exercise> exerciseArrayList) {
+        this.exerciseArrayList = exerciseArrayList;
+    }
 
     @Override
     public int describeContents() {
@@ -125,30 +153,6 @@ public class CategoryMaster implements Parcelable {
         dest.writeString(this.dateOf);
         dest.writeString(this.status);
         dest.writeString(this.title);
+        dest.writeTypedList(this.exerciseArrayList);
     }
-
-    public CategoryMaster() {
-    }
-
-    protected CategoryMaster(Parcel in) {
-        this.id = in.readString();
-        this.cat_name = in.readString();
-        this.cat_id = in.readString();
-        this.total_time = in.readString();
-        this.dateOf = in.readString();
-        this.status = in.readString();
-        this.title = in.readString();
-    }
-
-    public static final Parcelable.Creator<CategoryMaster> CREATOR = new Parcelable.Creator<CategoryMaster>() {
-        @Override
-        public CategoryMaster createFromParcel(Parcel source) {
-            return new CategoryMaster(source);
-        }
-
-        @Override
-        public CategoryMaster[] newArray(int size) {
-            return new CategoryMaster[size];
-        }
-    };
 }

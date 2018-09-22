@@ -1,7 +1,9 @@
 package com.example.admin.mealplanner2new.Views;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -114,6 +116,7 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     private class GetExData extends AsyncTask<Void, Void, List<Exercise>> {
 
         @Override
@@ -134,7 +137,7 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected List<Exercise> doInBackground(Void... voids) {
 
-            return wordRoomDatabase.wordDao().getAllData();
+            return wordRoomDatabase.wordDao().getAllData("");
         }
     }
 
@@ -143,10 +146,11 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
 
         private ArrayList<Exercise> mDataSet;
 
-        public CustomAdapter(ArrayList<Exercise> dataSet) {
+         CustomAdapter(ArrayList<Exercise> dataSet) {
             mDataSet = dataSet;
         }
 
+        @NonNull
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_exercise_detail, viewGroup, false);
@@ -164,10 +168,10 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
             return mDataSet.size();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+         class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView textView_name, textView_reps;
 
-            public ViewHolder(View v) {
+             ViewHolder(View v) {
                 super(v);
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override

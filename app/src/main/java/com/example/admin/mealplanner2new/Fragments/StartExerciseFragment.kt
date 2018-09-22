@@ -14,20 +14,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.admin.mealplanner2new.Models.Exercise
-import com.example.admin.mealplanner2new.Models.WordRoomDatabase
 import com.example.admin.mealplanner2new.R
 import com.example.admin.mealplanner2new.Views.ShowExercisesActivity
 import com.example.admin.mealplanner2new.Views.StartExerciseActivity
 import kotlinx.android.synthetic.main.fragment_start_exercise.*
-import com.example.admin.mealplanner2new.Models.WordDao
 import android.os.AsyncTask
 import android.widget.Toast
+import com.example.admin.mealplanner2new.Common.SessionManager
+import com.example.admin.mealplanner2new.Models.*
+import com.example.admin.mealplanner2new.Service.MyJobIntentService
+import com.google.gson.Gson
 
 
 class StartExerciseFragment : Fragment() {
 
-    lateinit var roomDb:WordRoomDatabase
+    lateinit var roomDb: WordRoomDatabase
     var countDownTimer: CountDownTimer? = null
     var endValue = 30L
     var remainingTime = endValue
@@ -39,23 +40,31 @@ class StartExerciseFragment : Fragment() {
     var exerciseReps = ""
     lateinit var contexts: Context
     lateinit var exerciseList: ArrayList<Exercise>
+    lateinit var workOutId: String
     var timeInMilliseconds = 0L
+    var dateOf = ""
+    lateinit var u_id: String
 
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         contexts = context!! as StartExerciseActivity
         exerciseList = (contexts as StartExerciseActivity).exerciseList
+        workOutId = (contexts as StartExerciseActivity).workOutId
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        u_id = SessionManager(activity).keyUId
 
         if (arguments != null) {
             endValue = arguments.getLong("time", 0L)
             exerciseId = arguments.getInt("ex_id")
             exerciseReps = arguments.getString("ex_rep")
             exersiceName = arguments.getString("ex_name")
+            dateOf = arguments.getString("day")
             remainingTime = endValue
             roomDb = WordRoomDatabase.getDatabase(activity.applicationContext)
         }
@@ -99,6 +108,7 @@ class StartExerciseFragment : Fragment() {
                 bundle.putString("ex_name", exerciseList[exerciseId + 1].name)
                 bundle.putString("ex_rep", exerciseList[exerciseId + 1].reps)
                 bundle.putInt("ex_id", exerciseId + 1)
+                bundle.putString("day", dateOf)
                 startExerciseFragment.arguments = bundle
 
                 fragmentManager.beginTransaction()
@@ -111,7 +121,7 @@ class StartExerciseFragment : Fragment() {
                         .commit()
             } else if (exerciseId >= exerciseList.size - 1 && !isCountDownTimerEnable) {
 
-                Toast.makeText(activity!!,"End of Exercise",Toast.LENGTH_LONG).show()
+                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
                 //fragmentManager.popBackStack(StartExerciseFragment::class.java.simpleName,FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 val intent = Intent(activity, ShowExercisesActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -133,12 +143,31 @@ class StartExerciseFragment : Fragment() {
                 bundle.putString("ex_name", exerciseList[exerciseId + 1].name)
                 bundle.putString("ex_rep", exerciseList[exerciseId + 1].reps)
                 bundle.putInt("ex_id", exerciseId + 1)
+                bundle.putString("day", dateOf)
                 startExerciseFragment.arguments = bundle
 
+                exerciseList[exerciseId].day = dateOf
+                exerciseList[exerciseId].isCompleted = true
 
                 insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
+                val savedArrayList: ArrayList<Exercise> = ArrayList()
 
 
+                for (items in exerciseList) {
+                    if (items.isCompleted) {
+                        savedArrayList.add(exerciseList[exerciseId])
+                    }
+                }
+
+                val savedExerciseData = SavedExerciseData()
+                savedExerciseData.id = workOutId
+                savedExerciseData.u_id = u_id
+                savedExerciseData.exerciseArrayList = savedArrayList
+
+
+                val intent = Intent(activity, MyJobIntentService::class.java)
+                intent.putExtra("data", savedExerciseData)
+                MyJobIntentService.enqueueWork(activity.applicationContext, intent)
 
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(R.animator.fragment_slide_left_enter,
@@ -152,7 +181,32 @@ class StartExerciseFragment : Fragment() {
 
             } else if (!isCountDownTimerEnable && remainingTime == 0L && exerciseId >= exerciseList.size - 1) {
 
-                Toast.makeText(activity!!,"End of Exercise",Toast.LENGTH_LONG).show()
+                exerciseList[exerciseId].day = dateOf
+                exerciseList[exerciseId].isCompleted = true
+
+
+                val savedArrayList: ArrayList<Exercise> = ArrayList()
+
+
+                for (items in exerciseList) {
+                    if (items.isCompleted) {
+                        savedArrayList.add(exerciseList[exerciseId])
+                    }
+                }
+
+                val savedExerciseData = SavedExerciseData()
+                savedExerciseData.id = workOutId
+                savedExerciseData.u_id = u_id
+                savedExerciseData.exerciseArrayList = savedArrayList
+
+
+                val intent2 = Intent(activity, MyJobIntentService::class.java)
+                intent2.putExtra("data", savedExerciseData)
+                MyJobIntentService.enqueueWork(activity.applicationContext, intent2)
+
+                insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
+
+                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
 
                 val intent = Intent(activity, ShowExercisesActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -303,7 +357,7 @@ class StartExerciseFragment : Fragment() {
 
 
     @SuppressLint("StaticFieldLeak")
-    private inner  class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<Exercise, Void, Void>() {
+    private inner class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<Exercise, Void, Void>() {
 
         override fun doInBackground(vararg params: Exercise): Void? {
             mAsyncTaskDao.insert(params[0])
@@ -312,21 +366,21 @@ class StartExerciseFragment : Fragment() {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            Toast.makeText(activity!!,"Successfully Saved",Toast.LENGTH_LONG).show()
+            Toast.makeText(activity!!, "Successfully Saved", Toast.LENGTH_LONG).show()
         }
     }
 
 
-    private class GetExersiceTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<Void, Void, List<Exercise>>() {
+    private inner class GetExersiceTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<Void, Void, List<Exercise>>() {
         override fun doInBackground(vararg params: Void?): List<Exercise> {
-           var myList =  mAsyncTaskDao.allData
+            var myList = mAsyncTaskDao.getAllData(dateOf)
             return myList
 
         }
 
         override fun onPostExecute(result: List<Exercise>?) {
             super.onPostExecute(result)
-            Log.e("size",result?.size.toString())
+            Log.e("size", result?.size.toString())
         }
 
 

@@ -70,7 +70,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         tvCatName = findViewById(R.id.tvExerciseType);
         tvDate = findViewById(R.id.tvDate);
 
-        tvCatName.setText(ex_category);
+        tvCatName.setText("Day - "+ex_category);
         tvDate.setText(dateOf);
 
 
@@ -127,6 +127,8 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(ExerciseDetailActivity.this, StartExerciseActivity.class);
                 intent.putParcelableArrayListExtra("data", exercises);
+                intent.putExtra("day",dateOf);
+                intent.putExtra("work_id",ex_category);
                 startActivity(intent);
 
 

@@ -84,6 +84,8 @@ class ShowExercisesActivity : AppCompatActivity() {
                                 LinearLayoutManager.VERTICAL,false)
                         rvList.adapter = CustomAdapter(categoryList!!)
 
+                        insertAsyncTask(roomDatabase.wordDao()).execute(categoryList)
+
 
                     }
 
@@ -171,7 +173,7 @@ class ShowExercisesActivity : AppCompatActivity() {
             // Get element from your dataset at this position and replace the contents of the view
             // with that element
 
-            viewHolder.tvTitle.text = dataSet[position].title
+            viewHolder.tvTitle.text = "Day - ".plus(dataSet[position].title)
             viewHolder.tvCatName.text = dataSet[position].cat_name
             viewHolder.tvDate.text = dataSet[position].dateOf
             viewHolder.tvStatus.text = dataSet[position].status
@@ -191,10 +193,10 @@ class ShowExercisesActivity : AppCompatActivity() {
 
 
     @SuppressLint("StaticFieldLeak")
-    private inner class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<CategoryMaster, Void, Void>() {
+    private inner class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<ArrayList<CategoryMaster>, Void, Void>() {
 
-        override fun doInBackground(vararg params: CategoryMaster): Void? {
-            mAsyncTaskDao.insertCategory(params[0])
+        override fun doInBackground(vararg params: ArrayList<CategoryMaster>): Void? {
+            mAsyncTaskDao.inserCategoryList(params[0])
             return null
         }
 
