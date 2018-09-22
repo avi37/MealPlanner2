@@ -9,6 +9,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "cat_master",indices = {@Index(value = {"cat_id"},
         unique = true)})
 public class CategoryMaster implements Parcelable {
@@ -38,13 +41,7 @@ public class CategoryMaster implements Parcelable {
         this.cat_id = cat_id;
     }
 
-    public String getTottal_time() {
-        return tottal_time;
-    }
 
-    public void setTottal_time(String tottal_time) {
-        this.tottal_time = tottal_time;
-    }
 
     public String getDateOf() {
         return dateOf;
@@ -74,24 +71,44 @@ public class CategoryMaster implements Parcelable {
     private String id;
 
     @ColumnInfo(name = "cat_name")
+    @SerializedName("cat_name")
+    @Expose
     private String cat_name;
 
 
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "cat_id")
+    @SerializedName("cat_id")
+    @Expose
     private String cat_id;
 
+    public String getTotal_time() {
+        return total_time;
+    }
+
+    public void setTotal_time(String total_time) {
+        this.total_time = total_time;
+    }
+
     @ColumnInfo(name = "total_time")
-    private String tottal_time;
+    @SerializedName("total_time")
+    @Expose
+    private String total_time;
 
     @ColumnInfo(name = "date")
+    @SerializedName("date")
+    @Expose
     private String dateOf;
 
     @ColumnInfo(name = "status")
+    @SerializedName("status")
+    @Expose
     private String status;
 
     @ColumnInfo(name = "title")
+    @SerializedName("name")
+    @Expose
     private String title;
 
     @Override
@@ -104,7 +121,7 @@ public class CategoryMaster implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.cat_name);
         dest.writeString(this.cat_id);
-        dest.writeString(this.tottal_time);
+        dest.writeString(this.total_time);
         dest.writeString(this.dateOf);
         dest.writeString(this.status);
         dest.writeString(this.title);
@@ -117,7 +134,7 @@ public class CategoryMaster implements Parcelable {
         this.id = in.readString();
         this.cat_name = in.readString();
         this.cat_id = in.readString();
-        this.tottal_time = in.readString();
+        this.total_time = in.readString();
         this.dateOf = in.readString();
         this.status = in.readString();
         this.title = in.readString();

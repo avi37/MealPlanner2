@@ -9,6 +9,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 
@@ -18,41 +21,43 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         onDelete = CASCADE))
 public class Exercise implements Parcelable {
 
-    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
-        @Override
-        public Exercise createFromParcel(Parcel source) {
-            return new Exercise(source);
-        }
-
-        @Override
-        public Exercise[] newArray(int size) {
-            return new Exercise[size];
-        }
-    };
     @PrimaryKey
     @ColumnInfo(name = "id")
     @NonNull
+    @SerializedName("id")
+    @Expose
     String id;
     @ColumnInfo(name = "ex_name")
+    @SerializedName("ex_name")
+    @Expose
     String name;
     @ColumnInfo(name = "ex_rep")
+    @SerializedName("ex_rep")
+    @Expose
     String reps;
     @ColumnInfo(name = "time")
+    @SerializedName("time")
+    @Expose
     Long timeOfRep;
     @ColumnInfo(name = "ref_cat_id")
+    @SerializedName("cat_id")
+    @Expose
     private String ref_master_cat_id;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Ignore
+    private String status;
 
     public Exercise() {
     }
 
-
-    protected Exercise(Parcel in) {
-        this.id = in.readString();
-        this.ref_master_cat_id = in.readString();
-        this.name = in.readString();
-        this.reps = in.readString();
-        this.timeOfRep = (Long) in.readValue(Long.class.getClassLoader());
-    }
 
     public String getId() {
         return id;
@@ -102,9 +107,31 @@ public class Exercise implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
-        dest.writeString(this.ref_master_cat_id);
         dest.writeString(this.name);
         dest.writeString(this.reps);
         dest.writeValue(this.timeOfRep);
+        dest.writeString(this.ref_master_cat_id);
+        dest.writeString(this.status);
     }
+
+    protected Exercise(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.reps = in.readString();
+        this.timeOfRep = (Long) in.readValue(Long.class.getClassLoader());
+        this.ref_master_cat_id = in.readString();
+        this.status = in.readString();
+    }
+
+    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+        @Override
+        public Exercise createFromParcel(Parcel source) {
+            return new Exercise(source);
+        }
+
+        @Override
+        public Exercise[] newArray(int size) {
+            return new Exercise[size];
+        }
+    };
 }

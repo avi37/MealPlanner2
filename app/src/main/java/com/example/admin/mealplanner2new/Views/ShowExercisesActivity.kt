@@ -16,6 +16,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.example.admin.mealplanner2new.Common.RetrofitClient
+import com.example.admin.mealplanner2new.Common.SessionManager
 import com.example.admin.mealplanner2new.Models.*
 
 import com.example.admin.mealplanner2new.R
@@ -26,18 +28,32 @@ import java.util.Calendar
 import java.util.Locale
 
 import kotlinx.android.synthetic.main.activity_show_exercises.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 class ShowExercisesActivity : AppCompatActivity() {
     private var dayWiseExersice: DayWiseExersice? = null
     private var dayWiseExersiceArrayList: ArrayList<DayWiseExersice>? = null
     private var exercises: ArrayList<Exercise>? = null
     private lateinit var roomDatabase: WordRoomDatabase
+    private lateinit var getDayWiseExercise: GetDayWiseExercise
+    private val BASE_URL = "http://code-fuel.in/healthbotics/api/auth/"
+    private lateinit var token: String
+    private lateinit var u_id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_exercises)
 
+        token = SessionManager(applicationContext).accessToken
+        u_id = SessionManager(applicationContext).keyUId
+
         roomDatabase = WordRoomDatabase.getDatabase(applicationContext)
+        getDayWiseExercise = RetrofitClient.getClient(BASE_URL).create(GetDayWiseExercise::class.java)
 
         val actionBar = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -48,106 +64,39 @@ class ShowExercisesActivity : AppCompatActivity() {
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
 
 
-        // --------------------------------------- DUMMY DATA-------------------------------------//
-        exercises = ArrayList()
 
-        val exercise1 = Exercise()
-        exercise1.name = "Push ups"          // 1
-        exercise1.reps = "30 Reps"
-        exercise1.timeOfRep = 60L
-        exercise1.id = "1"
-        exercise1.ref_master_cat_id = "1"
-        exercises!!.add(exercise1)
-
-        val exercise2 = Exercise()
-        exercise2.name = "Flat bench barbell"         // 2
-        exercise2.reps = "3*12 Reps"
-        exercise2.timeOfRep = 30L
-        exercise2.id = "2"
-        exercise2.ref_master_cat_id = "1"
-
-        exercises!!.add(exercise2)
-
-        val exercise3 = Exercise()
-        exercise3.name = "Inclined bench barbell"         // 3
-        exercise3.reps = "3*12 Reps"
-        exercise3.timeOfRep = 120L
-        exercise3.id = "3"
-        exercise3.ref_master_cat_id = "1"
-
-        exercises!!.add(exercise3)
-
-        val exercise4 = Exercise()
-        exercise4.name = "Cable fly"          // 4
-        exercise4.reps = "2*12 Reps"
-        exercise4.timeOfRep = 180L
-        exercise4.id = "4"
-        exercise4.ref_master_cat_id = "1"
-
-        exercises!!.add(exercise4)
-
-        val exercise5 = Exercise()
-        exercise5.name = "Dec fly machine"          // 5
-        exercise5.reps = "4*12"
-        exercise5.timeOfRep = 120L
-        exercise5.id = "5"
-        exercise5.ref_master_cat_id = "1"
-
-        exercises!!.add(exercise5)
-
-        val exercise6 = Exercise()
-        exercise6.name = "Hip twister"          // 6
-        exercise6.reps = "50 Reps"
-        exercise6.timeOfRep = 300L
-        exercise6.id = "6"
-        exercise6.ref_master_cat_id = "1"
-
-        exercises!!.add(exercise6)
-
-        val exercise7 = Exercise()
-        exercise7.name = "dumbbell side bend"           // 7
-        exercise7.reps = "3*10"
-        exercise7.timeOfRep = 200L
-        exercise7.id = "7"
-        exercise7.ref_master_cat_id = "1"
-        exercises!!.add(exercise7)
-
-        val exercise8 = Exercise()
-        exercise8.name = "dumbbell fly floor"           // 8
-        exercise8.reps = "3*10"
-        exercise8.timeOfRep = 600L
-        exercise8.id = "8"
-        exercise8.ref_master_cat_id = "1"
-        exercises!!.add(exercise8)
+        getDayWiseExercise.getExerciseDayList(u_id).enqueue(object : Callback<ArrayList<CategoryMaster>> {
+            override fun onFailure(call: Call<ArrayList<CategoryMaster>>, t: Throwable) {
+                progress_bar.visibility = View.GONE
 
 
-        dayWiseExersice = DayWiseExersice()
-        dayWiseExersice!!.cat_name = "Chest WorkOut"
-        dayWiseExersice!!.id = "1"
-        dayWiseExersice!!.title = "DAY - 1"
-        dayWiseExersice!!.dateOfExercise = "20-9-2018"
-        dayWiseExersice!!.exerciseArrayList = exercises
+            }
 
-        dayWiseExersiceArrayList = java.util.ArrayList<DayWiseExersice>()
-        dayWiseExersiceArrayList!!.add(dayWiseExersice!!)
+            override fun onResponse(call: Call<ArrayList<CategoryMaster>>, response: Response<ArrayList<CategoryMaster>>) {
+                progress_bar.visibility = View.GONE
 
+                if (response!!.isSuccessful) {
 
-        val categoryMaster = CategoryMaster()
-        categoryMaster.cat_id = "1"
-        categoryMaster.id = "1"
-        categoryMaster.cat_name = "Chest WorkOut"
-        categoryMaster.dateOf = "21-9-2018"
-        categoryMaster.status = "0"
-        categoryMaster.title = "DAY 1"
-        categoryMaster.tottal_time = "30min"
+                    if (response.body()!!.isNotEmpty()) {
 
-        insertAsyncTask(roomDatabase.wordDao()).execute(categoryMaster)
+                        var categoryList = response.body()
+                        rvList.layoutManager = LinearLayoutManager(this@ShowExercisesActivity,
+                                LinearLayoutManager.VERTICAL,false)
+                        rvList.adapter = CustomAdapter(categoryList!!)
 
 
+                    }
 
 
-        rvList.layoutManager = LinearLayoutManager(this@ShowExercisesActivity, LinearLayoutManager.VERTICAL, false)
-        rvList.adapter = CustomAdapter(dayWiseExersiceArrayList!!)
+                } else {
+
+                }
+
+
+            }
+
+        })
+
 
     }
 
@@ -169,7 +118,7 @@ class ShowExercisesActivity : AppCompatActivity() {
 
     }
 
-    inner class CustomAdapter(private val dataSet: ArrayList<DayWiseExersice>) :
+    inner class CustomAdapter(private val dataSet: ArrayList<CategoryMaster>) :
             RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
         inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -195,8 +144,10 @@ class ShowExercisesActivity : AppCompatActivity() {
                 v.setOnClickListener {
 
                     val intent = Intent(this@ShowExercisesActivity, ExerciseDetailActivity::class.java)
-                    intent.putParcelableArrayListExtra("data", dataSet[adapterPosition].exerciseArrayList)
+                    // intent.putParcelableArrayListExtra("data", dataSet[adapterPosition].dateOf)
                     intent.putExtra("ex_title", dataSet[adapterPosition].title)
+                    intent.putExtra("cat_id", dataSet[adapterPosition].cat_id)
+                    intent.putExtra("date", dataSet[adapterPosition].dateOf)
                     intent.putExtra("flag", true)
                     startActivity(intent)
                 }
@@ -222,7 +173,7 @@ class ShowExercisesActivity : AppCompatActivity() {
 
             viewHolder.tvTitle.text = dataSet[position].title
             viewHolder.tvCatName.text = dataSet[position].cat_name
-            viewHolder.tvDate.text = dataSet[position].dateOfExercise
+            viewHolder.tvDate.text = dataSet[position].dateOf
             viewHolder.tvStatus.text = dataSet[position].status
 
 
@@ -243,13 +194,22 @@ class ShowExercisesActivity : AppCompatActivity() {
     private inner class insertAsyncTask internal constructor(private val mAsyncTaskDao: WordDao) : AsyncTask<CategoryMaster, Void, Void>() {
 
         override fun doInBackground(vararg params: CategoryMaster): Void? {
-              mAsyncTaskDao.insertCategory(params[0])
+            mAsyncTaskDao.insertCategory(params[0])
             return null
         }
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
         }
+    }
+
+
+    interface GetDayWiseExercise {
+        @POST("getworkout")
+        @FormUrlEncoded
+        fun getExerciseDayList(@Field("u_id") u_id: String): Call<ArrayList<CategoryMaster>>
+
+
     }
 
 }
