@@ -155,7 +155,7 @@ class StartExerciseFragment : Fragment() {
 
                 for (items in exerciseList) {
                     if (items.isCompleted) {
-                        savedArrayList.add(exerciseList[exerciseId])
+                        savedArrayList.add(items)
                     }
                 }
 
@@ -190,7 +190,7 @@ class StartExerciseFragment : Fragment() {
 
                 for (items in exerciseList) {
                     if (items.isCompleted) {
-                        savedArrayList.add(exerciseList[exerciseId])
+                        savedArrayList.add(items)
                     }
                 }
 
