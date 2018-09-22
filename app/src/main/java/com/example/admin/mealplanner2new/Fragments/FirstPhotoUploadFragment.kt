@@ -49,6 +49,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
     private val BASE_URL = "http://code-fuel.in/healthbotics/api/auth/"
     private lateinit var exerciseList: ArrayList<Exercise>
     private var idOf = 0
+    private var dateOf = ""
 
     companion object {
         const val RC_WRITE_STORAGE = 108
@@ -70,8 +71,9 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
         uploadImageToServer = uploadImage(BASE_URL)
 
-        if (arguments != null){
+        if (arguments != null) {
             exerciseList = arguments.getParcelableArrayList("data")
+            dateOf = arguments.getString("day")
         }
     }
 
@@ -100,7 +102,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
                 val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
 
-           // -----------------------------Dummy start exercise  --------------------------------//
+                // -----------------------------Dummy start exercise  --------------------------------//
 
 
                 SessionManager(activity).setFirstPhotoUploaded()
@@ -110,6 +112,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 bundle.putString("ex_name", exerciseList[0].name)
                 bundle.putString("ex_rep", exerciseList[0].reps)
                 bundle.putInt("ex_id", idOf)
+                bundle.putString("day", dateOf)
                 startExerciseFragment.arguments = bundle
 
                 fragmentManager.beginTransaction()
@@ -120,11 +123,8 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                         .commit()
 
 
-
-
-            }
-            else{
-                Toast.makeText(activity,"Please take photo",Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(activity, "Please take photo", Toast.LENGTH_LONG).show()
             }
 
 
@@ -241,9 +241,8 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
             }
 
 
-        }
-        else{
-            if (mCurrentPhotoPath!=null) {
+        } else {
+            if (mCurrentPhotoPath != null) {
                 val file = File(mCurrentPhotoPath)
                 file.delete()
                 mCurrentPhotoPath = null

@@ -75,6 +75,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
 
         btnStart = findViewById(R.id.btnStart);
+        btnStart.setEnabled(false);
 
 //        if (flag) {
 //            btnStart.setVisibility(View.VISIBLE);
@@ -98,6 +99,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
                     exercises = response.body();
                     if (exercises != null && exercises.size() > 0) {
+                        btnStart.setEnabled(true);
 
                         recyclerView_exercises.setAdapter(new CustomAdapter(exercises));
 
@@ -106,7 +108,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
                 } else {
 
-
+                    btnStart.setEnabled(false);
                 }
 
 
@@ -115,6 +117,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Exercise>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
+                btnStart.setEnabled(false);
 
             }
         });
