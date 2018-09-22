@@ -29,7 +29,6 @@ public class ExQueItemActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        
         textView_index = findViewById(R.id.que_tv_index);
         viewPager_question = findViewById(R.id.queItem_viewPager);
         adapterPagerQuestions = new AdapterPagerQuestions(getSupportFragmentManager());
