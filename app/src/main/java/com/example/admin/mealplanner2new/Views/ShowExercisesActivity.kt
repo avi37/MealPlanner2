@@ -167,7 +167,7 @@ class ShowExercisesActivity : AppCompatActivity() {
                     intent.putExtra("date", dataSet[adapterPosition].dateOf)
                     intent.putExtra("task_id", dataSet[adapterPosition].task_id)
 
-                    if (currentTimeStamp == exerciseDateTime) {
+                    if (currentTimeStamp == exerciseDateTime && dataSet[adapterPosition].status == "0") {
                         intent.putExtra("flag", true)
 
                     } else {
@@ -200,7 +200,14 @@ class ShowExercisesActivity : AppCompatActivity() {
             viewHolder.tvTitle.text = "Day - ".plus(dataSet[position].title)
             viewHolder.tvCatName.text = dataSet[position].cat_name
             viewHolder.tvDate.text = dataSet[position].dateOf
-            viewHolder.tvStatus.text = dataSet[position].status
+
+            if (dataSet[position].status == "0") {
+                viewHolder.tvStatus.text = "Pending"
+
+            } else if (dataSet[position].status == "1") {
+                viewHolder.tvStatus.text = "Completed"
+
+            }
 
 
         }
