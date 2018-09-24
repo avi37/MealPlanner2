@@ -234,7 +234,7 @@ public class GSAddCoachFragment extends Fragment {
         coachListAPI.get_coachList(selectedCity).enqueue(new Callback<List<ResCoachList>>() {
             @Override
             public void onResponse(Call<List<ResCoachList>> call, Response<List<ResCoachList>> response) {
-
+                coachArrayList.clear();
                 if (response.isSuccessful()) {
 
                     if (response.body() != null) {
@@ -277,6 +277,7 @@ public class GSAddCoachFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<ResCoachList>> call, Throwable t) {
+                coachArrayList.clear();
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getContext(), "onFailure", Toast.LENGTH_SHORT).show();
             }

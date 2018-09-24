@@ -24,8 +24,6 @@ import com.example.admin.mealplanner2new.R
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 import kotlinx.android.synthetic.main.activity_show_exercises.*
 import retrofit2.Call
@@ -34,6 +32,8 @@ import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+import java.time.LocalDate
+import java.util.*
 
 class ShowExercisesActivity : AppCompatActivity() {
     private var dayWiseExersice: DayWiseExersice? = null
@@ -44,10 +44,17 @@ class ShowExercisesActivity : AppCompatActivity() {
     private val BASE_URL = "http://code-fuel.in/healthbotics/api/auth/"
     private lateinit var token: String
     private lateinit var u_id: String
+    private lateinit var currentTimeStamp: String
+    private lateinit var nextDayTimeStamp: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_exercises)
+
+
+        currentTimeStamp = getCurrentDate()
+        Log.e("current time", currentTimeStamp)
+
 
         token = SessionManager(applicationContext).accessToken
         u_id = SessionManager(applicationContext).keyUId
@@ -81,7 +88,7 @@ class ShowExercisesActivity : AppCompatActivity() {
 
                         var categoryList = response.body()
                         rvList.layoutManager = LinearLayoutManager(this@ShowExercisesActivity,
-                                LinearLayoutManager.VERTICAL,false)
+                                LinearLayoutManager.VERTICAL, false)
                         rvList.adapter = CustomAdapter(categoryList!!)
 
                         insertAsyncTask(roomDatabase.wordDao()).execute(categoryList)
@@ -143,15 +150,31 @@ class ShowExercisesActivity : AppCompatActivity() {
                 tvDate = v.findViewById<TextView>(R.id.tvDate)
                 tvTitle = v.findViewById<TextView>(R.id.tvDay)
 
+
+
+
+
                 v.setOnClickListener {
+
+                    val exerciseDateTime = getYMDDate(dataSet[adapterPosition].dateOf).toString()
+                    Log.e("exercise time", exerciseDateTime)
+
 
                     val intent = Intent(this@ShowExercisesActivity, ExerciseDetailActivity::class.java)
                     // intent.putParcelableArrayListExtra("data", dataSet[adapterPosition].dateOf)
                     intent.putExtra("ex_title", dataSet[adapterPosition].title)
                     intent.putExtra("cat_id", dataSet[adapterPosition].cat_id)
                     intent.putExtra("date", dataSet[adapterPosition].dateOf)
-                    intent.putExtra("flag", true)
+
+                    if (currentTimeStamp == exerciseDateTime) {
+                        intent.putExtra("flag", true)
+
+                    } else {
+                        intent.putExtra("flag", false)
+                    }
+
                     startActivity(intent)
+
                 }
 
 
@@ -210,6 +233,22 @@ class ShowExercisesActivity : AppCompatActivity() {
         @POST("getworkout")
         @FormUrlEncoded
         fun getExerciseDayList(@Field("u_id") u_id: String): Call<ArrayList<CategoryMaster>>
+
+
+    }
+
+    fun getYMDDate(dateString: String): String {
+
+
+//        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+//        val date = format.parse(dateString)
+
+        val dateTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).parse(dateString)
+        return SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(dateTime)
+
+        //Log.e("formated date", newstring)
+
+        // return SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(newstring)
 
 
     }

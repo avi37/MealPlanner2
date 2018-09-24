@@ -77,11 +77,11 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btnStart);
         btnStart.setEnabled(false);
 
-//        if (flag) {
-//            btnStart.setVisibility(View.VISIBLE);
-//        } else {
-//            btnStart.setVisibility(View.GONE);
-//        }
+        if (flag) {
+            btnStart.setVisibility(View.VISIBLE);
+        } else {
+            btnStart.setVisibility(View.GONE);
+        }
 
 
         recyclerView_exercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
