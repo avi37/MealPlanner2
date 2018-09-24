@@ -54,7 +54,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
         if (getIntent() != null) {
 
-            // flag = getIntent().getBooleanExtra("flag", false);
+             flag = getIntent().getBooleanExtra("flag", false);
             // exercises = getIntent().getParcelableArrayListExtra("data");
             ex_category = getIntent().getStringExtra("ex_title");
             cat_id = getIntent().getStringExtra("cat_id");
