@@ -204,7 +204,7 @@ public class GSAddCoachFragment extends Fragment {
                     selectedState = spinner_state.getSelectedItem().toString();
 
                     prefRegister.setSchedule("0");
-                    prefRegister.setCoachDetails(selected_coachId, selectedCountry, selectedState, selectedCity);
+                    prefRegister.setCoachDetails(selected_coachId);
 
                     Fragment someFragment = new SignUpFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();

@@ -75,11 +75,8 @@ public class PrefRegister {
         editor.commit();
     }
 
-    public void setCoachDetails(String coachId, String country, String state, String city) {
+    public void setCoachDetails(String coachId) {
         editor.putString(COACH_ID, coachId);
-        editor.putString(COUNTRY, country);
-        editor.putString(STATE, state);
-        editor.putString(CITY, city);
 
         editor.commit();
     }
@@ -140,17 +137,6 @@ public class PrefRegister {
         return regPref.getString(COACH_ID, null);
     }
 
-    public String getCountry() {
-        return regPref.getString(COUNTRY, null);
-    }
-
-    public String getState() {
-        return regPref.getString(STATE, null);
-    }
-
-    public String getCity() {
-        return regPref.getString(CITY, null);
-    }
 
     public void deleteRegisterPref() {
         editor.clear();

@@ -53,6 +53,10 @@ public class BodyRegister {
     @Expose
     private String coach_id;
 
+    @SerializedName("address")
+    @Expose
+    private String address;
+
     @SerializedName("country")
     @Expose
     private String country;
@@ -87,7 +91,7 @@ public class BodyRegister {
     private String password_confirmation;
 
 
-    public BodyRegister(String workout_place, String gender, String aim, String height, String age, String weight, String training_level, String past_ex_ex, String schedule, String week_minutes, String ex_days, String coach_id, String country, String state, String city, String name, String email, String mobile, String password, String password_confirmation) {
+    public BodyRegister(String workout_place, String gender, String aim, String height, String age, String weight, String training_level, String past_ex_ex, String schedule, String week_minutes, String ex_days, String coach_id, String address, String country, String state, String city, String name, String email, String mobile, String password, String password_confirmation) {
         this.workout_place = workout_place;
         this.gender = gender;
         this.aim = aim;
@@ -100,6 +104,7 @@ public class BodyRegister {
         this.week_minutes = week_minutes;
         this.ex_days = ex_days;
         this.coach_id = coach_id;
+        this.address = address;
         this.country = country;
         this.state = state;
         this.city = city;
@@ -110,6 +115,13 @@ public class BodyRegister {
         this.password_confirmation = password_confirmation;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public String getWorkout_place() {
         return workout_place;
@@ -207,12 +219,12 @@ public class BodyRegister {
         this.coach_id = coach_id;
     }
 
-    public String getCountry() {
-        return country;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getState() {
