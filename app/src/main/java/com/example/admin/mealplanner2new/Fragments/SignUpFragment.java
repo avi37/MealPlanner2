@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Common.PrefRegister;
@@ -44,9 +45,11 @@ public class SignUpFragment extends Fragment {
 
 
     EditText editText_name, editText_email, editText_number, editText_password1, editText_password2;
+    EditText editText_city, editText_address;
+    Spinner spinner_country, spinner_state;
     Button button_finish;
 
-    String name, email, number, password1, password2;
+    String name, email, number, password1, password2, address, country, state, city;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +64,10 @@ public class SignUpFragment extends Fragment {
         editText_number = view_main.findViewById(R.id.gs_signUp_et_number);
         editText_password1 = view_main.findViewById(R.id.gs_signUp_et_password1);
         editText_password2 = view_main.findViewById(R.id.gs_signUp_et_password2);
+        editText_address = view_main.findViewById(R.id.gs_signUp_et_address);
+        spinner_country = view_main.findViewById(R.id.gs_signUp_spinner_country);
+        spinner_state = view_main.findViewById(R.id.gs_signUp_spinner_state);
+        editText_city = view_main.findViewById(R.id.gs_signUp_et_city);
         button_finish = view_main.findViewById(R.id.gs_signUp_btn_finish);
 
         button_finish.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +88,10 @@ public class SignUpFragment extends Fragment {
         number = editText_number.getText().toString();
         password1 = editText_password1.getText().toString();
         password2 = editText_password2.getText().toString();
+        country = spinner_country.getSelectedItem().toString();
+        state = spinner_state.getSelectedItem().toString();
+        city = editText_city.getText().toString();
+        address = editText_address.getText().toString();
 
         if (name.equals("")) {
             editText_name.setError("Name is required");
@@ -112,6 +123,12 @@ public class SignUpFragment extends Fragment {
         } else if (!(password1.equals(password2))) {
             editText_password2.setError("Passwords must be same");
             editText_password2.requestFocus();
+        } else if (city.equals("")) {
+            editText_city.setError("City is required");
+            editText_city.requestFocus();
+        } else if (address.equals("")) {
+            editText_address.setError("Address is required");
+            editText_address.requestFocus();
 
         } else {
 
@@ -122,7 +139,7 @@ public class SignUpFragment extends Fragment {
 
 
             String place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days;
-            String coach_id, country, state, city;
+            String coach_id;
 
             place = prefRegister.getWorkoutPlace();
             gender = prefRegister.getGENDER();
@@ -137,11 +154,8 @@ public class SignUpFragment extends Fragment {
             ex_days = prefRegister.getExDays();
 
             coach_id = prefRegister.getCoachId();
-            country = prefRegister.getCountry();
-            state = prefRegister.getState();
-            city = prefRegister.getCity();
 
-            BodyRegister bodyRegister = new BodyRegister(place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days, coach_id, country, state, city, name, email, number, password1, password2);
+            BodyRegister bodyRegister = new BodyRegister(place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days, coach_id, address, country, state, city, name, email, number, password1, password2);
 
             Log.d("LOG_BodyRegister", new Gson().toJson(bodyRegister));
 
