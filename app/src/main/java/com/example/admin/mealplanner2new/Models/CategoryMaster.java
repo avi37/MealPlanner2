@@ -19,17 +19,6 @@ import java.util.ArrayList;
 public class CategoryMaster implements Parcelable {
 
 
-    public static final Creator<CategoryMaster> CREATOR = new Creator<CategoryMaster>() {
-        @Override
-        public CategoryMaster createFromParcel(Parcel source) {
-            return new CategoryMaster(source);
-        }
-
-        @Override
-        public CategoryMaster[] newArray(int size) {
-            return new CategoryMaster[size];
-        }
-    };
     @Ignore
     private String id;
     @ColumnInfo(name = "cat_name")
@@ -61,18 +50,21 @@ public class CategoryMaster implements Parcelable {
     @Ignore
     private ArrayList<Exercise> exerciseArrayList;
 
-    public CategoryMaster() {
+
+    public String getTask_id() {
+        return task_id;
     }
 
-    protected CategoryMaster(Parcel in) {
-        this.id = in.readString();
-        this.cat_name = in.readString();
-        this.cat_id = in.readString();
-        this.total_time = in.readString();
-        this.dateOf = in.readString();
-        this.status = in.readString();
-        this.title = in.readString();
-        this.exerciseArrayList = in.createTypedArrayList(Exercise.CREATOR);
+    public void setTask_id(String task_id) {
+        this.task_id = task_id;
+    }
+
+    @Ignore
+    @SerializedName("task_id")
+    @Expose
+    private String task_id;
+
+    public CategoryMaster() {
     }
 
     public String getId() {
@@ -154,5 +146,30 @@ public class CategoryMaster implements Parcelable {
         dest.writeString(this.status);
         dest.writeString(this.title);
         dest.writeTypedList(this.exerciseArrayList);
+        dest.writeString(this.task_id);
     }
+
+    protected CategoryMaster(Parcel in) {
+        this.id = in.readString();
+        this.cat_name = in.readString();
+        this.cat_id = in.readString();
+        this.total_time = in.readString();
+        this.dateOf = in.readString();
+        this.status = in.readString();
+        this.title = in.readString();
+        this.exerciseArrayList = in.createTypedArrayList(Exercise.CREATOR);
+        this.task_id = in.readString();
+    }
+
+    public static final Creator<CategoryMaster> CREATOR = new Creator<CategoryMaster>() {
+        @Override
+        public CategoryMaster createFromParcel(Parcel source) {
+            return new CategoryMaster(source);
+        }
+
+        @Override
+        public CategoryMaster[] newArray(int size) {
+            return new CategoryMaster[size];
+        }
+    };
 }

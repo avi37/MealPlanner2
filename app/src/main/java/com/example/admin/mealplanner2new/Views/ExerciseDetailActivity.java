@@ -43,6 +43,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView tvDate;
     private TextView tvCatName;
+    private String taskId;
 
 
     @Override
@@ -59,6 +60,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             ex_category = getIntent().getStringExtra("ex_title");
             cat_id = getIntent().getStringExtra("cat_id");
             dateOf = getIntent().getStringExtra("date");
+            taskId = getIntent().getStringExtra("task_id");
 
         }
 
@@ -132,6 +134,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
                 intent.putParcelableArrayListExtra("data", exercises);
                 intent.putExtra("day",dateOf);
                 intent.putExtra("work_id",ex_category);
+                intent.putExtra("task_id",taskId);
                 startActivity(intent);
 
 

@@ -63,6 +63,11 @@ public class MyJobIntentService extends JobIntentService {
 
             try {
                 final ResCommon resCommon = saveExerciseData.sendExercise(savedExerciseData).execute().body();
+
+                if ( resCommon!=null && resCommon.getMsg()!=null &&  resCommon.getMsg().equals("true")) {
+                    toast("Saved Exercise");
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

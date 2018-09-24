@@ -18,6 +18,18 @@ public class SavedExerciseData implements Parcelable {
     @Expose
     private String id;
 
+    public String getTask_id() {
+        return task_id;
+    }
+
+    public void setTask_id(String task_id) {
+        this.task_id = task_id;
+    }
+
+    @SerializedName("task_id")
+    @Expose
+    private String task_id;
+
     public String getU_id() {
         return u_id;
     }
@@ -47,6 +59,9 @@ public class SavedExerciseData implements Parcelable {
     private ArrayList<Exercise> exerciseArrayList;
 
 
+    public SavedExerciseData() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -56,19 +71,18 @@ public class SavedExerciseData implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.u_id);
         dest.writeString(this.id);
+        dest.writeString(this.task_id);
         dest.writeTypedList(this.exerciseArrayList);
-    }
-
-    public SavedExerciseData() {
     }
 
     protected SavedExerciseData(Parcel in) {
         this.u_id = in.readString();
         this.id = in.readString();
+        this.task_id = in.readString();
         this.exerciseArrayList = in.createTypedArrayList(Exercise.CREATOR);
     }
 
-    public static final Parcelable.Creator<SavedExerciseData> CREATOR = new Parcelable.Creator<SavedExerciseData>() {
+    public static final Creator<SavedExerciseData> CREATOR = new Creator<SavedExerciseData>() {
         @Override
         public SavedExerciseData createFromParcel(Parcel source) {
             return new SavedExerciseData(source);

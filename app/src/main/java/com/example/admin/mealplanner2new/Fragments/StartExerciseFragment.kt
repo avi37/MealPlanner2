@@ -44,6 +44,7 @@ class StartExerciseFragment : Fragment() {
     var timeInMilliseconds = 0L
     var dateOf = ""
     lateinit var u_id: String
+    lateinit var taslId: String
 
 
     override fun onAttach(context: Context?) {
@@ -51,6 +52,7 @@ class StartExerciseFragment : Fragment() {
         contexts = context!! as StartExerciseActivity
         exerciseList = (contexts as StartExerciseActivity).exerciseList
         workOutId = (contexts as StartExerciseActivity).workOutId
+        taslId = (contexts as StartExerciseActivity).task_id
 
     }
 
@@ -121,11 +123,43 @@ class StartExerciseFragment : Fragment() {
                         .commit()
             } else if (exerciseId >= exerciseList.size - 1 && !isCountDownTimerEnable) {
 
-                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
-                //fragmentManager.popBackStack(StartExerciseFragment::class.java.simpleName,FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                val intent = Intent(activity, ShowExercisesActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
+//                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
+//                //fragmentManager.popBackStack(StartExerciseFragment::class.java.simpleName,FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//                val intent = Intent(activity, ShowExercisesActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
+
+                val savedArrayList: ArrayList<Exercise> = ArrayList()
+
+
+                for (items in exerciseList) {
+                    if (items.isCompleted) {
+                        savedArrayList.add(items)
+                    }
+                }
+
+                val savedExerciseData = SavedExerciseData()
+                savedExerciseData.id = workOutId
+                savedExerciseData.u_id = u_id
+                savedExerciseData.task_id = taslId
+                savedExerciseData.exerciseArrayList = savedArrayList
+
+                val finalSubmitExerciseFragment = FinalSubmitExerciseFragment()
+                val bundle = Bundle()
+                finalSubmitExerciseFragment.arguments = bundle
+
+                bundle.putParcelable("data", savedExerciseData)
+
+
+
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(R.animator.fragment_slide_left_enter,
+                                R.animator.fragment_slide_left_exit, R.animator.fragment_slide_right_enter,
+                                R.animator.fragment_slide_right_exit)
+                        .add(R.id.container_exercise, finalSubmitExerciseFragment, FinalSubmitExerciseFragment::class.java.simpleName)
+                        .addToBackStack(FinalSubmitExerciseFragment::class.java.simpleName)
+                        .hide(this@StartExerciseFragment)
+                        .commit()
 
             }
 
@@ -162,12 +196,14 @@ class StartExerciseFragment : Fragment() {
                 val savedExerciseData = SavedExerciseData()
                 savedExerciseData.id = workOutId
                 savedExerciseData.u_id = u_id
+                savedExerciseData.task_id = taslId
+
                 savedExerciseData.exerciseArrayList = savedArrayList
 
 
-                val intent = Intent(activity, MyJobIntentService::class.java)
-                intent.putExtra("data", savedExerciseData)
-                MyJobIntentService.enqueueWork(activity.applicationContext, intent)
+//                val intent = Intent(activity, MyJobIntentService::class.java)
+//                intent.putExtra("data", savedExerciseData)
+//                MyJobIntentService.enqueueWork(activity.applicationContext, intent)
 
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(R.animator.fragment_slide_left_enter,
@@ -197,20 +233,40 @@ class StartExerciseFragment : Fragment() {
                 val savedExerciseData = SavedExerciseData()
                 savedExerciseData.id = workOutId
                 savedExerciseData.u_id = u_id
+                savedExerciseData.task_id = taslId
+
                 savedExerciseData.exerciseArrayList = savedArrayList
 
 
-                val intent2 = Intent(activity, MyJobIntentService::class.java)
-                intent2.putExtra("data", savedExerciseData)
-                MyJobIntentService.enqueueWork(activity.applicationContext, intent2)
+//                val intent2 = Intent(activity, MyJobIntentService::class.java)
+//                intent2.putExtra("data", savedExerciseData)
+//                MyJobIntentService.enqueueWork(activity.applicationContext, intent2)
 
                 insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
 
-                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
+//                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
+//
+//                val intent = Intent(activity, ShowExercisesActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
 
-                val intent = Intent(activity, ShowExercisesActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
+
+                val finalSubmitExerciseFragment = FinalSubmitExerciseFragment()
+                val bundle = Bundle()
+                bundle.putParcelable("data", savedExerciseData)
+                finalSubmitExerciseFragment.arguments = bundle
+
+
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(R.animator.fragment_slide_left_enter,
+                                R.animator.fragment_slide_left_exit, R.animator.fragment_slide_right_enter,
+                                R.animator.fragment_slide_right_exit)
+                        .add(R.id.container_exercise, finalSubmitExerciseFragment, FinalSubmitExerciseFragment::class.java.simpleName)
+                        .addToBackStack(FinalSubmitExerciseFragment::class.java.simpleName)
+                        .hide(this@StartExerciseFragment)
+                        .commit()
+
+
             }
 
 
@@ -366,7 +422,7 @@ class StartExerciseFragment : Fragment() {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            Toast.makeText(activity!!, "Successfully Saved", Toast.LENGTH_LONG).show()
+            // Toast.makeText(activity!!, "Successfully Saved", Toast.LENGTH_LONG).show()
         }
     }
 

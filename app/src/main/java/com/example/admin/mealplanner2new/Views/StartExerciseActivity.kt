@@ -15,9 +15,10 @@ import kotlinx.android.synthetic.main.activity_start_exercise.*
 class StartExerciseActivity : AppCompatActivity() {
 
     lateinit var exerciseList: ArrayList<Exercise>
-    lateinit var workOutId:String
+    lateinit var workOutId: String
     private var id = 0
     private var dateOf = ""
+    lateinit var task_id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,8 @@ class StartExerciseActivity : AppCompatActivity() {
             exerciseList = intent.getParcelableArrayListExtra("data")
             dateOf = intent.getStringExtra("day")
             workOutId = intent.getStringExtra("work_id")
+            task_id = intent.getStringExtra("task_id")
+
 
         }
 
