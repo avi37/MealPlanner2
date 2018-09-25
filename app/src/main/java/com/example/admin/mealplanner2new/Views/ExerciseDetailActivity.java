@@ -1,6 +1,7 @@
 package com.example.admin.mealplanner2new.Views;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -172,6 +173,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             mDataSet = dataSet;
         }
 
+        @NonNull
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_exercise_detail, viewGroup, false);
@@ -190,7 +192,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private final TextView textView_name, textView_reps;
+            private final TextView textView_name, textView_reps, tvDate;
 
             ViewHolder(View v) {
                 super(v);
@@ -202,6 +204,8 @@ public class ExerciseDetailActivity extends AppCompatActivity {
                 });
                 textView_name = (TextView) v.findViewById(R.id.tvExerciseName);
                 textView_reps = v.findViewById(R.id.tvRep);
+                tvDate = v.findViewById(R.id.tvDate);
+                tvDate.setVisibility(View.GONE);
             }
 
         }
