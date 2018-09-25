@@ -19,6 +19,17 @@ import java.util.ArrayList;
 public class CategoryMaster implements Parcelable {
 
 
+    public static final Creator<CategoryMaster> CREATOR = new Creator<CategoryMaster>() {
+        @Override
+        public CategoryMaster createFromParcel(Parcel source) {
+            return new CategoryMaster(source);
+        }
+
+        @Override
+        public CategoryMaster[] newArray(int size) {
+            return new CategoryMaster[size];
+        }
+    };
     @Ignore
     @SerializedName("id")
     @Expose
@@ -42,7 +53,7 @@ public class CategoryMaster implements Parcelable {
     @Expose
     private String dateOf;
     @ColumnInfo(name = "status")
-    @SerializedName("status")
+    @SerializedName("day_status")
     @Expose
     private String status;
     @ColumnInfo(name = "title")
@@ -55,6 +66,26 @@ public class CategoryMaster implements Parcelable {
     @SerializedName("task_id")
     @Expose
     private String task_id;
+    @Ignore
+    @SerializedName("component_id")
+    @Expose
+    private String component_id;
+
+    public CategoryMaster() {
+    }
+
+    protected CategoryMaster(Parcel in) {
+        this.id = in.readString();
+        this.cat_name = in.readString();
+        this.cat_id = in.readString();
+        this.total_time = in.readString();
+        this.dateOf = in.readString();
+        this.status = in.readString();
+        this.title = in.readString();
+        this.exerciseArrayList = in.createTypedArrayList(Exercise.CREATOR);
+        this.task_id = in.readString();
+        this.component_id = in.readString();
+    }
 
     public String getComponent_id() {
         return component_id;
@@ -62,14 +93,6 @@ public class CategoryMaster implements Parcelable {
 
     public void setComponent_id(String component_id) {
         this.component_id = component_id;
-    }
-
-    @Ignore
-    @SerializedName("component_id")
-    @Expose
-    private String component_id;
-
-    public CategoryMaster() {
     }
 
     public String getTask_id() {
@@ -162,29 +185,4 @@ public class CategoryMaster implements Parcelable {
         dest.writeString(this.task_id);
         dest.writeString(this.component_id);
     }
-
-    protected CategoryMaster(Parcel in) {
-        this.id = in.readString();
-        this.cat_name = in.readString();
-        this.cat_id = in.readString();
-        this.total_time = in.readString();
-        this.dateOf = in.readString();
-        this.status = in.readString();
-        this.title = in.readString();
-        this.exerciseArrayList = in.createTypedArrayList(Exercise.CREATOR);
-        this.task_id = in.readString();
-        this.component_id = in.readString();
-    }
-
-    public static final Creator<CategoryMaster> CREATOR = new Creator<CategoryMaster>() {
-        @Override
-        public CategoryMaster createFromParcel(Parcel source) {
-            return new CategoryMaster(source);
-        }
-
-        @Override
-        public CategoryMaster[] newArray(int size) {
-            return new CategoryMaster[size];
-        }
-    };
 }

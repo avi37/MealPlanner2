@@ -7,6 +7,7 @@
     tools:context=".Views.ExHistoryActivity">
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_softGrey"
@@ -45,13 +46,13 @@
     </LinearLayout>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/exHistory_tv_exTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:padding="8dp"
-        android:text="Chest Workout"
         android:textColor="@color/raisinBlackDark"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -86,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone" />
+         />
 
     </RelativeLayout>
 

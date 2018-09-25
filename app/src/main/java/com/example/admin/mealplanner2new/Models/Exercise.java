@@ -57,6 +57,8 @@ public class Exercise implements Parcelable {
     @Ignore
     private boolean isCompleted;
     @ColumnInfo(name = "day")
+    @SerializedName("day")
+    @Expose
     private String day;
     @Ignore
     private String status;

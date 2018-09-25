@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.example.admin.mealplanner2new.Models.SavedExerciseData
 import com.example.admin.mealplanner2new.R
 import com.example.admin.mealplanner2new.Service.MyJobIntentService
+import com.example.admin.mealplanner2new.Views.ExNavigationActivity
 import com.example.admin.mealplanner2new.Views.ShowExercisesActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_final_save_exercise.*
@@ -37,14 +38,14 @@ class FinalSubmitExerciseFragment : Fragment() {
         btnSaveExercise?.setOnClickListener {
 
 
-            Log.e("exercise json",Gson().toJson(savedExerciseData))
+            Log.e("exercise json", Gson().toJson(savedExerciseData))
 
             val intent = Intent(activity, MyJobIntentService::class.java)
             intent.putExtra("data", savedExerciseData)
             MyJobIntentService.enqueueWork(activity.applicationContext, intent)
 
 
-            val intent22 = Intent(activity, ShowExercisesActivity::class.java)
+            val intent22 = Intent(activity, ExNavigationActivity::class.java)
             intent22.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent22)
 
