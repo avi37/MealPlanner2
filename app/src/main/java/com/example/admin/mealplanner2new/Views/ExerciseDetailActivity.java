@@ -44,6 +44,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
     private TextView tvDate;
     private TextView tvCatName;
     private String taskId;
+    private String com_id;
 
 
     @Override
@@ -55,12 +56,13 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
         if (getIntent() != null) {
 
-             flag = getIntent().getBooleanExtra("flag", false);
+            flag = getIntent().getBooleanExtra("flag", false);
             // exercises = getIntent().getParcelableArrayListExtra("data");
             ex_category = getIntent().getStringExtra("ex_title");
             cat_id = getIntent().getStringExtra("cat_id");
             dateOf = getIntent().getStringExtra("date");
             taskId = getIntent().getStringExtra("task_id");
+            com_id = getIntent().getStringExtra("com_id");
 
         }
 
@@ -72,7 +74,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         tvCatName = findViewById(R.id.tvExerciseType);
         tvDate = findViewById(R.id.tvDate);
 
-        tvCatName.setText("Day - "+ex_category);
+        tvCatName.setText("Day - " + ex_category);
         tvDate.setText(dateOf);
 
 
@@ -91,7 +93,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
         // recyclerView_exercises.setAdapter(customAdapter);
 
-        exerciseDetail.exerciseDetail(cat_id).enqueue(new Callback<ArrayList<Exercise>>() {
+        exerciseDetail.exerciseDetail(com_id).enqueue(new Callback<ArrayList<Exercise>>() {
             @Override
             public void onResponse(Call<ArrayList<Exercise>> call, Response<ArrayList<Exercise>> response) {
 
@@ -132,9 +134,9 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(ExerciseDetailActivity.this, StartExerciseActivity.class);
                 intent.putParcelableArrayListExtra("data", exercises);
-                intent.putExtra("day",dateOf);
-                intent.putExtra("work_id",ex_category);
-                intent.putExtra("task_id",taskId);
+                intent.putExtra("day", dateOf);
+                intent.putExtra("work_id", ex_category);
+                intent.putExtra("task_id", taskId);
                 startActivity(intent);
 
 

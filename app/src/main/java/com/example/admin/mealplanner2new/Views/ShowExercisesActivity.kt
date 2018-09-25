@@ -166,6 +166,7 @@ class ShowExercisesActivity : AppCompatActivity() {
                     intent.putExtra("cat_id", dataSet[adapterPosition].cat_id)
                     intent.putExtra("date", dataSet[adapterPosition].dateOf)
                     intent.putExtra("task_id", dataSet[adapterPosition].task_id)
+                    intent.putExtra("com_id",dataSet[adapterPosition].component_id)
 
                     if (currentTimeStamp == exerciseDateTime && dataSet[adapterPosition].status == "0") {
                         intent.putExtra("flag", true)
@@ -197,8 +198,8 @@ class ShowExercisesActivity : AppCompatActivity() {
             // Get element from your dataset at this position and replace the contents of the view
             // with that element
 
-            viewHolder.tvTitle.text = "Day - ".plus(dataSet[position].title)
-            viewHolder.tvCatName.text = dataSet[position].cat_name
+            viewHolder.tvTitle.text = "Day - ".plus(dataSet[position].id)
+            viewHolder.tvCatName.text = dataSet[position].title
             viewHolder.tvDate.text = dataSet[position].dateOf
 
             if (dataSet[position].status == "0") {

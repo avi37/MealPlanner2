@@ -20,6 +20,8 @@ public class CategoryMaster implements Parcelable {
 
 
     @Ignore
+    @SerializedName("id")
+    @Expose
     private String id;
     @ColumnInfo(name = "cat_name")
     @SerializedName("cat_name")
@@ -49,7 +51,26 @@ public class CategoryMaster implements Parcelable {
     private String title;
     @Ignore
     private ArrayList<Exercise> exerciseArrayList;
+    @Ignore
+    @SerializedName("task_id")
+    @Expose
+    private String task_id;
 
+    public String getComponent_id() {
+        return component_id;
+    }
+
+    public void setComponent_id(String component_id) {
+        this.component_id = component_id;
+    }
+
+    @Ignore
+    @SerializedName("component_id")
+    @Expose
+    private String component_id;
+
+    public CategoryMaster() {
+    }
 
     public String getTask_id() {
         return task_id;
@@ -57,14 +78,6 @@ public class CategoryMaster implements Parcelable {
 
     public void setTask_id(String task_id) {
         this.task_id = task_id;
-    }
-
-    @Ignore
-    @SerializedName("task_id")
-    @Expose
-    private String task_id;
-
-    public CategoryMaster() {
     }
 
     public String getId() {
@@ -147,6 +160,7 @@ public class CategoryMaster implements Parcelable {
         dest.writeString(this.title);
         dest.writeTypedList(this.exerciseArrayList);
         dest.writeString(this.task_id);
+        dest.writeString(this.component_id);
     }
 
     protected CategoryMaster(Parcel in) {
@@ -159,6 +173,7 @@ public class CategoryMaster implements Parcelable {
         this.title = in.readString();
         this.exerciseArrayList = in.createTypedArrayList(Exercise.CREATOR);
         this.task_id = in.readString();
+        this.component_id = in.readString();
     }
 
     public static final Creator<CategoryMaster> CREATOR = new Creator<CategoryMaster>() {
