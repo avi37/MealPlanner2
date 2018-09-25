@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.admin.mealplanner2new.R;
+import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
 
 
 public class AddMealSummaryFragment extends Fragment {
@@ -17,7 +18,6 @@ public class AddMealSummaryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_add_meal_summary, container, false);
-
 
         return view_main;
     }
