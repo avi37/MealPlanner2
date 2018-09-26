@@ -3,6 +3,7 @@ package com.example.admin.mealplanner2new.Fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ public class AddMealDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_add_meal_details, container, false);
+
+        Log.e("oncreateview","addmeal");
 
         sessionManager = new SessionManager(getContext());
         prefMeal = new PrefMeal(getContext());
