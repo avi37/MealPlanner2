@@ -208,6 +208,7 @@ public class AddProteinFoodFragment extends Fragment {
             viewHolder.getImageView_add().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    viewHolder.getImageView_add().setImageResource(R.drawable.ic_red_remove);
                     Toast.makeText(getContext(), "Clicked: " + count, Toast.LENGTH_SHORT).show();
                 }
             });
