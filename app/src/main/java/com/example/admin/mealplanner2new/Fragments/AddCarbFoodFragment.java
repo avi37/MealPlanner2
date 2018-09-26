@@ -1,5 +1,6 @@
 package com.example.admin.mealplanner2new.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.admin.mealplanner2new.Common.PrefMeal;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
+import com.example.admin.mealplanner2new.Models.Ingredient;
 import com.example.admin.mealplanner2new.Models.ResRecipeItem;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
@@ -41,14 +43,33 @@ public class AddCarbFoodFragment extends Fragment {
 
     SessionManager sessionManager;
     PrefMeal prefMeal;
-
     View view_main;
     TextView textView_noRecipes;
     RecyclerView recyclerView_carbRecipes;
     ProgressBar progressBar;
     Button button_next;
-
     RecAdapter recAdapter;
+    private Ingredient ingredient;
+    private Context context;
+
+    public static AddCarbFoodFragment newInstance(int page, String title) {
+        AddCarbFoodFragment fragmentAddCarbFood = new AddCarbFoodFragment();
+        Bundle args = new Bundle();
+        args.putInt("3", page);
+        args.putString("Add Carb Food", title);
+        fragmentAddCarbFood.setArguments(args);
+        return fragmentAddCarbFood;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+
+        ingredient = ((AddTodayMealActivity) (context)).ingredient;
+
+
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,21 +97,13 @@ public class AddCarbFoodFragment extends Fragment {
         return view_main;
     }
 
-
-    public static AddCarbFoodFragment newInstance(int page, String title) {
-        AddCarbFoodFragment fragmentAddCarbFood = new AddCarbFoodFragment();
-        Bundle args = new Bundle();
-        args.putInt("3", page);
-        args.putString("Add Carb Food", title);
-        fragmentAddCarbFood.setArguments(args);
-        return fragmentAddCarbFood;
-    }
-
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+
+            Log.e("selected array", ingredient.getProteinList().get(0).getName());
+
             setAllRecipes();
         }
     }
@@ -154,11 +167,60 @@ public class AddCarbFoodFragment extends Fragment {
 
 //------------------------------------ Adapter Class ---------------------------------------------//
 
+    GetRecipesAPI getGetRecipesAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(GetRecipesAPI.class);
+    }
+
+
+//---------------------------------------- APIs --------------------------------------------------//
+
+    interface GetRecipesAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @POST("getRecipesByCategory")
+        @FormUrlEncoded
+        Call<List<ResRecipeItem>> get_recipes(@Header("Authorization") String token,
+                                              @Field("category") String category,
+                                              @Field("type") String type
+        );
+    }
+
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
         private String[] nameArray;
         private String[] imageArray;
 
+
+        RecAdapter(String[] nameArray, String[] imageArray) {
+            this.nameArray = nameArray;
+            this.imageArray = imageArray;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_add_recipe, viewGroup, false);
+
+            return new ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+            int count = position + 1;
+            viewHolder.getTextView_name().setText(nameArray[position]);
+
+            viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
+
+            viewHolder.getImageView_add().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Clicked: " + count, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return nameArray.length;
+        }
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -194,56 +256,6 @@ public class AddCarbFoodFragment extends Fragment {
 
         }
 
-        RecAdapter(String[] nameArray, String[] imageArray) {
-            this.nameArray = nameArray;
-            this.imageArray = imageArray;
-        }
-
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_add_recipe, viewGroup, false);
-
-            return new ViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-            int count = position + 1;
-            viewHolder.getTextView_name().setText(nameArray[position]);
-
-            viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
-
-            viewHolder.getImageView_add().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Clicked: " + count, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return nameArray.length;
-        }
-
-    }
-
-
-//---------------------------------------- APIs --------------------------------------------------//
-
-    GetRecipesAPI getGetRecipesAPIService(String baseUrl) {
-        return RetrofitClient.getClient(baseUrl).create(GetRecipesAPI.class);
-    }
-
-    interface GetRecipesAPI {
-        @Headers("X-Requested-With:XMLHttpRequest")
-        @POST("getRecipesByCategory")
-        @FormUrlEncoded
-        Call<List<ResRecipeItem>> get_recipes(@Header("Authorization") String token,
-                                              @Field("category") String category,
-                                              @Field("type") String type
-        );
     }
 
 }

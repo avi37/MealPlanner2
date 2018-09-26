@@ -188,7 +188,7 @@ class StartExerciseFragment : Fragment() {
                 exerciseList[exerciseId].day = dateOf
                 exerciseList[exerciseId].isCompleted = true
 
-               // insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
+                // insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
                 val savedArrayList: ArrayList<Exercise> = ArrayList()
 
 
@@ -247,7 +247,7 @@ class StartExerciseFragment : Fragment() {
 //                intent2.putExtra("data", savedExerciseData)
 //                MyJobIntentService.enqueueWork(activity.applicationContext, intent2)
 
-               // insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
+                // insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
 
 //                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
 //

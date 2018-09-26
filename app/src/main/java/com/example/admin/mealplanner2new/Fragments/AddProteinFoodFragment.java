@@ -1,5 +1,6 @@
 package com.example.admin.mealplanner2new.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,10 +22,12 @@ import com.bumptech.glide.Glide;
 import com.example.admin.mealplanner2new.Common.PrefMeal;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
+import com.example.admin.mealplanner2new.Models.Ingredient;
 import com.example.admin.mealplanner2new.Models.ResRecipeItem;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,9 +53,11 @@ public class AddProteinFoodFragment extends Fragment {
     RecyclerView recyclerView_proteinRecipes;
     ProgressBar progressBar;
     Button button_next;
-
-
     RecAdapter recAdapter;
+    private Context context;
+    private Ingredient ingredient;
+    private ArrayList<ResRecipeItem> resRecipeItemArrayList;
+    private ArrayList<ResRecipeItem> selectedItemReciepList;
 
     public static AddProteinFoodFragment newInstance(int page, String title) {
         AddProteinFoodFragment fragmentAddProteinFood = new AddProteinFoodFragment();
@@ -64,10 +69,23 @@ public class AddProteinFoodFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+
+        ingredient = ((AddTodayMealActivity) (context)).ingredient;
+
+
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_add_protein_food, container, false);
         Log.e("oncreateview", "addprotein");
+        resRecipeItemArrayList = new ArrayList<>();
+        selectedItemReciepList = new ArrayList<>();
         getRecipesAPI = getGetRecipesAPIService(BASE_URL);
+
 
         sessionManager = new SessionManager(getContext());
         prefMeal = new PrefMeal(getContext());
@@ -83,6 +101,24 @@ public class AddProteinFoodFragment extends Fragment {
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (resRecipeItemArrayList.size() > 0) {
+                    for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
+                        if (resRecipeItemArrayList.get(i).isSelected()) {
+                            selectedItemReciepList.add(resRecipeItemArrayList.get(i));
+                        }
+
+
+                    }
+                }
+
+                if (selectedItemReciepList.size() > 0) {
+
+                    ingredient.setProteinList(selectedItemReciepList);
+
+                }
+
+
                 ((AddTodayMealActivity) getActivity()).setCurrentItem(2, true);
             }
         });
@@ -120,15 +156,11 @@ public class AddProteinFoodFragment extends Fragment {
 
                     if (response.body() != null) {
 
-                        String[] names = new String[response.body().size()];
-                        String[] thumbs = new String[response.body().size()];
 
-                        for (int i = 0; i < response.body().size(); i++) {
-                            names[i] = response.body().get(i).getName();
-                            thumbs[i] = response.body().get(i).getThumb();
-                        }
+                        resRecipeItemArrayList = (ArrayList<ResRecipeItem>) response.body();
 
-                        recAdapter = new RecAdapter(names, thumbs);
+
+                        recAdapter = new RecAdapter(resRecipeItemArrayList);
 
                         recyclerView_proteinRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
                         recyclerView_proteinRecipes.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -180,12 +212,11 @@ public class AddProteinFoodFragment extends Fragment {
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
         String BASE_IMG_URL = "http://code-fuel.in/healthbotics/storage/app/public/thumb/";
-        private String[] nameArray;
-        private String[] imageArray;
+        private ArrayList<ResRecipeItem> mDataSet;
 
-        RecAdapter(String[] nameArray, String[] imageArray) {
-            this.nameArray = nameArray;
-            this.imageArray = imageArray;
+
+        RecAdapter(ArrayList<ResRecipeItem> mDataSet) {
+            this.mDataSet = mDataSet;
         }
 
         @Override
@@ -198,25 +229,19 @@ public class AddProteinFoodFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
             int count = position + 1;
-            viewHolder.getTextView_name().setText(nameArray[position]);
+            viewHolder.getTextView_name().setText(mDataSet.get(position).getName());
 
             viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
 
-            String img_uri = BASE_IMG_URL + (imageArray[position]);
+            String img_uri = BASE_IMG_URL + (mDataSet.get(position).getPhoto());
             Glide.with(getContext()).load(img_uri).into(viewHolder.imageView_recipeImage);
 
-            viewHolder.getImageView_add().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    viewHolder.getImageView_add().setImageResource(R.drawable.ic_red_remove);
-                    Toast.makeText(getContext(), "Clicked: " + count, Toast.LENGTH_SHORT).show();
-                }
-            });
+
         }
 
         @Override
         public int getItemCount() {
-            return nameArray.length;
+            return mDataSet.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
@@ -227,16 +252,27 @@ public class AddProteinFoodFragment extends Fragment {
             ViewHolder(View v) {
                 super(v);
 
-                /*v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //startActivity(new Intent(ExHelpActivity.this, ExQueItemActivity.class));
-                    }
-                });*/
 
                 textView_name = (TextView) v.findViewById(R.id.row_addRecipe_tv_name);
                 imageView_recipeImage = (ImageView) v.findViewById(R.id.row_addRecipe_iv_image);
                 imageView_add = (ImageView) v.findViewById(R.id.row_addRecipe_iv_addBtn);
+
+
+                imageView_add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        imageView_add.setImageResource(R.drawable.ic_red_remove);
+
+                        if (mDataSet.get(getAdapterPosition()).isSelected()) {
+                            mDataSet.get(getAdapterPosition()).setSelected(false);
+                        } else {
+                            mDataSet.get(getAdapterPosition()).setSelected(true);
+                        }
+
+
+                        // Toast.makeText(getContext(), "Clicked: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             TextView getTextView_name() {

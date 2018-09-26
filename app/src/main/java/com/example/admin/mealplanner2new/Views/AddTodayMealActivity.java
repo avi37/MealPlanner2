@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.admin.mealplanner2new.Adapters.AdapterPagerAddTodayMeal;
 import com.example.admin.mealplanner2new.Common.AddMealViewPager;
+import com.example.admin.mealplanner2new.Models.Ingredient;
 import com.example.admin.mealplanner2new.R;
 
 import java.text.SimpleDateFormat;
@@ -18,7 +19,7 @@ public class AddTodayMealActivity extends AppCompatActivity {
 
     TextView textView_date, textView_day;
     AddMealViewPager viewPager;
-
+    public Ingredient ingredient = new Ingredient();
     int currentItem;
 
     @Override
