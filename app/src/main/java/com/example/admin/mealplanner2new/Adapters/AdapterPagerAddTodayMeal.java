@@ -3,6 +3,7 @@ package com.example.admin.mealplanner2new.Adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.admin.mealplanner2new.Fragments.AddCarbFoodFragment;
 import com.example.admin.mealplanner2new.Fragments.AddFnTFragment;
@@ -11,7 +12,7 @@ import com.example.admin.mealplanner2new.Fragments.AddMealSummaryFragment;
 import com.example.admin.mealplanner2new.Fragments.AddProteinFoodFragment;
 import com.example.admin.mealplanner2new.Fragments.AddVeggiesFragment;
 
-public class AdapterPagerAddTodayMeal extends FragmentPagerAdapter {
+public class AdapterPagerAddTodayMeal extends FragmentStatePagerAdapter {
 
     private static int NUM_ITEMS = 6;
 

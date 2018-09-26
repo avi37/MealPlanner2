@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class AddVeggiesFragment extends Fragment {
         recyclerView_veggies = view_main.findViewById(R.id.addVeggies_recView_recipes);
         button_next = view_main.findViewById(R.id.addVeggies_btn_next);
 
-        setAllVeggies();
+        //setAllVeggies();
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +86,14 @@ public class AddVeggiesFragment extends Fragment {
         return fragmentAddVeggies;
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            setAllVeggies();
+        }
+    }
 
     private void setAllVeggies() {
 

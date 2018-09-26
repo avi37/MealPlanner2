@@ -69,7 +69,7 @@ public class AddMealDetailsFragment extends Fragment {
                     mealType = "0";
                 }
 
-                prefMeal.setMealDetails(mealType, mealTime, mealCategory);
+                prefMeal.setMealDetails(mealCategory, mealTime, mealType);
                 ((AddTodayMealActivity) getActivity()).setCurrentItem(1, true);
             }
         });

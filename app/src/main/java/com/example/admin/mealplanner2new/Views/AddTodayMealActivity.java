@@ -112,7 +112,11 @@ public class AddTodayMealActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                finish();
+                if (viewPager.getCurrentItem() == 0 || viewPager.getCurrentItem() == 5) {
+                    finish();
+                } else {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                }
 
         }
 

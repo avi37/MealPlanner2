@@ -5,10 +5,56 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.AddCarbFoodFragment">
 
+    <LinearLayout
+        android:id="@+id/addCarbFood_tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/raisinBlackLight" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Remaining carb intake: "
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/addCarbFood_tv_intakeCarb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="110"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" gm"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/raisinBlackLight" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/addCarbFood_recView_recipes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addCarbFood_tv_info" />
 
     <TextView
         android:id="@+id/addCarbFood_tv_noRecipes"
@@ -16,7 +62,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="No carb recipes added"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/addCarbFood_progressBar"

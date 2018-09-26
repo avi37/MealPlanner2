@@ -2,6 +2,7 @@ package com.example.admin.mealplanner2new.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -77,7 +78,7 @@ public class AddProteinFoodFragment extends Fragment {
         button_next = view_main.findViewById(R.id.addProteinFood_btn_next);
 
 
-        setAllRecipes();
+        //setAllRecipes();
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +91,17 @@ public class AddProteinFoodFragment extends Fragment {
         return view_main;
 
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // do something when visible.
+            Log.e("onresume", "addprotein");
+            setAllRecipes();
+        }
+    }
+
 
     private void setAllRecipes() {
         progressBar.setVisibility(View.VISIBLE);
@@ -154,23 +166,6 @@ public class AddProteinFoodFragment extends Fragment {
 
 
 //---------------------------------------- APIs --------------------------------------------------//
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //Log.e("onresume","addprotein");
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            // do something when visible.
-            Log.e("onresume", "addprotein");
-            setAllRecipes();
-        }
-    }
-
 
     interface GetRecipesAPI {
         @Headers("X-Requested-With:XMLHttpRequest")

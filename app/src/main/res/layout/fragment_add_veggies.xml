@@ -5,10 +5,37 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.AddVeggiesFragment">
 
+    <LinearLayout
+        android:id="@+id/addVeggies_tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/raisinBlackLight" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Select any vegetable"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/raisinBlackLight" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/addVeggies_recView_recipes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addVeggies_tv_info" />
 
     <TextView
         android:id="@+id/addVeggies_tv_noRecipes"
@@ -16,7 +43,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="No vegetables added"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/addVeggies_progressBar"

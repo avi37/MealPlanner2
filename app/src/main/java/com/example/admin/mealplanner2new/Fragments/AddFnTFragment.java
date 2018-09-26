@@ -62,7 +62,7 @@ public class AddFnTFragment extends Fragment {
         recyclerView_FnT = view_main.findViewById(R.id.addFnT_recView_recipes);
         button_next = view_main.findViewById(R.id.addFnT_btn_next);
 
-        setAllRecipes();
+        //setAllRecipes();
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +83,14 @@ public class AddFnTFragment extends Fragment {
         return fragmentAddFnT;
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            setAllRecipes();
+        }
+    }
 
     private void setAllRecipes() {
 

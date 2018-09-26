@@ -5,10 +5,37 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.AddFnTFragment">
 
+    <LinearLayout
+        android:id="@+id/addFnT_tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/raisinBlackLight" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Select any fruit or nut"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/raisinBlackLight" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/addFnT_recView_recipes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addFnT_tv_info" />
 
     <TextView
         android:id="@+id/addFnT_tv_noRecipes"
@@ -16,7 +43,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="No fruits or nuts added"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/addFnT_progressBar"

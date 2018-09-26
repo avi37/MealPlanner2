@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class AddCarbFoodFragment extends Fragment {
         recyclerView_carbRecipes = view_main.findViewById(R.id.addCarbFood_recView_recipes);
         button_next = view_main.findViewById(R.id.addCarbFood_btn_next);
 
-        setAllRecipes();
+        //setAllRecipes();
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +86,14 @@ public class AddCarbFoodFragment extends Fragment {
         return fragmentAddCarbFood;
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            setAllRecipes();
+        }
+    }
 
     private void setAllRecipes() {
 
