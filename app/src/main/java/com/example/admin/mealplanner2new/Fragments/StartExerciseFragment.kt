@@ -20,6 +20,7 @@ import com.example.admin.mealplanner2new.Views.StartExerciseActivity
 import kotlinx.android.synthetic.main.fragment_start_exercise.*
 import android.os.AsyncTask
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.admin.mealplanner2new.Common.SessionManager
 import com.example.admin.mealplanner2new.Models.*
 import com.example.admin.mealplanner2new.Service.MyJobIntentService
@@ -45,6 +46,7 @@ class StartExerciseFragment : Fragment() {
     var dateOf = ""
     lateinit var u_id: String
     lateinit var taslId: String
+    val PHOTO_URL = "http://code-fuel.in/healthbotics/storage/app/public/exercise/"
 
 
     override fun onAttach(context: Context?) {
@@ -92,6 +94,9 @@ class StartExerciseFragment : Fragment() {
         tvExerciseName?.text = exersiceName
         tvNoOfRep?.text = exerciseReps
         btnNext?.visibility = View.GONE
+        Glide.with(activity).load(PHOTO_URL.plus(exerciseList[exerciseId].photo)).into(ivPhoto)
+
+
 
         btnSkip?.setOnClickListener {
 
@@ -183,7 +188,7 @@ class StartExerciseFragment : Fragment() {
                 exerciseList[exerciseId].day = dateOf
                 exerciseList[exerciseId].isCompleted = true
 
-                insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
+               // insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
                 val savedArrayList: ArrayList<Exercise> = ArrayList()
 
 
@@ -242,7 +247,7 @@ class StartExerciseFragment : Fragment() {
 //                intent2.putExtra("data", savedExerciseData)
 //                MyJobIntentService.enqueueWork(activity.applicationContext, intent2)
 
-                insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
+               // insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
 
 //                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
 //

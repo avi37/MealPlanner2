@@ -62,9 +62,14 @@ public class Exercise implements Parcelable {
     private String day;
     @Ignore
     private String status;
+    @Ignore
+    @SerializedName("photo")
+    @Expose
+    private String photo;
 
     public Exercise() {
     }
+
 
     protected Exercise(Parcel in) {
         this.id = in.readString();
@@ -75,6 +80,15 @@ public class Exercise implements Parcelable {
         this.isCompleted = in.readByte() != 0;
         this.day = in.readString();
         this.status = in.readString();
+        this.photo = in.readString();
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public boolean isCompleted() {
@@ -156,5 +170,6 @@ public class Exercise implements Parcelable {
         dest.writeByte(this.isCompleted ? (byte) 1 : (byte) 0);
         dest.writeString(this.day);
         dest.writeString(this.status);
+        dest.writeString(this.photo);
     }
 }

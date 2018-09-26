@@ -4,93 +4,92 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/scrollView"
-    android:layout_alignParentTop="true"
-    android:layout_above="@+id/ivLogo"
-    tools:context=".Fragments.GSGenderFragment">
-
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ivLogo"
+        android:layout_alignParentTop="true"
+        tools:context=".Fragments.GSGenderFragment">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/main_bg_light_primary"
-            android:elevation="5dp"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="What is your gender?"
-            android:textColor="@color/raisinBlackDark"
-            android:textSize="20sp" />
+            android:orientation="vertical">
 
-        <RadioGroup
-            android:id="@+id/rgMaleFemale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:weightSum="2">
-
-            <RadioButton
-                android:id="@+id/gsGender_tv_male"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_male_female"
-                android:button="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_bg_light_primary"
+                android:elevation="5dp"
                 android:gravity="center"
                 android:padding="15dp"
-                android:text="MALE"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:text="What is your gender?"
+                android:textColor="@color/raisinBlackDark"
+                android:textSize="20sp" />
 
-            <RadioButton
-                android:id="@+id/gsGender_tv_female"
+            <RadioGroup
+                android:id="@+id/rgMaleFemale"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_male_female"
-                android:button="@android:color/transparent"
-                android:gravity="center"
-                android:padding="15dp"
-                android:text="FEMALE"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="2">
+
+                <RadioButton
+                    android:id="@+id/gsGender_tv_male"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_male_female"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="MALE"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:id="@+id/gsGender_tv_female"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_male_female"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="FEMALE"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/gsGender_btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:background="@color/mainColorPrimary"
+                android:text="Next"
                 android:textColor="@color/white"
-                android:textSize="15sp" />
-
-        </RadioGroup>
-
-        <Button
-            android:id="@+id/gsGender_btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="25dp"
-            android:background="@color/mainColorPrimary"
-            android:text="Next"
-            android:textColor="@color/white"
-            android:visibility="invisible" />
+                android:visibility="invisible" />
 
 
+        </LinearLayout>
 
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
 
     <ImageView
-        android:layout_alignParentBottom="true"
         android:id="@+id/ivLogo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/male_female" />
 </RelativeLayout>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="match_parent">
 
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,9 +19,9 @@
             android:id="@+id/tvExerciseName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:gravity="center"
             android:text="Push Ups"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -35,17 +35,17 @@
             android:id="@+id/rl_progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:padding="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNoOfRep">
 
             <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                android:layout_width="150dp"
                 android:id="@+id/progress_bar"
+                android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:cpb_background_progressbar_color="#FFCDD2"
                 app:cpb_background_progressbar_width="5dp"
@@ -66,10 +66,10 @@
             android:id="@+id/tvNoOfRep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:text="3*20 Rep"
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@+id/rl_progressbar"
@@ -81,9 +81,9 @@
             android:id="@+id/ivPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:padding="5dp"
             android:src="@drawable/ic_play_circle_outline_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -108,13 +108,11 @@
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:background="@color/mainColorPrimary"
             android:text="Next"
             android:textColor="@color/dark_white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivReset" />
 
@@ -122,16 +120,26 @@
             android:id="@+id/btnSkip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:background="@color/mainColorPrimary"
             android:text="Skip"
             android:textColor="@color/dark_white"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivPlay" />
+
+        <ImageView
+            android:id="@+id/ivPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSkip"
+            app:srcCompat="@drawable/workout" />
 
 
     </android.support.constraint.ConstraintLayout>
