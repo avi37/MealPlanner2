@@ -1,5 +1,6 @@
 package com.example.admin.mealplanner2new.Fragments;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.admin.mealplanner2new.Common.PrefMeal;
-import com.example.admin.mealplanner2new.Common.PrefRegister;
 import com.example.admin.mealplanner2new.Common.SessionManager;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
+
+import java.util.Calendar;
 
 
 public class AddMealDetailsFragment extends Fragment {
@@ -42,6 +45,13 @@ public class AddMealDetailsFragment extends Fragment {
         button_next = view_main.findViewById(R.id.addMealDetails_btn_next);
 
 
+        textView_mealTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePicker();
+            }
+        });
+
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +71,7 @@ public class AddMealDetailsFragment extends Fragment {
             }
         });
 
+
         return view_main;
     }
 
@@ -72,6 +83,21 @@ public class AddMealDetailsFragment extends Fragment {
         args.putString("Add Meal Details", title);
         fragmentAddMealDetails.setArguments(args);
         return fragmentAddMealDetails;
+    }
+
+    private void showTimePicker() {
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                textView_mealTime.setText(selectedHour + ":" + selectedMinute);
+            }
+        }, hour, minute, true);
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
     }
 
 
