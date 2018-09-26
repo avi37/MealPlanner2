@@ -170,6 +170,7 @@ public class SignUpFragment extends Fragment {
                             if (response.body().getMsg().equals("true")) {
                                 progressDialog.dismiss();
                                 getActivity().finish();
+                                prefRegister.deleteRegisterPref();
                                 startActivity(new Intent(getContext(), LoginActivity.class));
 
                             } else if (response.body().getMsg().equals("The given data was invalid.")) {

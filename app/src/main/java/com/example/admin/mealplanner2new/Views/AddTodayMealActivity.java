@@ -1,5 +1,6 @@
 package com.example.admin.mealplanner2new.Views;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ public class AddTodayMealActivity extends AppCompatActivity {
     TextView textView_date, textView_day;
     AddMealViewPager viewPager;
 
+    int currentItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,59 @@ public class AddTodayMealActivity extends AppCompatActivity {
 
         setTodayData();
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                              @Override
+                                              public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                                              }
+
+                                              @Override
+                                              public void onPageSelected(int position) {
+                                                  currentItem = viewPager.getCurrentItem();
+
+                                                  setHeaderTitle(currentItem);
+                                              }
+
+                                              @Override
+                                              public void onPageScrollStateChanged(int state) {
+
+                                              }
+                                          }
+        );
+
+
+    }
+
+    private void setHeaderTitle(int currentItem) {
+
+        switch (currentItem) {
+
+            case 0:
+                setTitle("Add Meal Details");
+                break;
+
+            case 1:
+                setTitle("Protein recipes");
+                break;
+
+            case 2:
+                setTitle("Carb recipes");
+                break;
+
+            case 3:
+                setTitle("Vegetables");
+                break;
+
+            case 4:
+                setTitle("Fruit and Nuts");
+                break;
+
+            case 5:
+                setTitle("Meal Summary");
+                break;
+
+
+        }
 
     }
 
@@ -52,10 +108,14 @@ public class AddTodayMealActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
+
             case android.R.id.home:
                 finish();
+
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -66,6 +126,7 @@ public class AddTodayMealActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         if (viewPager.getCurrentItem() == 0 || viewPager.getCurrentItem() == 5) {
             super.onBackPressed();
         } else {
@@ -73,4 +134,5 @@ public class AddTodayMealActivity extends AppCompatActivity {
         }
 
     }
+
 }
