@@ -49,6 +49,15 @@ public class AddFnTFragment extends Fragment {
 
     RecAdapter recAdapter;
 
+    public static AddFnTFragment newInstance(int page, String title) {
+        AddFnTFragment fragmentAddFnT = new AddFnTFragment();
+        Bundle args = new Bundle();
+        args.putInt("5", page);
+        args.putString("Add Fruit and Nuts", title);
+        fragmentAddFnT.setArguments(args);
+        return fragmentAddFnT;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_add_fnt, container, false);
@@ -73,16 +82,6 @@ public class AddFnTFragment extends Fragment {
 
         return view_main;
     }
-
-    public static AddFnTFragment newInstance(int page, String title) {
-        AddFnTFragment fragmentAddFnT = new AddFnTFragment();
-        Bundle args = new Bundle();
-        args.putInt("5", page);
-        args.putString("Add Fruit and Nuts", title);
-        fragmentAddFnT.setArguments(args);
-        return fragmentAddFnT;
-    }
-
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -120,8 +119,10 @@ public class AddFnTFragment extends Fragment {
 
                         recAdapter = new RecAdapter(names, thumbs);
 
-                        recyclerView_FnT.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                        recyclerView_FnT.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+                        recyclerView_FnT.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+                        if (getActivity() != null)
+                            recyclerView_FnT.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
                         recyclerView_FnT.setAdapter(recAdapter);
 
@@ -150,11 +151,59 @@ public class AddFnTFragment extends Fragment {
 
 //------------------------------------ Adapter Class ---------------------------------------------//
 
+    GetRecipesAPI getGetRecipesAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(GetRecipesAPI.class);
+    }
+
+//---------------------------------------- APIs --------------------------------------------------//
+
+    interface GetRecipesAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @POST("getRecipesByCategory")
+        @FormUrlEncoded
+        Call<List<ResRecipeItem>> get_recipes(@Header("Authorization") String token,
+                                              @Field("category") String category,
+                                              @Field("type") String type
+        );
+    }
+
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
         private String[] nameArray;
         private String[] imageArray;
 
+
+        RecAdapter(String[] nameArray, String[] imageArray) {
+            this.nameArray = nameArray;
+            this.imageArray = imageArray;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_add_recipe, viewGroup, false);
+
+            return new ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+            int count = position + 1;
+            viewHolder.getTextView_name().setText(nameArray[position]);
+
+            viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
+
+            viewHolder.getImageView_add().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Clicked: " + count, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return nameArray.length;
+        }
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -190,55 +239,6 @@ public class AddFnTFragment extends Fragment {
 
         }
 
-        RecAdapter(String[] nameArray, String[] imageArray) {
-            this.nameArray = nameArray;
-            this.imageArray = imageArray;
-        }
-
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_add_recipe, viewGroup, false);
-
-            return new ViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-            int count = position + 1;
-            viewHolder.getTextView_name().setText(nameArray[position]);
-
-            viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
-
-            viewHolder.getImageView_add().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Clicked: " + count, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return nameArray.length;
-        }
-
-    }
-
-//---------------------------------------- APIs --------------------------------------------------//
-
-    GetRecipesAPI getGetRecipesAPIService(String baseUrl) {
-        return RetrofitClient.getClient(baseUrl).create(GetRecipesAPI.class);
-    }
-
-    interface GetRecipesAPI {
-        @Headers("X-Requested-With:XMLHttpRequest")
-        @POST("getRecipesByCategory")
-        @FormUrlEncoded
-        Call<List<ResRecipeItem>> get_recipes(@Header("Authorization") String token,
-                                              @Field("category") String category,
-                                              @Field("type") String type
-        );
     }
 
 }

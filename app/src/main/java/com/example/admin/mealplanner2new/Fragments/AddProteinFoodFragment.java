@@ -99,29 +99,24 @@ public class AddProteinFoodFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (selectedItemReciepList.isEmpty()) {
+                if (selectedItemReciepList.size() > 0) {
 
-                    Toast.makeText(getContext(), "Please add any recipe to your meal", Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
 
-                } else {
-                    if (resRecipeItemArrayList.size() > 0) {
-
-                        for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
-
-                            if (resRecipeItemArrayList.get(i).isSelected()) {
-                                selectedItemReciepList.add(resRecipeItemArrayList.get(i));
-                            }
-
+                        if (resRecipeItemArrayList.get(i).isSelected()) {
+                            selectedItemReciepList.add(resRecipeItemArrayList.get(i));
                         }
+
                     }
 
                     if (selectedItemReciepList.size() > 0) {
                         ingredient.setProteinList(selectedItemReciepList);
                     }
-
-
                     ((AddTodayMealActivity) getActivity()).setCurrentItem(2, true);
+                } else {
+                    Toast.makeText(getActivity(), "Select any receipe", Toast.LENGTH_LONG).show();
                 }
+
 
             }
 
@@ -162,10 +157,35 @@ public class AddProteinFoodFragment extends Fragment {
                         resRecipeItemArrayList = (ArrayList<ResRecipeItem>) response.body();
 
 
+                        if (selectedItemReciepList.size() > 0 && resRecipeItemArrayList.size() > 0) {
+
+                            for (int i = 0; i < selectedItemReciepList.size(); i++) {
+
+                                for (int j = 0; j < resRecipeItemArrayList.size(); j++) {
+
+                                    if (selectedItemReciepList.get(i).getId().equals(
+                                            resRecipeItemArrayList.get(j).getId()
+                                    )) {
+
+                                        resRecipeItemArrayList.get(j).setSelected(true);
+
+
+                                    }
+
+
+                                }
+                            }
+
+
+                        }
+
+
                         recAdapter = new RecAdapter(resRecipeItemArrayList);
 
-                        recyclerView_proteinRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                        recyclerView_proteinRecipes.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+                        recyclerView_proteinRecipes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+                        if(getActivity()!=null)
+                        recyclerView_proteinRecipes.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
                         recyclerView_proteinRecipes.setAdapter(recAdapter);
 
@@ -234,6 +254,16 @@ public class AddProteinFoodFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
+            if (mDataSet.get(position).isSelected()) {
+
+
+                viewHolder.imageView_add.setImageResource(R.drawable.ic_red_remove);
+
+
+            } else {
+                viewHolder.imageView_add.setImageResource(R.drawable.ic_green_add);
+            }
+
             viewHolder.getTextView_name().setText(mDataSet.get(position).getName());
 
             viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
@@ -276,12 +306,22 @@ public class AddProteinFoodFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
+                        selectedItemReciepList.clear();
+
                         if (mDataSet.get(getAdapterPosition()).isSelected()) {
                             mDataSet.get(getAdapterPosition()).setSelected(false);
                             imageView_add.setImageResource(R.drawable.ic_green_add);
                         } else {
                             mDataSet.get(getAdapterPosition()).setSelected(true);
                             imageView_add.setImageResource(R.drawable.ic_red_remove);
+                        }
+
+                        for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
+
+                            if (resRecipeItemArrayList.get(i).isSelected()) {
+                                selectedItemReciepList.add(resRecipeItemArrayList.get(i));
+                            }
+
                         }
 
                     }
