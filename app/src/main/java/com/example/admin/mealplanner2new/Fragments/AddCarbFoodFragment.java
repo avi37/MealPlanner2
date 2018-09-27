@@ -142,7 +142,7 @@ public class AddCarbFoodFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         String token = sessionManager.getAccessToken();
-        String category = "2";
+        String category = "4";
         String type = prefMeal.getMealType();
 
         getRecipesAPI.get_recipes("Bearer " + token, category, type).enqueue(new Callback<List<ResRecipeItem>>() {

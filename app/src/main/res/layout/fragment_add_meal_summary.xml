@@ -1,15 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fragments.AddMealSummaryFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:padding="5sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal Category: "
+            android:textColor="@color/raisinBlack"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/mealSummary_tv_mealCat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal Type: "
+            android:textColor="@color/raisinBlack"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/mealSummary_tv_mealType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal Time: "
+            android:textColor="@color/raisinBlack"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/mealSummary_tv_mealTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="3sp"
+        android:layout_marginRight="10sp"
+        android:background="@color/lightGrey"
+        android:orientation="horizontal"
+        android:padding="3dp"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proteins"
+                android:textColor="@color/raisinBlack" />
+
+            <TextView
+                android:id="@+id/mealSummary_tv_total_proteins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fats"
+                android:textColor="@color/raisinBlack" />
+
+            <TextView
+                android:id="@+id/mealSummary_tv_total_fats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carbs"
+                android:textColor="@color/raisinBlack" />
+
+            <TextView
+                android:id="@+id/mealSummary_tv_total_carbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calories"
+                android:textColor="@color/raisinBlack" />
+
+            <TextView
+                android:id="@+id/mealSummary_tv_total_calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="8sp"
+        android:layout_marginRight="10sp"
+        android:background="@color/raisinBlackDark" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Meal summary here"
-        android:textSize="20sp" />
+        android:padding="5sp"
+        android:text=": Meal Recipes :"
+        android:textColor="@color/raisinBlack"
+        android:textSize="15sp" />
 
-</FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mealSummary_recView_recipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginBottom="5dp" />
+
+    <Button
+        android:id="@+id/mealSummary_btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColorAccent"
+        android:text="SUBMIT"
+        android:textColor="@color/white" />
+
+</LinearLayout>

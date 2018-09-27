@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.admin.mealplanner2new.Models.Ingredient;
@@ -28,6 +30,13 @@ public class AddMealSummaryFragment extends Fragment {
     private Context context;
     private Ingredient ingredient;
     private ArrayList<ResRecipeItem> allItemList;
+    RecAdapter recAdapter;
+
+    TextView tv_mealCat, tv_mealTime, tv_mealType;
+    TextView tv_proteins, tv_fats, tv_carbs, tv_calories;
+    RecyclerView recyclerView_recipes;
+    Button btn_submit;
+
 
     public static AddMealSummaryFragment newInstance(int page, String title) {
         AddMealSummaryFragment fragmentAddMealSummary = new AddMealSummaryFragment();
@@ -45,12 +54,22 @@ public class AddMealSummaryFragment extends Fragment {
 
         ingredient = ((AddTodayMealActivity) (context)).ingredient;
 
-
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_add_meal_summary, container, false);
+
+        tv_mealCat = view_main.findViewById(R.id.mealSummary_tv_mealCat);
+        tv_mealTime = view_main.findViewById(R.id.mealSummary_tv_mealTime);
+        tv_mealType = view_main.findViewById(R.id.mealSummary_tv_mealType);
+        tv_proteins = view_main.findViewById(R.id.mealSummary_tv_total_proteins);
+        tv_fats = view_main.findViewById(R.id.mealSummary_tv_total_fats);
+        tv_carbs = view_main.findViewById(R.id.mealSummary_tv_total_carbs);
+        tv_calories = view_main.findViewById(R.id.mealSummary_tv_total_calories);
+        recyclerView_recipes = view_main.findViewById(R.id.mealSummary_recView_recipes);
+        btn_submit = view_main.findViewById(R.id.mealSummary_btn_submit);
+
         allItemList = new ArrayList<>();
 
         if (ingredient != null) {
@@ -62,12 +81,33 @@ public class AddMealSummaryFragment extends Fragment {
 
             Log.e("all item", String.valueOf(allItemList.size()));
 
-
         }
+
+        recAdapter = new RecAdapter(allItemList);
+
+        recyclerView_recipes.setAdapter(recAdapter);
+
+        recAdapter.notifyDataSetChanged();
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                methodSubmitMeal();
+            }
+        });
 
 
         return view_main;
     }
+
+    private void methodSubmitMeal() {
+
+        Toast.makeText(getContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+//--------------------------------- Adapter Class -----------------------------------------------//
 
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
@@ -81,14 +121,13 @@ public class AddMealSummaryFragment extends Fragment {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_add_recipe, viewGroup, false);
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_summary_meal_item, viewGroup, false);
 
             return new ViewHolder(v);
         }
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-
 
             viewHolder.getTextView_name().setText(mDataSet.get(position).getName());
 
@@ -107,17 +146,13 @@ public class AddMealSummaryFragment extends Fragment {
         class ViewHolder extends RecyclerView.ViewHolder {
 
             private final TextView textView_name;
-            private final ImageView imageView_recipeImage, imageView_add;
+            private final ImageView imageView_recipeImage;
 
             ViewHolder(View v) {
                 super(v);
 
-
-                textView_name = (TextView) v.findViewById(R.id.row_addRecipe_tv_name);
-                imageView_recipeImage = (ImageView) v.findViewById(R.id.row_addRecipe_iv_image);
-                imageView_add = (ImageView) v.findViewById(R.id.row_addRecipe_iv_addBtn);
-                imageView_add.setVisibility(View.GONE);
-
+                textView_name = (TextView) v.findViewById(R.id.row_mealSummary_tv_name);
+                imageView_recipeImage = (ImageView) v.findViewById(R.id.row_mealSummary_iv_image);
 
             }
 
@@ -129,12 +164,9 @@ public class AddMealSummaryFragment extends Fragment {
                 return imageView_recipeImage;
             }
 
-            ImageView getImageView_add() {
-                return imageView_add;
-            }
-
         }
 
     }
+
 
 }
