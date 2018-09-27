@@ -127,13 +127,25 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/addMealDetails_tv_selectInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addMealDetails_ll_buttons"
+        android:background="@color/lightGrey"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="Select any of the meals"
+        android:textColor="@color/raisinBlack"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/addMealDetails_recView_repeatRecipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addMealDetails_ll_buttons">
+        android:layout_below="@id/addMealDetails_tv_selectInfo" />
 
-    </android.support.v7.widget.RecyclerView>
 
     <ProgressBar
         android:id="@+id/addMealDetails_progressbar"

@@ -1,5 +1,6 @@
 package com.example.admin.mealplanner2new.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.admin.mealplanner2new.Common.PrefMeal;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
@@ -25,6 +27,7 @@ import com.example.admin.mealplanner2new.Models.ResRecipeItem;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,6 +55,9 @@ public class AddCarbFoodFragment extends Fragment {
     private Ingredient ingredient;
     private Context context;
 
+    private ArrayList<ResRecipeItem> resRecipeItemArrayList;
+    private ArrayList<ResRecipeItem> selectedItemReciepList;
+
     public static AddCarbFoodFragment newInstance(int page, String title) {
         AddCarbFoodFragment fragmentAddCarbFood = new AddCarbFoodFragment();
         Bundle args = new Bundle();
@@ -67,8 +73,13 @@ public class AddCarbFoodFragment extends Fragment {
         this.context = context;
 
         ingredient = ((AddTodayMealActivity) (context)).ingredient;
+    }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
+        ingredient = ((AddTodayMealActivity) (activity)).ingredient;
     }
 
     @Override
@@ -79,17 +90,37 @@ public class AddCarbFoodFragment extends Fragment {
         sessionManager = new SessionManager(getContext());
         prefMeal = new PrefMeal(getContext());
 
+        resRecipeItemArrayList = new ArrayList<>();
+        selectedItemReciepList = new ArrayList<>();
+
         textView_noRecipes = view_main.findViewById(R.id.addCarbFood_tv_noRecipes);
         progressBar = view_main.findViewById(R.id.addCarbFood_progressBar);
         recyclerView_carbRecipes = view_main.findViewById(R.id.addCarbFood_recView_recipes);
         button_next = view_main.findViewById(R.id.addCarbFood_btn_next);
 
-        //setAllRecipes();
 
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AddTodayMealActivity) getActivity()).setCurrentItem(3, true);
+
+                if (selectedItemReciepList.size() > 0) {
+
+                    for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
+
+                        if (resRecipeItemArrayList.get(i).isSelected()) {
+                            selectedItemReciepList.add(resRecipeItemArrayList.get(i));
+                        }
+
+                    }
+
+                    if (selectedItemReciepList.size() > 0) {
+                        ingredient.setCarbList(selectedItemReciepList);
+                    }
+                    ((AddTodayMealActivity) getActivity()).setCurrentItem(3, true);
+                } else {
+                    Toast.makeText(getActivity(), "Select any recipe", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -124,15 +155,31 @@ public class AddCarbFoodFragment extends Fragment {
 
                     if (response.body() != null) {
 
-                        String[] names = new String[response.body().size()];
-                        String[] thumbs = new String[response.body().size()];
+                        resRecipeItemArrayList = (ArrayList<ResRecipeItem>) response.body();
 
-                        for (int i = 0; i < response.body().size(); i++) {
-                            names[i] = response.body().get(i).getName();
-                            thumbs[i] = response.body().get(i).getThumb();
+
+                        if (selectedItemReciepList.size() > 0 && resRecipeItemArrayList.size() > 0) {
+
+                            for (int i = 0; i < selectedItemReciepList.size(); i++) {
+
+                                for (int j = 0; j < resRecipeItemArrayList.size(); j++) {
+
+                                    if (selectedItemReciepList.get(i).getId().equals(
+                                            resRecipeItemArrayList.get(j).getId()
+                                    )) {
+
+                                        resRecipeItemArrayList.get(j).setSelected(true);
+
+                                    }
+
+                                }
+                            }
+
+
                         }
 
-                        recAdapter = new RecAdapter(names, thumbs);
+
+                        recAdapter = new RecAdapter(resRecipeItemArrayList);
 
                         recyclerView_carbRecipes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
@@ -165,14 +212,11 @@ public class AddCarbFoodFragment extends Fragment {
     }
 
 
-//------------------------------------ Adapter Class ---------------------------------------------//
+//---------------------------------------- APIs --------------------------------------------------//
 
     GetRecipesAPI getGetRecipesAPIService(String baseUrl) {
         return RetrofitClient.getClient(baseUrl).create(GetRecipesAPI.class);
     }
-
-
-//---------------------------------------- APIs --------------------------------------------------//
 
     interface GetRecipesAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
@@ -184,15 +228,17 @@ public class AddCarbFoodFragment extends Fragment {
         );
     }
 
+
+//------------------------------------ Adapter Class ---------------------------------------------//
+
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
-        private String[] nameArray;
-        private String[] imageArray;
+        String BASE_IMG_URL = "http://code-fuel.in/healthbotics/storage/app/public/thumb/";
+        private ArrayList<ResRecipeItem> mDataSet;
 
 
-        RecAdapter(String[] nameArray, String[] imageArray) {
-            this.nameArray = nameArray;
-            this.imageArray = imageArray;
+        RecAdapter(ArrayList<ResRecipeItem> mDataSet) {
+            this.mDataSet = mDataSet;
         }
 
         @Override
@@ -204,42 +250,75 @@ public class AddCarbFoodFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-            int count = position + 1;
-            viewHolder.getTextView_name().setText(nameArray[position]);
+
+            if (mDataSet.get(position).isSelected()) {
+                viewHolder.imageView_add.setImageResource(R.drawable.ic_red_remove);
+
+            } else {
+                viewHolder.imageView_add.setImageResource(R.drawable.ic_green_add);
+            }
+
+            viewHolder.getTextView_name().setText(mDataSet.get(position).getName());
 
             viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
 
-            viewHolder.getImageView_add().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Clicked: " + count, Toast.LENGTH_SHORT).show();
-                }
-            });
+            String img_uri = BASE_IMG_URL + (mDataSet.get(position).getPhoto());
+            Glide.with(getContext()).load(img_uri).into(viewHolder.imageView_recipeImage);
+
+            viewHolder.tv_protein.setText(mDataSet.get(position).getProteins());
+            viewHolder.tv_fats.setText(mDataSet.get(position).getFats());
+            viewHolder.tv_carbs.setText(mDataSet.get(position).getCarbs());
+            viewHolder.tv_caloreis.setText(mDataSet.get(position).getCalories());
+
         }
 
         @Override
         public int getItemCount() {
-            return nameArray.length;
+            return mDataSet.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
             private final TextView textView_name;
             private final ImageView imageView_recipeImage, imageView_add;
+            private final TextView tv_protein, tv_fats, tv_carbs, tv_caloreis;
 
             ViewHolder(View v) {
                 super(v);
 
-                /*v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //startActivity(new Intent(ExHelpActivity.this, ExQueItemActivity.class));
-                    }
-                });*/
-
                 textView_name = (TextView) v.findViewById(R.id.row_addRecipe_tv_name);
                 imageView_recipeImage = (ImageView) v.findViewById(R.id.row_addRecipe_iv_image);
                 imageView_add = (ImageView) v.findViewById(R.id.row_addRecipe_iv_addBtn);
+                tv_protein = (TextView) v.findViewById(R.id.row_addRecipe_tv_proteins);
+                tv_fats = (TextView) v.findViewById(R.id.row_addRecipe_tv_fats);
+                tv_carbs = (TextView) v.findViewById(R.id.row_addRecipe_tv_carbs);
+                tv_caloreis = (TextView) v.findViewById(R.id.row_addRecipe_tv_calories);
+
+
+                imageView_add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        selectedItemReciepList.clear();
+
+                        if (mDataSet.get(getAdapterPosition()).isSelected()) {
+                            mDataSet.get(getAdapterPosition()).setSelected(false);
+                            imageView_add.setImageResource(R.drawable.ic_green_add);
+                        } else {
+                            mDataSet.get(getAdapterPosition()).setSelected(true);
+                            imageView_add.setImageResource(R.drawable.ic_red_remove);
+                        }
+
+                        for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
+
+                            if (resRecipeItemArrayList.get(i).isSelected()) {
+                                selectedItemReciepList.add(resRecipeItemArrayList.get(i));
+                            }
+
+                        }
+
+                    }
+                });
             }
 
             TextView getTextView_name() {

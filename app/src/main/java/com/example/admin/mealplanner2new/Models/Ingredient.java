@@ -29,6 +29,15 @@ public class Ingredient {
     }
 
     private ArrayList<ResRecipeItem> proteinList;
-     private ArrayList<ResRecipeItem> carbList;
-     private ArrayList<ResRecipeItem> veggiList;
+    private ArrayList<ResRecipeItem> carbList;
+    private ArrayList<ResRecipeItem> veggiList;
+    private ArrayList<ResRecipeItem> fNtList;
+
+    public ArrayList<ResRecipeItem> getfNtList() {
+        return fNtList;
+    }
+
+    public void setfNtList(ArrayList<ResRecipeItem> fNtList) {
+        this.fNtList = fNtList;
+    }
 }

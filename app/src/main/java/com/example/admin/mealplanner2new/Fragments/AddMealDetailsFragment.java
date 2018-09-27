@@ -51,7 +51,7 @@ public class AddMealDetailsFragment extends Fragment {
 
     View view_main;
     Spinner spinner_category, spinner_mealType;
-    TextView textView_mealTime;
+    TextView textView_mealTime, textView_selectInfo;
     Button button_repeat, button_next;
     RecyclerView recyclerView_repeatedRecipes;
     ProgressBar progressBar;
@@ -76,6 +76,7 @@ public class AddMealDetailsFragment extends Fragment {
         spinner_mealType = view_main.findViewById(R.id.addTodayMeal_spinnerMealType);
         button_repeat = view_main.findViewById(R.id.addMealDetails_btn_repeat);
         button_next = view_main.findViewById(R.id.addMealDetails_btn_next);
+        textView_selectInfo = view_main.findViewById(R.id.addMealDetails_tv_selectInfo);
         recyclerView_repeatedRecipes = view_main.findViewById(R.id.addMealDetails_recView_repeatRecipes);
         progressBar = view_main.findViewById(R.id.addMealDetails_progressbar);
 
@@ -91,6 +92,7 @@ public class AddMealDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
+                textView_selectInfo.setVisibility(View.VISIBLE);
 
                 String token = sessionManager.getAccessToken();
                 String u_id = sessionManager.getKeyUId();

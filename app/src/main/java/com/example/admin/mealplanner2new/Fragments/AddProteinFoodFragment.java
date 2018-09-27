@@ -1,5 +1,6 @@
 package com.example.admin.mealplanner2new.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -55,6 +56,7 @@ public class AddProteinFoodFragment extends Fragment {
     RecAdapter recAdapter;
     private Context context;
     private Ingredient ingredient;
+
     private ArrayList<ResRecipeItem> resRecipeItemArrayList;
     private ArrayList<ResRecipeItem> selectedItemReciepList;
 
@@ -74,7 +76,13 @@ public class AddProteinFoodFragment extends Fragment {
 
         ingredient = ((AddTodayMealActivity) (context)).ingredient;
 
+    }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        ingredient = ((AddTodayMealActivity) (activity)).ingredient;
     }
 
     @Override
@@ -114,7 +122,7 @@ public class AddProteinFoodFragment extends Fragment {
                     }
                     ((AddTodayMealActivity) getActivity()).setCurrentItem(2, true);
                 } else {
-                    Toast.makeText(getActivity(), "Select any receipe", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Select any recipe", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -169,9 +177,7 @@ public class AddProteinFoodFragment extends Fragment {
 
                                         resRecipeItemArrayList.get(j).setSelected(true);
 
-
                                     }
-
 
                                 }
                             }
@@ -184,8 +190,8 @@ public class AddProteinFoodFragment extends Fragment {
 
                         recyclerView_proteinRecipes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-                        if(getActivity()!=null)
-                        recyclerView_proteinRecipes.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+                        if (getActivity() != null)
+                            recyclerView_proteinRecipes.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
                         recyclerView_proteinRecipes.setAdapter(recAdapter);
 
@@ -211,8 +217,6 @@ public class AddProteinFoodFragment extends Fragment {
         });
 
     }
-
-
 
 
 //---------------------------------------- APIs --------------------------------------------------//
@@ -255,10 +259,7 @@ public class AddProteinFoodFragment extends Fragment {
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
             if (mDataSet.get(position).isSelected()) {
-
-
                 viewHolder.imageView_add.setImageResource(R.drawable.ic_red_remove);
-
 
             } else {
                 viewHolder.imageView_add.setImageResource(R.drawable.ic_green_add);
@@ -291,7 +292,6 @@ public class AddProteinFoodFragment extends Fragment {
 
             ViewHolder(View v) {
                 super(v);
-
 
                 textView_name = (TextView) v.findViewById(R.id.row_addRecipe_tv_name);
                 imageView_recipeImage = (ImageView) v.findViewById(R.id.row_addRecipe_iv_image);
@@ -343,4 +343,6 @@ public class AddProteinFoodFragment extends Fragment {
         }
 
     }
+
+
 }

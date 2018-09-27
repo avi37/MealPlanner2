@@ -7,9 +7,10 @@
 
 
     <string-array name="array_mealType">
-        <item>Breakfast</item>
-        <item>Lunch</item>
-        <item>Dinner</item>
+        <item>Pre-Workout</item>
+        <item>Post-Workout</item>
+        <item>Before Bed</item>
+        <item>Rest Time</item>
     </string-array>
 
     <string-array name="array_mealCat">
