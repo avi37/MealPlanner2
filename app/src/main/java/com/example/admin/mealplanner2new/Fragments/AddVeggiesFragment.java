@@ -123,8 +123,10 @@ public class AddVeggiesFragment extends Fragment {
 
                         recAdapter = new RecAdapter(names, thumbs);
 
-                        recyclerView_veggies.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                        recyclerView_veggies.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+                        recyclerView_veggies.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+                         if(getActivity()!=null)
+                         recyclerView_veggies.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
                         recyclerView_veggies.setAdapter(recAdapter);
 

@@ -102,8 +102,6 @@ public class AddCarbFoodFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
 
-            Log.e("selected array", ingredient.getProteinList().get(0).getName());
-
             setAllRecipes();
         }
     }
@@ -136,8 +134,10 @@ public class AddCarbFoodFragment extends Fragment {
 
                         recAdapter = new RecAdapter(names, thumbs);
 
-                        recyclerView_carbRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                        recyclerView_carbRecipes.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+                        recyclerView_carbRecipes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+                        if (getActivity() != null)
+                            recyclerView_carbRecipes.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
                         recyclerView_carbRecipes.setAdapter(recAdapter);
 
