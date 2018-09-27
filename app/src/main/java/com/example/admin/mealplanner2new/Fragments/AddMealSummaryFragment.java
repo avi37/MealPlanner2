@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,17 +27,18 @@ import java.util.ArrayList;
 public class AddMealSummaryFragment extends Fragment {
 
     View view_main;
-
-    private Context context;
-    private Ingredient ingredient;
-    private ArrayList<ResRecipeItem> allItemList;
     RecAdapter recAdapter;
-
     TextView tv_mealCat, tv_mealTime, tv_mealType;
     TextView tv_proteins, tv_fats, tv_carbs, tv_calories;
     RecyclerView recyclerView_recipes;
     Button btn_submit;
-
+    private Context context;
+    private Ingredient ingredient;
+    private ArrayList<ResRecipeItem> allItemList;
+    private double proteins;
+    private double carbs;
+    private double fats;
+    private double calories;
 
     public static AddMealSummaryFragment newInstance(int page, String title) {
         AddMealSummaryFragment fragmentAddMealSummary = new AddMealSummaryFragment();
@@ -81,9 +83,22 @@ public class AddMealSummaryFragment extends Fragment {
 
             Log.e("all item", String.valueOf(allItemList.size()));
 
+
+            for (int i = 0; i < allItemList.size(); i++) {
+
+                proteins = proteins + Double.valueOf(allItemList.get(i).getProteins());
+                calories = calories + Double.valueOf(allItemList.get(i).getCalories());
+                carbs = carbs + Double.valueOf(allItemList.get(i).getCarbs());
+                fats = proteins + Double.valueOf(allItemList.get(i).getFats());
+
+
+            }
+
+
         }
 
         recAdapter = new RecAdapter(allItemList);
+        recyclerView_recipes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         recyclerView_recipes.setAdapter(recAdapter);
 
