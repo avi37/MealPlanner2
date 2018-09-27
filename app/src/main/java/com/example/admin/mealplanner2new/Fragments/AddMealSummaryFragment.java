@@ -72,37 +72,6 @@ public class AddMealSummaryFragment extends Fragment {
         recyclerView_recipes = view_main.findViewById(R.id.mealSummary_recView_recipes);
         btn_submit = view_main.findViewById(R.id.mealSummary_btn_submit);
 
-        allItemList = new ArrayList<>();
-
-        if (ingredient != null) {
-
-            allItemList.addAll(ingredient.getProteinList());
-            allItemList.addAll(ingredient.getCarbList());
-            allItemList.addAll(ingredient.getfNtList());
-            allItemList.addAll(ingredient.getVeggiList());
-
-            Log.e("all item", String.valueOf(allItemList.size()));
-
-
-            for (int i = 0; i < allItemList.size(); i++) {
-
-                proteins = proteins + Double.valueOf(allItemList.get(i).getProteins());
-                calories = calories + Double.valueOf(allItemList.get(i).getCalories());
-                carbs = carbs + Double.valueOf(allItemList.get(i).getCarbs());
-                fats = proteins + Double.valueOf(allItemList.get(i).getFats());
-
-
-            }
-
-
-        }
-
-        recAdapter = new RecAdapter(allItemList);
-        recyclerView_recipes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-        recyclerView_recipes.setAdapter(recAdapter);
-
-        recAdapter.notifyDataSetChanged();
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +87,54 @@ public class AddMealSummaryFragment extends Fragment {
     private void methodSubmitMeal() {
 
         Toast.makeText(getContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+
+            allItemList = new ArrayList<>();
+
+            if (ingredient != null && ingredient.getfNtList() != null) {
+
+                allItemList.addAll(ingredient.getProteinList());
+                allItemList.addAll(ingredient.getCarbList());
+                allItemList.addAll(ingredient.getfNtList());
+                allItemList.addAll(ingredient.getVeggiList());
+
+                Log.e("all item", String.valueOf(allItemList.size()));
+
+
+                for (int i = 0; i < allItemList.size(); i++) {
+
+                    proteins = proteins + Double.valueOf(allItemList.get(i).getProteins());
+                    calories = calories + Double.valueOf(allItemList.get(i).getCalories());
+                    carbs = carbs + Double.valueOf(allItemList.get(i).getCarbs());
+                    fats = proteins + Double.valueOf(allItemList.get(i).getFats());
+
+                }
+
+                tv_proteins.setText(String.valueOf(proteins));
+                tv_fats.setText(String.valueOf(fats));
+                tv_carbs.setText(String.valueOf(carbs));
+                tv_calories.setText(String.valueOf(calories));
+
+                btn_submit.setVisibility(View.VISIBLE);
+
+            }
+
+            recAdapter = new RecAdapter(allItemList);
+            recyclerView_recipes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+            recyclerView_recipes.setAdapter(recAdapter);
+
+            recAdapter.notifyDataSetChanged();
+
+        }
 
     }
 

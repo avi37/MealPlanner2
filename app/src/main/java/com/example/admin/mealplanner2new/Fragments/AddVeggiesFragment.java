@@ -107,13 +107,13 @@ public class AddVeggiesFragment extends Fragment {
 
                 if (selectedItemReciepList.size() > 0) {
 
-                    for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
+                    /*for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
 
                         if (resRecipeItemArrayList.get(i).isSelected()) {
                             selectedItemReciepList.add(resRecipeItemArrayList.get(i));
                         }
 
-                    }
+                    }*/
 
                     if (selectedItemReciepList.size() > 0) {
                         ingredient.setVeggiList(selectedItemReciepList);
@@ -152,14 +152,11 @@ public class AddVeggiesFragment extends Fragment {
 
                 progressBar.setVisibility(View.GONE);
 
-
                 if (response.isSuccessful()) {
 
                     if (response.body() != null) {
 
-
                         resRecipeItemArrayList = (ArrayList<ResRecipeItem>) response.body();
-
 
                         if (selectedItemReciepList.size() > 0 && resRecipeItemArrayList.size() > 0) {
 
@@ -173,11 +170,10 @@ public class AddVeggiesFragment extends Fragment {
 
                                         resRecipeItemArrayList.get(j).setSelected(true);
 
-
                                     }
 
-
                                 }
+
                             }
 
 
@@ -194,7 +190,7 @@ public class AddVeggiesFragment extends Fragment {
                         recyclerView_veggies.setAdapter(recAdapter);
 
                         if (recAdapter.getItemCount() > 0) {
-                            recyclerView_veggies.setVisibility(View.GONE);
+                            textView_noVeggies.setVisibility(View.GONE);
                         }
 
                     } else {
@@ -218,13 +214,12 @@ public class AddVeggiesFragment extends Fragment {
 
     }
 
-//------------------------------------ Adapter Class ---------------------------------------------//
+
+//---------------------------------------- APIs --------------------------------------------------//
 
     GetRecipesAPI getGetRecipesAPIService(String baseUrl) {
         return RetrofitClient.getClient(baseUrl).create(GetRecipesAPI.class);
     }
-
-//---------------------------------------- APIs --------------------------------------------------//
 
     interface GetRecipesAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
@@ -235,6 +230,9 @@ public class AddVeggiesFragment extends Fragment {
                                               @Field("type") String type
         );
     }
+
+
+//------------------------------------ Adapter Class ---------------------------------------------//
 
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
@@ -257,7 +255,6 @@ public class AddVeggiesFragment extends Fragment {
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
             if (mDataSet.get(position).isSelected()) {
-
 
                 viewHolder.imageView_add.setImageResource(R.drawable.ic_red_remove);
 
@@ -287,7 +284,6 @@ public class AddVeggiesFragment extends Fragment {
 
             ViewHolder(View v) {
                 super(v);
-
 
                 textView_name = (TextView) v.findViewById(R.id.row_addRecipe_tv_name);
                 imageView_recipeImage = (ImageView) v.findViewById(R.id.row_addRecipe_iv_image);

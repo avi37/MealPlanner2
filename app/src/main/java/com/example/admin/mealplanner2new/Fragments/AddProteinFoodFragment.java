@@ -109,13 +109,13 @@ public class AddProteinFoodFragment extends Fragment {
 
                 if (selectedItemReciepList.size() > 0) {
 
-                    for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
+                    /*for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
 
                         if (resRecipeItemArrayList.get(i).isSelected()) {
                             selectedItemReciepList.add(resRecipeItemArrayList.get(i));
                         }
 
-                    }
+                    }*/
 
                     if (selectedItemReciepList.size() > 0) {
                         ingredient.setProteinList(selectedItemReciepList);

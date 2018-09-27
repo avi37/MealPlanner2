@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,8 +7,10 @@
     tools:context=".Fragments.AddMealSummaryFragment">
 
     <LinearLayout
+        android:id="@+id/mealSummary_ll_mealCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="12dp"
         android:padding="5sp">
 
@@ -28,8 +30,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/mealSummary_ll_mealType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/mealSummary_ll_mealCategory"
         android:padding="5sp">
 
         <TextView
@@ -48,8 +52,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/mealSummary_ll_mealTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/mealSummary_ll_mealType"
         android:padding="5sp">
 
         <TextView
@@ -68,8 +74,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/mealSummary_ll_nutriInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/mealSummary_ll_mealTime"
         android:layout_marginLeft="10sp"
         android:layout_marginTop="3sp"
         android:layout_marginRight="10sp"
@@ -163,16 +171,20 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/mealSummary_view1"
         android:layout_width="match_parent"
         android:layout_height="2sp"
+        android:layout_below="@id/mealSummary_ll_nutriInfo"
         android:layout_marginLeft="10sp"
         android:layout_marginTop="8sp"
         android:layout_marginRight="10sp"
         android:background="@color/raisinBlackDark" />
 
     <TextView
+        android:id="@+id/mealSummary_tv_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/mealSummary_view1"
         android:gravity="center"
         android:padding="5sp"
         android:text=": Meal Recipes :"
@@ -183,6 +195,8 @@
         android:id="@+id/mealSummary_recView_recipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/mealSummary_btn_submit"
+        android:layout_below="@id/mealSummary_tv_text"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:layout_marginBottom="5dp" />
@@ -191,8 +205,9 @@
         android:id="@+id/mealSummary_btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="@color/mainColorAccent"
         android:text="SUBMIT"
         android:textColor="@color/white" />
 
-</LinearLayout>
+</RelativeLayout>

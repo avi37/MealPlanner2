@@ -33,9 +33,9 @@ public class ResRecipeItem {
     @Expose
     private String fats;
 
-    @SerializedName("calories")
+    @SerializedName("calorie")
     @Expose
-    private String calories;
+    private String calorie;
 
     @SerializedName("proteins")
     @Expose
@@ -129,11 +129,11 @@ public class ResRecipeItem {
     }
 
     public String getCalories() {
-        return calories;
+        return calorie;
     }
 
     public void setCalories(String calories) {
-        this.calories = calories;
+        this.calorie = calories;
     }
 
     public String getProteins() {
