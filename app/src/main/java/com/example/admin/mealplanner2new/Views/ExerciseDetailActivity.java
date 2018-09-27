@@ -39,7 +39,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
     private boolean flag = false;
     private String ex_category;
     private String cat_id;
-    private String dateOf;
+    public String dateOf, status;
     private GetExerciseDetail exerciseDetail;
     private ProgressBar progressBar;
     private TextView tvDate;
@@ -64,6 +64,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             dateOf = getIntent().getStringExtra("date");
             taskId = getIntent().getStringExtra("task_id");
             com_id = getIntent().getStringExtra("com_id");
+            status = getIntent().getStringExtra("status");
 
         }
 
@@ -88,6 +89,11 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             btnStart.setVisibility(View.GONE);
         }
 
+        if (status.equals("0")) {
+            btnStart.setText("START");
+        } else {
+            btnStart.setText("REVIEW");
+        }
 
         recyclerView_exercises.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         //customAdapter = new CustomAdapter(exercises);
@@ -132,14 +138,13 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 Intent intent = new Intent(ExerciseDetailActivity.this, StartExerciseActivity.class);
                 intent.putParcelableArrayListExtra("data", exercises);
                 intent.putExtra("day", dateOf);
                 intent.putExtra("work_id", ex_category);
                 intent.putExtra("task_id", taskId);
+                intent.putExtra("status", status);
                 startActivity(intent);
-
 
             }
         });

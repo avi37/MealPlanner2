@@ -25,9 +25,14 @@ import com.example.admin.mealplanner2new.Models.Exercise;
 import com.example.admin.mealplanner2new.Models.WordRoomDatabase;
 import com.example.admin.mealplanner2new.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +52,9 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
     WordRoomDatabase wordRoomDatabase;
     private GetExerciseHistory getExerciseHistory;
     private String u_id;
+
+    ArrayList<Exercise> exerciseArrayList;
+    ArrayList<Exercise> dateExResult = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +92,8 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
 
                 if (response.isSuccessful()) {
 
-                    final ArrayList<Exercise> exerciseArrayList = response.body();
+                    exerciseArrayList = response.body();
+
                     if (exerciseArrayList.size() > 0) {
                         recyclerView_exList.setLayoutManager(new LinearLayoutManager(ExHistoryActivity.this, LinearLayoutManager.VERTICAL, false));
 //
@@ -107,7 +116,6 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onFailure(Call<ArrayList<Exercise>> call, Throwable t) {
-
                 progressBar.setVisibility(View.GONE);
 
             }
@@ -155,8 +163,30 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                textView_date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                dateExResult.clear();
+                recyclerView_exList.getAdapter().notifyDataSetChanged();
 
+                String _month = String.valueOf(monthOfYear + 1);
+
+                textView_date.setText(dayOfMonth + "/" + _month + "/" + year);
+
+                if (monthOfYear + 1 < 10) {
+                    _month = "0" + _month;
+                }
+
+                String _date = dayOfMonth + "/" + _month + "/" + year;
+
+
+                for (int i = 0; i < exerciseArrayList.size(); i++) {
+
+                    if (getYMDDate(exerciseArrayList.get(i).getDay()).equals(_date)) {
+                        dateExResult.add(exerciseArrayList.get(i));
+
+                    }
+
+                }
+
+                recyclerView_exList.setAdapter(new CustomAdapter(dateExResult));
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -165,9 +195,30 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
 
 
     private void methodRefresh() {
+        textView_date.setText("All History");
         Toast.makeText(this, "Refreshing your history list...", Toast.LENGTH_LONG).show();
+
+        recyclerView_exList.setAdapter(new CustomAdapter(exerciseArrayList));
+
     }
 
+
+    String getYMDDate(String dateString) {
+
+        Date dateTime = null;
+
+        try {
+            dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(dateTime);
+
+    }
+
+
+//--------------- API ---------------//
 
     interface GetExerciseHistory {
 
@@ -203,6 +254,8 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+
+    //--------------- Adapter Class ------------------------//
     public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
         private ArrayList<Exercise> mDataSet;

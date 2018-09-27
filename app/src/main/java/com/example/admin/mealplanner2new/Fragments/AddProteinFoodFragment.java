@@ -3,7 +3,6 @@ package com.example.admin.mealplanner2new.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -96,31 +95,36 @@ public class AddProteinFoodFragment extends Fragment {
         button_next = view_main.findViewById(R.id.addProteinFood_btn_next);
 
 
-        //setAllRecipes();
-
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (resRecipeItemArrayList.size() > 0) {
-                    for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
-                        if (resRecipeItemArrayList.get(i).isSelected()) {
-                            selectedItemReciepList.add(resRecipeItemArrayList.get(i));
+                if (selectedItemReciepList.isEmpty()) {
+
+                    Toast.makeText(getContext(), "Please add any recipe to your meal", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    if (resRecipeItemArrayList.size() > 0) {
+
+                        for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
+
+                            if (resRecipeItemArrayList.get(i).isSelected()) {
+                                selectedItemReciepList.add(resRecipeItemArrayList.get(i));
+                            }
+
                         }
-
-
                     }
+
+                    if (selectedItemReciepList.size() > 0) {
+                        ingredient.setProteinList(selectedItemReciepList);
+                    }
+
+
+                    ((AddTodayMealActivity) getActivity()).setCurrentItem(2, true);
                 }
 
-                if (selectedItemReciepList.size() > 0) {
-
-                    ingredient.setProteinList(selectedItemReciepList);
-
-                }
-
-
-                ((AddTodayMealActivity) getActivity()).setCurrentItem(2, true);
             }
+
         });
 
 
@@ -132,8 +136,6 @@ public class AddProteinFoodFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            // do something when visible.
-            Log.e("onresume", "addprotein");
             setAllRecipes();
         }
     }
@@ -228,14 +230,13 @@ public class AddProteinFoodFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-            int count = position + 1;
+
             viewHolder.getTextView_name().setText(mDataSet.get(position).getName());
 
             viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
 
             String img_uri = BASE_IMG_URL + (mDataSet.get(position).getPhoto());
             Glide.with(getContext()).load(img_uri).into(viewHolder.imageView_recipeImage);
-
 
         }
 
@@ -261,16 +262,15 @@ public class AddProteinFoodFragment extends Fragment {
                 imageView_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        imageView_add.setImageResource(R.drawable.ic_red_remove);
 
                         if (mDataSet.get(getAdapterPosition()).isSelected()) {
                             mDataSet.get(getAdapterPosition()).setSelected(false);
+                            imageView_add.setImageResource(R.drawable.ic_green_add);
                         } else {
                             mDataSet.get(getAdapterPosition()).setSelected(true);
+                            imageView_add.setImageResource(R.drawable.ic_red_remove);
                         }
 
-
-                        // Toast.makeText(getContext(), "Clicked: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

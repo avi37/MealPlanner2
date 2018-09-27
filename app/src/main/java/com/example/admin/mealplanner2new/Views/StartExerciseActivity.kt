@@ -19,6 +19,7 @@ class StartExerciseActivity : AppCompatActivity() {
     private var id = 0
     private var dateOf = ""
     lateinit var task_id: String
+    public  var status = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +28,11 @@ class StartExerciseActivity : AppCompatActivity() {
 
         if (intent != null) {
 
-            exerciseList = intent.getParcelableArrayListExtra("data")
+            exerciseList = intent.getParcelableArrayListExtra("data")         // Data is coming from  ExerciseDetailActivity.java
             dateOf = intent.getStringExtra("day")
             workOutId = intent.getStringExtra("work_id")
             task_id = intent.getStringExtra("task_id")
+            status = intent.getStringExtra("status")
 
 
         }

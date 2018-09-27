@@ -23,9 +23,9 @@ public class DietDashboardFragment extends Fragment implements View.OnClickListe
 
     CardView cardView_add_today_meal, cardView_check_today_menu, cardView_meal_history, cardView_add_recipe, cardView_add_ingredient;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         view_main = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         cardView_add_today_meal = view_main.findViewById(R.id.dash_card_add_today_meal);

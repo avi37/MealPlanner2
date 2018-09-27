@@ -166,9 +166,10 @@ class ShowExercisesActivity : AppCompatActivity() {
                     intent.putExtra("cat_id", dataSet[adapterPosition].cat_id)
                     intent.putExtra("date", dataSet[adapterPosition].dateOf)
                     intent.putExtra("task_id", dataSet[adapterPosition].task_id)
-                    intent.putExtra("com_id",dataSet[adapterPosition].component_id)
+                    intent.putExtra("com_id", dataSet[adapterPosition].component_id)
+                    intent.putExtra("status", dataSet[adapterPosition].status)
 
-                    if (currentTimeStamp == exerciseDateTime && dataSet[adapterPosition].status == "0") {
+                    if (currentTimeStamp == exerciseDateTime) {
                         intent.putExtra("flag", true)
 
                     } else {

@@ -10,10 +10,10 @@
             android:icon="@drawable/ic_nav_dashboard"
             android:title="Dashboard" />
 
-        <item
+        <!--<item
             android:id="@+id/nav2_my_profile"
             android:icon="@drawable/ic_nav_my_profile"
-            android:title="My Profile" />
+            android:title="My Profile" />-->
 
         <item
             android:id="@+id/nav2_help"

@@ -1,6 +1,7 @@
 package com.example.admin.mealplanner2new.Fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
 import android.app.FragmentTransaction
@@ -56,6 +57,13 @@ class StartExerciseFragment : Fragment() {
         workOutId = (contexts as StartExerciseActivity).workOutId
         taslId = (contexts as StartExerciseActivity).task_id
 
+    }
+
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        exerciseList = (activity as StartExerciseActivity).exerciseList
+        workOutId = (activity as StartExerciseActivity).workOutId
+        taslId = (activity as StartExerciseActivity).task_id
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

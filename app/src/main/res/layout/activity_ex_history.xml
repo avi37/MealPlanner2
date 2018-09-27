@@ -7,11 +7,11 @@
     tools:context=".Views.ExHistoryActivity">
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_softGrey"
         android:elevation="5dp"
+        android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp"
         android:weightSum="10">
@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="3dp"
             android:layout_weight="2.8"
-            android:text="18-09-2018"
+            android:text="All History"
             android:textColor="@color/raisinBlack"
             android:textSize="15sp" />
 
@@ -46,7 +46,6 @@
     </LinearLayout>
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/exHistory_tv_exTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,7 +54,8 @@
         android:padding="8dp"
         android:textColor="@color/raisinBlackDark"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <View
         android:layout_width="match_parent"
@@ -86,8 +86,7 @@
             android:id="@+id/exHistory_progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-         />
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

@@ -24,7 +24,6 @@ public class ExDashboardFragment extends Fragment implements View.OnClickListene
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         view_main = inflater.inflate(R.layout.fragment_ex_dashboard, container, false);
 
         cardView_showExercise = view_main.findViewById(R.id.dash_card_show_exercise);
