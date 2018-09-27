@@ -2,32 +2,135 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:weightSum="10">
+    android:orientation="vertical"
+    android:padding="12dp">
 
-    <TextView
-        android:id="@+id/row_addRecipe_tv_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:text="NAME"
-        android:textColor="@color/raisinBlack"
-        android:textSize="18sp" />
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
-    <ImageView
-        android:id="@+id/row_addRecipe_iv_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp" />
+        <TextView
+            android:id="@+id/row_addRecipe_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:text="NAME"
+            android:textColor="@color/raisinBlack"
+            android:textSize="18sp" />
 
-    <ImageView
-        android:id="@+id/row_addRecipe_iv_addBtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="10dp"
-        android:layout_weight="2"
-        android:src="@drawable/ic_green_add" />
+        <ImageView
+            android:id="@+id/row_addRecipe_iv_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/lightGrey" />
+
+        <ImageView
+            android:id="@+id/row_addRecipe_iv_addBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="2"
+            android:src="@drawable/ic_green_add" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/lightGrey"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Protein"
+                android:textColor="@color/raisinBlack" />
+
+            <TextView
+                android:id="@+id/row_addRecipe_tv_proteins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fat"
+                android:textColor="@color/raisinBlack" />
+
+            <TextView
+                android:id="@+id/row_addRecipe_tv_fats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carb"
+                android:textColor="@color/raisinBlack" />
+
+            <TextView
+                android:id="@+id/row_addRecipe_tv_carbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calorie"
+                android:textColor="@color/raisinBlack" />
+
+            <TextView
+                android:id="@+id/row_addRecipe_tv_calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -192,14 +192,14 @@ public class AddProteinFoodFragment extends Fragment {
 
     }
 
-//------------------------------------ Adapter Class ---------------------------------------------//
+
+
+
+//---------------------------------------- APIs --------------------------------------------------//
 
     GetRecipesAPI getGetRecipesAPIService(String baseUrl) {
         return RetrofitClient.getClient(baseUrl).create(GetRecipesAPI.class);
     }
-
-
-//---------------------------------------- APIs --------------------------------------------------//
 
     interface GetRecipesAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
@@ -210,6 +210,9 @@ public class AddProteinFoodFragment extends Fragment {
                                               @Field("type") String type
         );
     }
+
+
+//----------------------------------- Adapter Class ----------------------------------------------//
 
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
@@ -238,6 +241,11 @@ public class AddProteinFoodFragment extends Fragment {
             String img_uri = BASE_IMG_URL + (mDataSet.get(position).getPhoto());
             Glide.with(getContext()).load(img_uri).into(viewHolder.imageView_recipeImage);
 
+            viewHolder.tv_protein.setText(mDataSet.get(position).getProteins());
+            viewHolder.tv_fats.setText(mDataSet.get(position).getFats());
+            viewHolder.tv_carbs.setText(mDataSet.get(position).getCarbs());
+            viewHolder.tv_caloreis.setText(mDataSet.get(position).getCalories());
+
         }
 
         @Override
@@ -249,6 +257,7 @@ public class AddProteinFoodFragment extends Fragment {
 
             private final TextView textView_name;
             private final ImageView imageView_recipeImage, imageView_add;
+            private final TextView tv_protein, tv_fats, tv_carbs, tv_caloreis;
 
             ViewHolder(View v) {
                 super(v);
@@ -257,6 +266,10 @@ public class AddProteinFoodFragment extends Fragment {
                 textView_name = (TextView) v.findViewById(R.id.row_addRecipe_tv_name);
                 imageView_recipeImage = (ImageView) v.findViewById(R.id.row_addRecipe_iv_image);
                 imageView_add = (ImageView) v.findViewById(R.id.row_addRecipe_iv_addBtn);
+                tv_protein = (TextView) v.findViewById(R.id.row_addRecipe_tv_proteins);
+                tv_fats = (TextView) v.findViewById(R.id.row_addRecipe_tv_fats);
+                tv_carbs = (TextView) v.findViewById(R.id.row_addRecipe_tv_carbs);
+                tv_caloreis = (TextView) v.findViewById(R.id.row_addRecipe_tv_calories);
 
 
                 imageView_add.setOnClickListener(new View.OnClickListener() {

@@ -6,23 +6,24 @@
     tools:context=".Fragments.AddMealDetailsFragment">
 
     <LinearLayout
+        android:id="@+id/addTodayMeal_ll_details"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:padding="12sp">
+            android:padding="8sp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Meal Category:  "
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/addTodayMeal_spinnerMealCat"
@@ -44,20 +45,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="12sp">
+            android:padding="8sp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Meal Time:  "
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/addTodayMeal_tv_selectedTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:padding="8dp"
+                android:padding="5dp"
                 android:text="7:00"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -76,13 +77,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="12dp">
+            android:padding="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Type:  "
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/addTodayMeal_spinnerMealType"
@@ -95,24 +96,50 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/addMealDetails_ll_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addTodayMeal_ll_details"
+        android:gravity="center"
+        android:padding="6dp">
+
+        <Button
+            android:id="@+id/addMealDetails_btn_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/db2ColorPrimaryDark"
+            android:elevation="3dp"
+            android:padding="8dp"
+            android:text="Select existing recipe"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/addMealDetails_btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:background="@color/mainColorAccent"
+            android:elevation="3dp"
+            android:padding="10dp"
+            android:text="Create New"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/addMealDetails_recView_repeatRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addMealDetails_ll_buttons">
+
+    </android.support.v7.widget.RecyclerView>
+
     <ProgressBar
         android:id="@+id/addMealDetails_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" />
-
-    <Button
-        android:id="@+id/addMealDetails_btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:background="@color/mainColorAccent"
-        android:elevation="3dp"
-        android:text="Next"
-        android:textColor="@color/white" />
 
 </RelativeLayout>
