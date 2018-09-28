@@ -1,103 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_softGrey"
-    android:orientation="vertical"
     tools:context=".Views.MyProfileActivity">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/myProfile_iv_profilePic"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="35dp"
-        android:src="@drawable/default_dp"
-        app:civ_border_color="@color/raisinBlack"
-        app:civ_border_width="1dp" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25sp"
+        android:layout_height="match_parent"
+        android:background="@color/bg_softGrey"
         android:orientation="vertical">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/myProfile_iv_profilePic"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/default_dp"
+            app:civ_border_color="@color/raisinBlack"
+            app:civ_border_width="1dp" />
+
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25sp"
-            android:background="@color/white"
-            android:elevation="3sp"
-            android:gravity="center"
-            android:weightSum="10">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5sp"
-                android:src="@drawable/ic_tv_phone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15sp"
+                android:background="@color/white"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_tv_phone" />
+
+                <TextView
+                    android:id="@+id/myProfile_tv_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:text="Mobile"
+                    android:textColor="@color/raisinBlack"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20sp"
+                android:background="@color/white"
+                android:elevation="3dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_user" />
+
+                <TextView
+                    android:id="@+id/myProfile_tv_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="9"
+                    android:text="Username"
+                    android:textColor="@color/raisinBlack"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/myProfile_iv_updateUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_edit" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/myProfile_tv_number"
-                android:layout_width="match_parent"
+                android:id="@+id/myProfile_tv_changePwd"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="15sp"
-                android:text="Mobile"
-                android:textColor="@color/raisinBlack"
-                android:textSize="15sp" />
+                android:layout_weight="9"
+                android:padding="20dp"
+                android:text="Change Password"
+                android:textColor="@color/raisinBlackDark"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25sp"
-            android:background="@color/white"
-            android:elevation="3sp"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5sp"
-                android:src="@drawable/ic_user" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/myProfile_tv_userName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15sp"
-                android:layout_marginLeft="15sp"
-                android:layout_weight="9"
-                android:text="Username"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="You have not uploaded your first photo\nTap the button to upload"
                 android:textColor="@color/raisinBlack"
-                android:textSize="15sp" />
+                android:textSize="15dp" />
 
-            <ImageView
-                android:id="@+id/myProfile_iv_updateUserName"
+            <Button
+                android:id="@+id/myProfile_btn_uploadPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8sp"
-                android:layout_marginRight="8sp"
-                android:src="@drawable/ic_edit" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/db2ColorPrimaryDark"
+                android:padding="8dp"
+                android:text="Upload Photo"
+                android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/myProfile_tv_changePwd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="9"
-            android:padding="30sp"
-            android:text="Change Password"
-            android:textColor="@color/raisinBlackDark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="*you can check your progress by comparing your current photo with the first photo"
+                android:textSize="12dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

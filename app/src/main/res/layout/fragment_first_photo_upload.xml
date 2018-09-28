@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnSelectFile"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:background="@color/db2ColorPrimaryDark"
-        android:padding="5dp"
-        android:text="Take Photo"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/btnSelectFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:background="@color/db2ColorPrimaryDark"
+            android:padding="5dp"
+            android:text="Take Photo"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:background="@color/db2ColorPrimaryDark"
+            android:text="Upload"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvPath"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ellipsize="end"
+        android:gravity="center"
         android:lines="1"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSelectFile"
-        app:layout_constraintEnd_toStartOf="@+id/btnSelectFile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnSelectFile"
-        tools:text="http:::/google.com/images/narendra modi" />
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/ivProfile"
@@ -50,16 +62,15 @@
         app:srcCompat="@drawable/workout" />
 
     <Button
-        android:id="@+id/btnUpload"
+        android:id="@+id/btnSkipUploadPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
         android:background="@color/db2ColorPrimaryDark"
-        android:text="Upload"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+        android:padding="8dp"
+        android:text="Skip"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

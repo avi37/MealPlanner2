@@ -1,7 +1,9 @@
 package com.example.admin.mealplanner2new.Views;
 
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
+import com.example.admin.mealplanner2new.Fragments.FirstPhotoUploadFragment;
 import com.example.admin.mealplanner2new.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -39,8 +42,11 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
     CircleImageView profilePic;
     TextView textView_number, textView_userName, textView_editPwd;
     ImageView imageView_editName;
+    Button button_uploadPhoto;
 
     String number, username;
+
+    FragmentTransaction ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +56,24 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
         /*changePwdAPI = getPwdAPIService(BASE_URL);
         changeProfileAPI = getProfileAPIService(BASE_URL);*/
         sessionManager = new SessionManager(this);
-        username = sessionManager.getUserName();
+        if (!sessionManager.getUserName().isEmpty()) {
+            username = sessionManager.getUserName();
+        } else {
+            username = "";
+        }
 
         profilePic = findViewById(R.id.myProfile_iv_profilePic);
         textView_number = findViewById(R.id.myProfile_tv_number);
         textView_userName = findViewById(R.id.myProfile_tv_userName);
         imageView_editName = findViewById(R.id.myProfile_iv_updateUserName);
         textView_editPwd = findViewById(R.id.myProfile_tv_changePwd);
-
+        button_uploadPhoto = findViewById(R.id.myProfile_btn_uploadPhoto);
 
         setUserData();
 
         imageView_editName.setOnClickListener(this);
         textView_editPwd.setOnClickListener(this);
+        button_uploadPhoto.setOnClickListener(this);
 
     }
 
@@ -81,7 +92,19 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
             case R.id.myProfile_tv_changePwd:
                 //changePassword();
                 break;
+
+            case R.id.myProfile_btn_uploadPhoto:
+                methodUploadPhoto();
+                break;
         }
+    }
+
+    private void methodUploadPhoto() {
+
+        ft = getFragmentManager().beginTransaction();
+
+        ft.add(R.id.activity_my_profile, new FirstPhotoUploadFragment());
+        ft.commit();
     }
 
     /*private void updateUserName() {

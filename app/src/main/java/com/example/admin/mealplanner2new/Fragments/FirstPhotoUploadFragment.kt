@@ -130,6 +130,9 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
         }
 
+        btnSkipUploadPhoto.setOnClickListener {
+            activity.onBackPressed()
+        }
 
     }
 
@@ -239,7 +242,6 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 galleryAddPic()
                 setPic()
             }
-
 
         } else {
             if (mCurrentPhotoPath != null) {
