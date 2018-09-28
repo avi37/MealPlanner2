@@ -32,9 +32,11 @@
         <activity
             android:name=".Views.MyProfileActivity"
             android:label="My Profile"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
         <activity
             android:name=".Views.ChooseDashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/LoginTheme" />
         <activity
             android:name=".Views.DietMainNavigationActivity"
@@ -84,7 +86,8 @@
         <activity
             android:name=".Views.ExNavigationActivity"
             android:label="@string/title_activity_ex_navigation"
-            android:theme="@style/Dash2Theme" />
+            android:theme="@style/Dash2Theme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Views.ShowExercisesActivity"
             android:label="Exercises"
@@ -98,7 +101,8 @@
         <activity
             android:name=".Views.StartExerciseActivity"
             android:label="@string/title_activity_start_exercise"
-            android:theme="@style/StartExTheme" />
+            android:theme="@style/StartExTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Views.ExHelpActivity"
             android:label="Help"
