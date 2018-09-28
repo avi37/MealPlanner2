@@ -32,7 +32,6 @@ import com.example.admin.mealplanner2new.Common.RetrofitClient
 import com.example.admin.mealplanner2new.Common.SessionManager
 import com.example.admin.mealplanner2new.Models.Exercise
 import com.example.admin.mealplanner2new.Models.ResCommon
-import id.zelory.compressor.Compressor
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
