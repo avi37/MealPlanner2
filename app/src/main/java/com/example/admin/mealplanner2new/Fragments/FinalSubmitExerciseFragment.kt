@@ -14,6 +14,7 @@ import com.example.admin.mealplanner2new.Models.SavedExerciseData
 import com.example.admin.mealplanner2new.R
 import com.example.admin.mealplanner2new.Service.MyJobIntentService
 import com.example.admin.mealplanner2new.Views.ExNavigationActivity
+import com.example.admin.mealplanner2new.Views.FinalImageUploadActivity
 import com.example.admin.mealplanner2new.Views.ShowExercisesActivity
 import com.example.admin.mealplanner2new.Views.StartExerciseActivity
 import com.google.gson.Gson
@@ -64,6 +65,13 @@ class FinalSubmitExerciseFragment : Fragment() {
             val intent22 = Intent(activity, ExNavigationActivity::class.java)
             intent22.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent22)
+
+            if (status == "1") {
+
+                val intent33 = Intent(activity, FinalImageUploadActivity::class.java)
+                startActivity(intent33)
+
+            }
 
 
         }

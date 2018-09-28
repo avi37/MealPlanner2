@@ -119,6 +119,10 @@
             android:label="Image Gallery"
             android:screenOrientation="portrait"
             android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.FinalImageUploadActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StartExTheme" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

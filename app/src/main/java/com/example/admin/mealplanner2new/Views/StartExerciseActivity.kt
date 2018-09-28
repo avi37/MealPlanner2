@@ -19,7 +19,7 @@ class StartExerciseActivity : AppCompatActivity() {
     private var id = 0
     private var dateOf = ""
     lateinit var task_id: String
-    public  var status = ""
+    public var status = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,38 +57,14 @@ class StartExerciseActivity : AppCompatActivity() {
         bundle.putString("ex_rep", exerciseList[0].reps)
         bundle.putInt("ex_id", id)
         bundle.putString("day", dateOf)
+        bundle.putString("from", "200")
         startExerciseFragment.arguments = bundle
 
-
-        if (SessionManager(this@StartExerciseActivity).isFirstPhotoUploaded) {
-            fragmentManager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .add(R.id.container_exercise, startExerciseFragment, id.toString())
-                    //.addToBackStack(id.toString())
-                    .commit()
-
-
-        } else {
-
-            val bundle2 = Bundle()
-            bundle2.putParcelableArrayList("data", exerciseList)
-            bundle2.putLong("time", exerciseList[0].timeOfRep)
-            bundle2.putString("ex_name", exerciseList[0].name)
-            bundle2.putString("ex_rep", exerciseList[0].reps)
-            bundle2.putInt("ex_id", id)
-            bundle2.putString("day", dateOf)
-
-            val firstPhotoUploadFragment = FirstPhotoUploadFragment()
-            firstPhotoUploadFragment.arguments = bundle2
-
-            fragmentManager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .add(R.id.container_exercise, firstPhotoUploadFragment, FirstPhotoUploadFragment::class.java.simpleName)
-                    //.addToBackStack(id.toString())
-                    .commit()
-
-
-        }
+        fragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .add(R.id.container_exercise, startExerciseFragment, id.toString())
+                //.addToBackStack(id.toString())
+                .commit()
 
 
     }

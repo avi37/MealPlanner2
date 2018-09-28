@@ -49,9 +49,10 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
     val FILE_NAME = "profile"
     lateinit var uploadImageToServer: UploadImageToServer
     private val BASE_URL = "http://code-fuel.in/healthbotics/api/auth/"
-    private lateinit var exerciseList: ArrayList<Exercise>
+    private var exerciseList: ArrayList<Exercise>? = null
     private var idOf = 0
-    private var dateOf = ""
+    private var dateOf: String? = null
+    private var from = ""
 
     lateinit var view_main: View
 
@@ -83,6 +84,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
         if (arguments != null) {
             exerciseList = arguments.getParcelableArrayList("data")
             dateOf = arguments.getString("day")
+            from = arguments.getString("from")
         }
     }
 
@@ -113,43 +115,98 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 progressDialog.setCanceledOnTouchOutside(false)
                 progressDialog.show()
 
-                val file = File(mCurrentPhotoPath)
-                val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
-                val fileToUpload = MultipartBody.Part.createFormData("file", file.name, requestBody)
-                val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
-                val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
-                val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
+
+                if (from.isNotEmpty() && from == "100") {
+                    // pelo
 
 
-                val token: String = sessionManager.accessToken
+                    val file = File(mCurrentPhotoPath)
+                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
+                    val fileToUpload = MultipartBody.Part.createFormData("file", file.name, requestBody)
+                    val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
+                    val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
+                    val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
 
-                uploadImageToServer.uploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
 
-                    override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
-                        progressDialog.dismiss()
+                    val token: String = sessionManager.accessToken
 
-                    }
+                    uploadImageToServer.pelouploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
 
-                    override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
+                        override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
+                            progressDialog.dismiss()
 
-                        if (response!!.isSuccessful) {
+                        }
 
-                            if (response!!.body() != null) {
+                        override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
 
-                                if (response.body()!!.msg == "true") {
-                                    progressDialog.dismiss()
+                            if (progressDialog.isShowing) {
+                                progressDialog.dismiss()
+                            }
 
-                                    Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
+                            if (response!!.isSuccessful) {
+
+                                if (response!!.body() != null) {
+
+                                    if (response.body()!!.msg == "true") {
+
+                                        Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
+                                    }
+
                                 }
 
                             }
 
                         }
 
-                    }
+
+                    })
 
 
-                })
+                } else {
+                    // from profile
+
+                    val file = File(mCurrentPhotoPath)
+                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
+                    val fileToUpload = MultipartBody.Part.createFormData("file", file.name, requestBody)
+                    val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
+                    val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
+                    val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
+
+
+                    val token: String = sessionManager.accessToken
+
+                    uploadImageToServer.uploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
+
+                        override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
+                            progressDialog.dismiss()
+
+                        }
+
+                        override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
+
+                            if (response!!.isSuccessful) {
+
+                                if (response!!.body() != null) {
+
+                                    if (response.body()!!.msg == "true") {
+                                        progressDialog.dismiss()
+
+                                        Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
+                                    }
+
+                                }
+
+                            }
+
+                            activity?.finish()
+
+
+                        }
+
+
+                    })
+
+                }
 
 
             } else {
@@ -164,7 +221,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
             Toast.makeText(activity, "Skip uploading photo", Toast.LENGTH_SHORT).show()
 
             activity.onBackPressed()
-            
+
             /*val fm: FragmentManager = activity.getFragmentManager()
             if (fm.getBackStackEntryCount() > 0) {
                 fm.popBackStack()
@@ -315,6 +372,18 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                        @Part("file") name: RequestBody,
                        @Part("status") status: RequestBody)
                 : Call<ResCommon>
+
+
+        @Multipart
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @POST("uploadPhoto")
+        fun pelouploadFile(@Header("Authorization") token: String,
+                           @Part("user_id") u_id: RequestBody,
+                           @Part file: MultipartBody.Part,
+                           @Part("file") name: RequestBody,
+                           @Part("pelo") pelo: RequestBody)
+                : Call<ResCommon>
+
     }
 
     internal fun uploadImage(baseurl: String): UploadImageToServer {
