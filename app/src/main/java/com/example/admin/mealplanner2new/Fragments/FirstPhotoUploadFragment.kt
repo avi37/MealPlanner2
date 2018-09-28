@@ -21,6 +21,7 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.content.Intent
 import android.app.Activity.RESULT_OK
+import android.app.FragmentManager
 import android.app.FragmentTransaction
 import android.app.ProgressDialog
 import android.graphics.BitmapFactory
@@ -159,6 +160,15 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
         }
 
         btnSkipUploadPhoto.setOnClickListener {
+
+            Toast.makeText(activity, "Skip uploading photo", Toast.LENGTH_SHORT).show()
+
+            activity.onBackPressed()
+            
+            /*val fm: FragmentManager = activity.getFragmentManager()
+            if (fm.getBackStackEntryCount() > 0) {
+                fm.popBackStack()
+            }*/
 
         }
 

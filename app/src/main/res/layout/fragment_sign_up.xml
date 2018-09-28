@@ -17,7 +17,7 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:padding="10dp"
-            android:text="now add your details mentioned below\nto get registered"
+            android:text="Enter your details mentioned below\nto get registered"
             android:textColor="@color/db2ColorPrimaryDark"
             android:textSize="15sp" />
 

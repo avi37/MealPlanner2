@@ -85,7 +85,6 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
         linearLayout_photoUpload = findViewById(R.id.myProfile_ll_photoUpload);
 
         setUserData();
-        checkForFirstPhoto();
 
         imageView_editName.setOnClickListener(this);
         textView_editPwd.setOnClickListener(this);
@@ -96,7 +95,7 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
     private void checkForFirstPhoto() {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading");
+        progressDialog.setMessage("Getting your profile details...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
@@ -153,11 +152,20 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        checkForFirstPhoto();
+    }
+
+
     private void methodUploadPhoto() {
 
         ft = getFragmentManager().beginTransaction();
 
-        ft.add(R.id.activity_my_profile, new FirstPhotoUploadFragment());
+        ft.add(R.id.activity_my_profile, new FirstPhotoUploadFragment(), "PhotoUploadFragment");
+        ft.addToBackStack(null);
         ft.commit();
     }
 
