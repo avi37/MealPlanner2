@@ -39,12 +39,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
+import id.zelory.compressor.Compressor;
 
 
 class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks {
-
-    internal var compressedImageFile: File? = null
-
 
     val REQUEST_IMAGE_CAPTURE = 1
     var mCurrentPhotoPath: String? = null
@@ -56,7 +54,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
     private var idOf = 0
     private var dateOf: String? = null
     private var from = ""
-
+    var compressedFile: File? = null
     lateinit var view_main: View
 
     lateinit var sessionManager: SessionManager
@@ -122,11 +120,14 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 if (from.isNotEmpty() && from == "100") {
                     // pelo
 
-
                     val file = File(mCurrentPhotoPath)
-                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
-                    val fileToUpload = MultipartBody.Part.createFormData("file", file.name, requestBody)
-                    val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
+
+                    compressedFile = Compressor(activity).compressToFile(file)
+
+
+                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), compressedFile!!)
+                    val fileToUpload = MultipartBody.Part.createFormData("file", compressedFile!!.name, requestBody)
+                    val filename = RequestBody.create(MediaType.parse("text/plain"), compressedFile!!.name)
                     val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
                     val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
 
@@ -169,36 +170,24 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                     // from profile
 
                     val file = File(mCurrentPhotoPath)
-                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
-                    val fileToUpload = MultipartBody.Part.createFormData("file", file.name, requestBody)
-                    val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
+                    compressedFile = Compressor(activity).compressToFile(file)
+
+
+                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), compressedFile!!)
+                    val fileToUpload = MultipartBody.Part.createFormData("file", compressedFile!!.name, requestBody)
+                    val filename = RequestBody.create(MediaType.parse("text/plain"), compressedFile!!.name)
                     val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
                     val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
-                val file = File(mCurrentPhotoPath)
-
-                compressedImageFile = Compressor(activity).compressToFile(file);
-
-                val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
-                val fileToUpload = MultipartBody.Part.createFormData("file", compressedImageFile!!.name, requestBody)
-                val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
-                val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
-                val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
 
 
                     val token: String = sessionManager.accessToken
 
                     uploadImageToServer.uploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
 
-                uploadImageToServer.uploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
-
                         override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
                             progressDialog.dismiss()
 
                         }
-                    override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
-                        progressDialog.dismiss()
-                        Toast.makeText(activity, "connection error", Toast.LENGTH_SHORT).show()
-                    }
 
                         override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
 
@@ -211,30 +200,10 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
                                         Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
                                     }
-                                    Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
-
-                                } else {
-                                    progressDialog.dismiss()
-
-                                    Toast.makeText(activity, "not proper response", Toast.LENGTH_SHORT).show()
-                                }
 
                                 }
-                            } else {
-                                progressDialog.dismiss()
-
-                                Toast.makeText(activity, "response body null", Toast.LENGTH_SHORT).show()
-                            }
 
                             }
-                        } else {
-                            progressDialog.dismiss()
-
-                            Toast.makeText(activity, "response not successful", Toast.LENGTH_SHORT).show()
-                        }
-
-                            activity?.finish()
-
 
                         }
 
