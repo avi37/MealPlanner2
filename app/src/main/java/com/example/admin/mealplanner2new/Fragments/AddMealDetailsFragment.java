@@ -1,6 +1,8 @@
 package com.example.admin.mealplanner2new.Fragments;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -55,12 +57,34 @@ public class AddMealDetailsFragment extends Fragment {
     Button button_repeat, button_next;
     RecyclerView recyclerView_repeatedRecipes;
     ProgressBar progressBar;
-
+    private Context context;
     RecAdapter recAdapter;
     private ArrayList<ResRecipeItem> resRecipeItemArrayList;
 
 
     private String mealCategory, mealTime, mealType;
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+
+        this.mealCategory = ((AddTodayMealActivity) (context)).mealCategory;
+        this.mealTime = ((AddTodayMealActivity) (context)).mealTime;
+        this.mealType = ((AddTodayMealActivity) (context)).mealType;
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        this.mealCategory = ((AddTodayMealActivity) (activity)).mealCategory;
+        this.mealTime = ((AddTodayMealActivity) (activity)).mealTime;
+        this.mealType = ((AddTodayMealActivity) (activity)).mealType;
+
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,10 +124,12 @@ public class AddMealDetailsFragment extends Fragment {
 
                 if (spinner_mealType.getSelectedItem().toString().equals("Veg.")) {
                     type = "1";
+
                 } else {
                     type = "0";
                 }
 
+                mealType = type;
 
                 getSavedRecipesAPI.get_savedRecipes("Bearer " + token, u_id, type).enqueue(new Callback<List<ResRecipeItem>>() {
                     @Override
@@ -159,7 +185,6 @@ public class AddMealDetailsFragment extends Fragment {
                 } else {
                     mealType = "0";
                 }
-
                 prefMeal.setMealDetails(mealCategory, mealTime, mealType);
                 ((AddTodayMealActivity) getActivity()).setCurrentItem(1, true);
             }

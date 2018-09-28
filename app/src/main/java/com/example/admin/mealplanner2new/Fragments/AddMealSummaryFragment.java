@@ -3,6 +3,7 @@ package com.example.admin.mealplanner2new.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.admin.mealplanner2new.Common.PrefMeal;
 import com.example.admin.mealplanner2new.Models.Ingredient;
 import com.example.admin.mealplanner2new.Models.ResRecipeItem;
 import com.example.admin.mealplanner2new.R;
@@ -39,6 +41,10 @@ public class AddMealSummaryFragment extends Fragment {
     private double carbs;
     private double fats;
     private double calories;
+    private String mealType;
+    private String mealCategory;
+    private String mealTime;
+    private PrefMeal prefMeal;
 
     public static AddMealSummaryFragment newInstance(int page, String title) {
         AddMealSummaryFragment fragmentAddMealSummary = new AddMealSummaryFragment();
@@ -55,8 +61,13 @@ public class AddMealSummaryFragment extends Fragment {
         this.context = context;
 
         ingredient = ((AddTodayMealActivity) (context)).ingredient;
+        mealTime = ((AddTodayMealActivity) (context)).mealTime;
+        mealType = ((AddTodayMealActivity) (context)).mealType;
+        mealCategory = ((AddTodayMealActivity) (context)).mealCategory;
+
 
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,7 +106,20 @@ public class AddMealSummaryFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
+
         if (isVisibleToUser) {
+            if (getActivity() != null) {
+
+                prefMeal = new PrefMeal(getActivity());
+                tv_mealTime.setText(prefMeal.getMealTime());
+                tv_mealCat.setText(prefMeal.getMealCategory());
+                if (prefMeal.getMealType().equals("0")) {
+                    tv_mealType.setText("Non Veg");
+                } else {
+                    tv_mealType.setText("Veg");
+                }
+            }
+
 
             allItemList = new ArrayList<>();
 

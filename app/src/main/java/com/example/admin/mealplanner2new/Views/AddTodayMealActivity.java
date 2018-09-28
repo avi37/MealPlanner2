@@ -21,6 +21,9 @@ public class AddTodayMealActivity extends AppCompatActivity {
     AddMealViewPager viewPager;
     public Ingredient ingredient = new Ingredient();
     int currentItem;
+    public String mealType;
+    public  String mealTime;
+    public String mealCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
