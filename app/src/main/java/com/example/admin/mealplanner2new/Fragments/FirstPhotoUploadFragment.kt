@@ -32,6 +32,7 @@ import com.example.admin.mealplanner2new.Common.RetrofitClient
 import com.example.admin.mealplanner2new.Common.SessionManager
 import com.example.admin.mealplanner2new.Models.Exercise
 import com.example.admin.mealplanner2new.Models.ResCommon
+import id.zelory.compressor.Compressor
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -42,6 +43,9 @@ import retrofit2.http.*
 
 
 class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks {
+
+    internal var compressedImageFile: File? = null
+
 
     val REQUEST_IMAGE_CAPTURE = 1
     var mCurrentPhotoPath: String? = null
@@ -114,8 +118,11 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 progressDialog.show()
 
                 val file = File(mCurrentPhotoPath)
+
+                compressedImageFile = Compressor(activity).compressToFile(file);
+
                 val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
-                val fileToUpload = MultipartBody.Part.createFormData("file", file.name, requestBody)
+                val fileToUpload = MultipartBody.Part.createFormData("file", compressedImageFile!!.name, requestBody)
                 val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
                 val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
                 val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
@@ -123,11 +130,12 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
                 val token: String = sessionManager.accessToken
 
+
                 uploadImageToServer.uploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
 
                     override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
                         progressDialog.dismiss()
-
+                        Toast.makeText(activity, "connection error", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
@@ -140,10 +148,23 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                                     progressDialog.dismiss()
 
                                     Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
+
+                                } else {
+                                    progressDialog.dismiss()
+
+                                    Toast.makeText(activity, "not proper response", Toast.LENGTH_SHORT).show()
                                 }
 
+                            } else {
+                                progressDialog.dismiss()
+
+                                Toast.makeText(activity, "response body null", Toast.LENGTH_SHORT).show()
                             }
 
+                        } else {
+                            progressDialog.dismiss()
+
+                            Toast.makeText(activity, "response not successful", Toast.LENGTH_SHORT).show()
                         }
 
                     }
@@ -164,7 +185,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
             Toast.makeText(activity, "Skip uploading photo", Toast.LENGTH_SHORT).show()
 
             activity.onBackPressed()
-            
+
             /*val fm: FragmentManager = activity.getFragmentManager()
             if (fm.getBackStackEntryCount() > 0) {
                 fm.popBackStack()

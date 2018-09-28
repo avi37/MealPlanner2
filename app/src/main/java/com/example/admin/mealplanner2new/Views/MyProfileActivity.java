@@ -25,7 +25,10 @@ import com.example.admin.mealplanner2new.Fragments.FirstPhotoUploadFragment;
 import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.R;
 
+import java.io.File;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.zelory.compressor.Compressor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,6 +95,7 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+
     private void checkForFirstPhoto() {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -111,7 +115,7 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
 
                     if (response.body() != null) {
 
-                        if (response.body().getFirst_photo().equals("1")) {
+                        if (response.body().getMsg().equals("true")) {
                             linearLayout_photoUpload.setClickable(false);
                             linearLayout_photoUpload.setVisibility(View.GONE);
                         }
@@ -417,7 +421,7 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
 
     interface CheckPhotoUploadedAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
-        @GET("user")
+        @GET("getFirstUploadedPhoto")
         Call<ResCommon> checkPhotoUploaded(@Header("Authorization") String token,
                                            @Query("u_id") String u_id
         );
