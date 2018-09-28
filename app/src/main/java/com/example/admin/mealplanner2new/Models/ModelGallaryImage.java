@@ -2,34 +2,40 @@ package com.example.admin.mealplanner2new.Models;
 
 public class ModelGallaryImage {
 
-    String name, url;
-
+    String id, thumb, photo;
 
 
     public ModelGallaryImage() {
 
     }
 
-    public ModelGallaryImage(String name, String url) {
-        this.name = name;
-        this.url = url;
+    public ModelGallaryImage(String id, String thumb, String photo) {
+        this.id = id;
+        this.thumb = thumb;
+        this.photo = photo;
     }
 
-
-
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getThumb() {
+        return thumb;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

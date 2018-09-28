@@ -20,6 +20,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     Context context;
     List<ModelGallaryImage> data = new ArrayList<>();
+    private String BASE_PHOTO_URL = "http://code-fuel.in/healthbotics/storage/app/public/thumb/";
+
 
     public GalleryAdapter(Context context, List<ModelGallaryImage> data) {
         this.context = context;
@@ -40,7 +42,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        Glide.with(context).load(data.get(position).getUrl())
+        Glide.with(context).load(BASE_PHOTO_URL + data.get(position).getThumb())
                 .thumbnail(0.5f)
                 .apply(new RequestOptions().override(200, 200).diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(((MyItemHolder) holder).mImg);

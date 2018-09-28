@@ -6,23 +6,44 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Adapters.GalleryAdapter;
+import com.example.admin.mealplanner2new.Common.RetrofitClient;
+import com.example.admin.mealplanner2new.Common.SessionManager;
 import com.example.admin.mealplanner2new.Models.ModelGallaryImage;
+import com.example.admin.mealplanner2new.Models.ResCommon;
+import com.example.admin.mealplanner2new.Models.ResUploadedPhotos;
 import com.example.admin.mealplanner2new.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 
 
 public class ImageGalleryActivity extends AppCompatActivity {
+
+    private String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
+    UploadedPhotosAPI uploadedPhotosAPI;
+
+    SessionManager sessionManager;
 
     RecyclerView recyclerView_gallery;
     ProgressBar progressBar;
     TextView textView_noImages;
 
     ArrayList<ModelGallaryImage> imageData = new ArrayList<>();
+
     public static String arrImages[] = {
             "https://images.unsplash.com/photo-1444090542259-0af8fa96557e?q=80&fm=jpg&w=1080&fit=max&s=4b703b77b42e067f949d14581f35019b",
             "https://images.unsplash.com/photo-1439546743462-802cabef8e97?dpr=2&fit=crop&fm=jpg&h=725&q=50&w=1300",
@@ -44,6 +65,9 @@ public class ImageGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_gallery);
 
+        uploadedPhotosAPI = getUploadedPhotosAPIService(BASE_URL);
+        sessionManager = new SessionManager(this);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -54,16 +78,67 @@ public class ImageGalleryActivity extends AppCompatActivity {
         recyclerView_gallery.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView_gallery.setHasFixedSize(true); // Helps improve performance
 
-        for (int i = 0; i < arrImages.length; i++) {
-            ModelGallaryImage imageModel = new ModelGallaryImage();
-            imageModel.setName("Image " + i);
-            imageModel.setUrl(arrImages[i]);
-            imageData.add(imageModel);
-        }
+        getUploadedPhotos();
+
+    }
+
+    private void getUploadedPhotos() {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        String token = sessionManager.getAccessToken();
+
+        uploadedPhotosAPI.getUploadedPhotos("Bearer " + token).enqueue(new Callback<List<ResUploadedPhotos>>() {
+            @Override
+            public void onResponse(Call<List<ResUploadedPhotos>> call, Response<List<ResUploadedPhotos>> response) {
+
+                if (response.isSuccessful()) {
+
+                    if (response.body() != null) {
+
+                        if (response.body().size() > 0) {
+
+                            for (int i = 0; i < response.body().size(); i++) {
+                                ModelGallaryImage imageModel = new ModelGallaryImage();
+                                imageModel.setId(response.body().get(i).getId());
+                                imageModel.setThumb(response.body().get(i).getThumb());
+                                imageModel.setPhoto(response.body().get(i).getPhoto());
+                                imageData.add(imageModel);
+                            }
+
+                            mAdapter = new GalleryAdapter(ImageGalleryActivity.this, imageData);
+                            recyclerView_gallery.setAdapter(mAdapter);
+
+                            mAdapter.notifyDataSetChanged();
+
+                            progressBar.setVisibility(View.GONE);
 
 
-        mAdapter = new GalleryAdapter(ImageGalleryActivity.this, imageData) ;
-        recyclerView_gallery.setAdapter(mAdapter);
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            textView_noImages.setVisibility(View.VISIBLE);
+                        }
+
+
+                    } else {
+                        progressBar.setVisibility(View.GONE);
+                        //response body null
+                    }
+
+
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    //response not successful
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ResUploadedPhotos>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(), "Connection error", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -75,6 +150,19 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+//---------------------------------------- APIs -----------------------------------------------//
+
+    UploadedPhotosAPI getUploadedPhotosAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(UploadedPhotosAPI.class);
+    }
+
+    interface UploadedPhotosAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @POST("getUploadedPhoto")
+        Call<List<ResUploadedPhotos>> getUploadedPhotos(@Header("Authorization") String token);
     }
 
 }

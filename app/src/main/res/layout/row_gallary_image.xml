@@ -6,7 +6,7 @@
     <ImageView
         android:id="@+id/row_gallery_image"
         android:layout_width="match_parent"
-        android:layout_height="128dp"
+        android:layout_height="110dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop" />
 

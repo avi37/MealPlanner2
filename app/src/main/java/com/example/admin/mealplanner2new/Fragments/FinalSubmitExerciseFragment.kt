@@ -55,6 +55,7 @@ class FinalSubmitExerciseFragment : Fragment() {
                 MyJobIntentService.enqueueWork(activity.applicationContext, intent)
 
                 Toast.makeText(activity, "Exercise completed", Toast.LENGTH_LONG).show()
+
             } else {
 
                 Toast.makeText(activity, "Review completed", Toast.LENGTH_SHORT)

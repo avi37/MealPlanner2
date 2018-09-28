@@ -29,6 +29,20 @@ public class ResCommon {
     @Expose
     private String expires_at;
 
+
+    @SerializedName("first_photo")
+    @Expose
+    private String first_photo;
+
+
+    public String getFirst_photo() {
+        return first_photo;
+    }
+
+    public void setFirst_photo(String first_photo) {
+        this.first_photo = first_photo;
+    }
+
     public String getU_id() {
         return u_id;
     }

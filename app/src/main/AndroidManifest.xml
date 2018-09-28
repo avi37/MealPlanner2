@@ -3,8 +3,8 @@
     package="com.example.admin.mealplanner2new">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +29,10 @@
             android:label="MealPlanner 2"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme" />
+        <activity
+            android:name=".Views.MyProfileActivity"
+            android:label="My Profile"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Views.ChooseDashActivity"
             android:theme="@style/LoginTheme" />
@@ -123,13 +127,13 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepath"/>
+                android:resource="@xml/filepath" />
         </provider>
 
         <service
             android:name=".Service.MyJobIntentService"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

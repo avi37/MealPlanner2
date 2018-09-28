@@ -1,76 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="@color/bg_softGrey">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btnSelectFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:background="@color/db2ColorPrimaryDark"
+                android:padding="5dp"
+                android:text="Take Photo"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:background="@color/db2ColorPrimaryDark"
+                android:text="Upload"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="254dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/workout" />
 
         <Button
-            android:id="@+id/btnSelectFile"
+            android:id="@+id/btnSkipUploadPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
             android:background="@color/db2ColorPrimaryDark"
-            android:padding="5dp"
-            android:text="Take Photo"
+            android:padding="8dp"
+            android:text="Skip"
             android:textColor="@android:color/white"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/btnUpload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:background="@color/db2ColorPrimaryDark"
-            android:text="Upload"
-            android:textColor="@color/white" />
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvPath"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:lines="1"
-        android:textSize="12sp" />
-
-    <ImageView
-        android:id="@+id/ivProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="254dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnUpload"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectFile"
-        app:layout_constraintVertical_bias="0.51"
-        app:srcCompat="@drawable/workout" />
-
-    <Button
-        android:id="@+id/btnSkipUploadPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:background="@color/db2ColorPrimaryDark"
-        android:padding="8dp"
-        android:text="Skip"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
-
-</LinearLayout>
+</FrameLayout>

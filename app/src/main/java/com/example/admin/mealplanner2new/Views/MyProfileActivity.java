@@ -1,6 +1,7 @@
 package com.example.admin.mealplanner2new.Views;
 
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
 import com.example.admin.mealplanner2new.Fragments.FirstPhotoUploadFragment;
+import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,24 +31,32 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public class MyProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
+    CheckPhotoUploadedAPI checkPhotoUploadedAPI;
     SessionManager sessionManager;
 
-    private final String BASE_URL = "http://www.code-fuel.in/mealplanner/";
+    private final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
     /*private ChangePwdAPI changePwdAPI;
     private ChangeProfileAPI changeProfileAPI;*/
 
     CircleImageView profilePic;
     TextView textView_number, textView_userName, textView_editPwd;
     ImageView imageView_editName;
+    TextView textView_uploadInfo;
     Button button_uploadPhoto;
+    LinearLayout linearLayout_photoUpload;
 
     String number, username;
 
     FragmentTransaction ft;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,8 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
 
         /*changePwdAPI = getPwdAPIService(BASE_URL);
         changeProfileAPI = getProfileAPIService(BASE_URL);*/
+        checkPhotoUploadedAPI = getCheckPhotoUploadedAPIService(BASE_URL);
+
         sessionManager = new SessionManager(this);
         if (!sessionManager.getUserName().isEmpty()) {
             username = sessionManager.getUserName();
@@ -62,14 +74,18 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
             username = "";
         }
 
+
         profilePic = findViewById(R.id.myProfile_iv_profilePic);
-        textView_number = findViewById(R.id.myProfile_tv_number);
+        //textView_number = findViewById(R.id.myProfile_tv_number);
         textView_userName = findViewById(R.id.myProfile_tv_userName);
         imageView_editName = findViewById(R.id.myProfile_iv_updateUserName);
         textView_editPwd = findViewById(R.id.myProfile_tv_changePwd);
+        textView_uploadInfo = findViewById(R.id.myProfile_tv_info1);
         button_uploadPhoto = findViewById(R.id.myProfile_btn_uploadPhoto);
+        linearLayout_photoUpload = findViewById(R.id.myProfile_ll_photoUpload);
 
         setUserData();
+        checkForFirstPhoto();
 
         imageView_editName.setOnClickListener(this);
         textView_editPwd.setOnClickListener(this);
@@ -77,8 +93,46 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    private void checkForFirstPhoto() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        String token = sessionManager.getAccessToken();
+
+        checkPhotoUploadedAPI.checkPhotoUploaded("Bearer " + token, sessionManager.getKeyUId()).enqueue(new Callback<ResCommon>() {
+            @Override
+            public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
+
+                progressDialog.dismiss();
+
+                if (response.isSuccessful()) {
+
+                    if (response.body() != null) {
+
+                        if (response.body().getFirst_photo().equals("1")) {
+                            linearLayout_photoUpload.setClickable(false);
+                            linearLayout_photoUpload.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResCommon> call, Throwable t) {
+                progressDialog.dismiss();
+            }
+        });
+
+    }
+
     private void setUserData() {
-        textView_number.setText("+91 " + number);
+        //textView_number.setText("+91 " + number);
         textView_userName.setText(username);
     }
 
@@ -348,5 +402,17 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
         );
     }*/
 
+
+    CheckPhotoUploadedAPI getCheckPhotoUploadedAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(CheckPhotoUploadedAPI.class);
+    }
+
+    interface CheckPhotoUploadedAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @GET("user")
+        Call<ResCommon> checkPhotoUploaded(@Header("Authorization") String token,
+                                           @Query("u_id") String u_id
+        );
+    }
 
 }

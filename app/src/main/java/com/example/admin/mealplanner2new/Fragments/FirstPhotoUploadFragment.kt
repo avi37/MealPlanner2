@@ -22,6 +22,7 @@ import android.support.v4.content.FileProvider
 import android.content.Intent
 import android.app.Activity.RESULT_OK
 import android.app.FragmentTransaction
+import android.app.ProgressDialog
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.widget.Toast
@@ -34,9 +35,9 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.*
 
 
 class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks {
@@ -50,6 +51,10 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
     private lateinit var exerciseList: ArrayList<Exercise>
     private var idOf = 0
     private var dateOf = ""
+
+    lateinit var view_main: View
+
+    lateinit var sessionManager: SessionManager
 
     companion object {
         const val RC_WRITE_STORAGE = 108
@@ -71,6 +76,9 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
         uploadImageToServer = uploadImage(BASE_URL)
 
+        sessionManager = SessionManager(activity)
+
+
         if (arguments != null) {
             exerciseList = arguments.getParcelableArrayList("data")
             dateOf = arguments.getString("day")
@@ -78,7 +86,10 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater?.inflate(R.layout.fragment_first_photo_upload, container, false)!!
+        view_main = inflater?.inflate(R.layout.fragment_first_photo_upload, container, false)!!
+
+
+        return view_main
     }
 
 
@@ -96,31 +107,48 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
             if (mCurrentPhotoPath != null) {
 
+                val progressDialog = ProgressDialog(activity)
+                progressDialog.setMessage("Uploading photo...")
+                progressDialog.setCanceledOnTouchOutside(false)
+                progressDialog.show()
+
                 val file = File(mCurrentPhotoPath)
                 val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
                 val fileToUpload = MultipartBody.Part.createFormData("file", file.name, requestBody)
                 val filename = RequestBody.create(MediaType.parse("text/plain"), file.name)
                 val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
+                val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
 
-                // -----------------------------Dummy start exercise  --------------------------------//
+
+                val token: String = sessionManager.accessToken
+
+                uploadImageToServer.uploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
+
+                    override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
+                        progressDialog.dismiss()
+
+                    }
+
+                    override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
+
+                        if (response!!.isSuccessful) {
+
+                            if (response!!.body() != null) {
+
+                                if (response.body()!!.msg == "true") {
+                                    progressDialog.dismiss()
+
+                                    Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
+                                }
+
+                            }
+
+                        }
+
+                    }
 
 
-                SessionManager(activity).setFirstPhotoUploaded()
-                val startExerciseFragment = StartExerciseFragment()
-                val bundle = Bundle()
-                bundle.putLong("time", exerciseList[0].timeOfRep)
-                bundle.putString("ex_name", exerciseList[0].name)
-                bundle.putString("ex_rep", exerciseList[0].reps)
-                bundle.putInt("ex_id", idOf)
-                bundle.putString("day", dateOf)
-                startExerciseFragment.arguments = bundle
-
-                fragmentManager.beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.container_exercise, startExerciseFragment, id.toString())
-                        .hide(this@FirstPhotoUploadFragment)
-                        //.addToBackStack(id.toString())
-                        .commit()
+                })
 
 
             } else {
@@ -131,7 +159,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
         }
 
         btnSkipUploadPhoto.setOnClickListener {
-            activity.onBackPressed()
+
         }
 
     }
@@ -170,8 +198,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
     private fun getOutputMediaFile(): File? {
 
-        val mediaStorageDir = File(
-                Environment.getExternalStorageDirectory(), IMAGE_DIRECTORY)
+        val mediaStorageDir = File(Environment.getExternalStorageDirectory(), IMAGE_DIRECTORY)
 
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
@@ -223,9 +250,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
             }
 
             if (photoFile != null) {
-                val photoURI = FileProvider.getUriForFile(activity,
-                        "com.example.admin.mealplanner2new.fileprovider",
-                        photoFile)
+                val photoURI = FileProvider.getUriForFile(activity, "com.example.admin.mealplanner2new.fileprovider", photoFile)
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
@@ -241,6 +266,8 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
                 galleryAddPic()
                 setPic()
+
+                btnSkipUploadPhoto.visibility = View.INVISIBLE
             }
 
         } else {
@@ -266,14 +293,18 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
         Glide.with(activity).load(BitmapFactory.decodeFile(mCurrentPhotoPath)).into(ivProfile)
 
-
     }
 
     interface UploadImageToServer {
         @Multipart
-        @POST("member/uploadimageapi/")
-        fun uploadFile(@Part file: MultipartBody.Part, @Part("file") name: RequestBody, @Part("status") status: RequestBody,
-                       @Part("type") type: RequestBody): Call<ResCommon>
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @POST("uploadPhoto")
+        fun uploadFile(@Header("Authorization") token: String,
+                       @Part("user_id") u_id: RequestBody,
+                       @Part file: MultipartBody.Part,
+                       @Part("file") name: RequestBody,
+                       @Part("status") status: RequestBody)
+                : Call<ResCommon>
     }
 
     internal fun uploadImage(baseurl: String): UploadImageToServer {
