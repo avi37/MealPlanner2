@@ -7,16 +7,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Upload photo of your body to compare with your future progress"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <Button
                 android:id="@+id/btnSelectFile"
@@ -24,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
                 android:background="@color/db2ColorPrimaryDark"
-                android:padding="5dp"
                 android:text="Take Photo"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
@@ -36,27 +44,15 @@
                 android:layout_marginStart="30dp"
                 android:background="@color/db2ColorPrimaryDark"
                 android:text="Upload"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvPath"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:lines="1"
-            android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/ivProfile"
             android:layout_width="wrap_content"
-            android:layout_height="254dp"
+            android:layout_height="255dp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
@@ -67,9 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:background="@color/db2ColorPrimaryDark"
-            android:padding="8dp"
             android:text="Skip"
             android:textColor="@android:color/white"
             android:textSize="12sp" />

@@ -152,6 +152,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                                 if (response!!.body() != null) {
 
                                     if (response.body()!!.msg == "true") {
+                                        activity.finish()
 
                                         Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
                                     }
@@ -191,14 +192,17 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
                         override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
 
+                            progressDialog.dismiss()
+
                             if (response!!.isSuccessful) {
 
                                 if (response!!.body() != null) {
 
                                     if (response.body()!!.msg == "true") {
-                                        progressDialog.dismiss()
 
                                         Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
+                                        activity.finish()
+
                                     }
 
                                 }

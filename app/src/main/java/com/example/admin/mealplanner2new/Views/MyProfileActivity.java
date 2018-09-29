@@ -115,9 +115,8 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
 
                     if (response.body() != null) {
 
-                        if (response.body().getMsg().equals("true")) {
-                            linearLayout_photoUpload.setClickable(false);
-                            linearLayout_photoUpload.setVisibility(View.GONE);
+                        if (response.body().getMsg().equals("false")) {
+                            linearLayout_photoUpload.setVisibility(View.VISIBLE);
                         }
 
                     }
@@ -421,9 +420,10 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
 
     interface CheckPhotoUploadedAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
-        @GET("getFirstUploadedPhoto")
+        @POST("getFirstUploadedPhoto")
+        @FormUrlEncoded
         Call<ResCommon> checkPhotoUploaded(@Header("Authorization") String token,
-                                           @Query("u_id") String u_id
+                                           @Field("u_id") String u_id
         );
     }
 
