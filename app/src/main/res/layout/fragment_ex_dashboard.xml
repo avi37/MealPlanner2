@@ -130,14 +130,13 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:id="@+id/dash_card_"
+                android:id="@+id/dash_card_yoga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:clickable="false"
-                android:visibility="invisible">
+                android:clickable="false">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -149,14 +148,14 @@
                     <ImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:src="@drawable/dash_menu_history" />
+                        android:src="@drawable/dash_menu_yoga" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="Exercise\nHistory"
+                        android:text="Yoga\nSection"
                         android:textColor="@color/font_grey"
                         android:textSize="18sp" />
 
@@ -166,6 +165,13 @@
 
         </LinearLayout>
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/exDash_viewPager_tips"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/lightGrey"
+            android:fitsSystemWindows="true" />
 
     </LinearLayout>
 

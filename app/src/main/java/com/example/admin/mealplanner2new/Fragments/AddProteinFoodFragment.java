@@ -107,24 +107,13 @@ public class AddProteinFoodFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+
                 if (selectedItemReciepList.size() > 0) {
-
-                    /*for (int i = 0; i < resRecipeItemArrayList.size(); i++) {
-
-                        if (resRecipeItemArrayList.get(i).isSelected()) {
-                            selectedItemReciepList.add(resRecipeItemArrayList.get(i));
-                        }
-
-                    }*/
-
-                    if (selectedItemReciepList.size() > 0) {
-                        ingredient.setProteinList(selectedItemReciepList);
-                    }
-                    ((AddTodayMealActivity) getActivity()).setCurrentItem(2, true);
+                    ingredient.setProteinList(selectedItemReciepList);
                 } else {
                     Toast.makeText(getActivity(), "Select any recipe", Toast.LENGTH_LONG).show();
                 }
-
+                ((AddTodayMealActivity) getActivity()).setCurrentItem(2, true);
 
             }
 
@@ -269,7 +258,7 @@ public class AddProteinFoodFragment extends Fragment {
 
             viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
 
-            String img_uri = BASE_IMG_URL + (mDataSet.get(position).getPhoto());
+            String img_uri = BASE_IMG_URL + (mDataSet.get(position).getThumb());
             Glide.with(getContext()).load(img_uri).into(viewHolder.imageView_recipeImage);
 
             viewHolder.tv_protein.setText(mDataSet.get(position).getProteins());

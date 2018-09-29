@@ -86,8 +86,8 @@
         <activity
             android:name=".Views.ExNavigationActivity"
             android:label="@string/title_activity_ex_navigation"
-            android:theme="@style/Dash2Theme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Dash2Theme" />
         <activity
             android:name=".Views.ShowExercisesActivity"
             android:label="Exercises"
@@ -101,8 +101,8 @@
         <activity
             android:name=".Views.StartExerciseActivity"
             android:label="@string/title_activity_start_exercise"
-            android:theme="@style/StartExTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/StartExTheme" />
         <activity
             android:name=".Views.ExHelpActivity"
             android:label="Help"
@@ -143,6 +143,21 @@
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
+        <activity
+            android:name=".Views.YogaSectionActivity"
+            android:label="Yoga Section"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.YogaListActivity"
+            android:label="Yoga List"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.StartYogaActivity"
+            android:label="Start Yoga"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme"/>
     </application>
 
 </manifest>

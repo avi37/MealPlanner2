@@ -1,10 +1,13 @@
 package com.example.admin.mealplanner2new.Fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +28,7 @@ import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class AddMealSummaryFragment extends Fragment {
@@ -87,7 +92,7 @@ public class AddMealSummaryFragment extends Fragment {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                methodSubmitMeal();
+                showConfirmDialog();
             }
         });
 
@@ -95,7 +100,33 @@ public class AddMealSummaryFragment extends Fragment {
         return view_main;
     }
 
+
+    private void showConfirmDialog() {
+
+        final AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setTitle("Confirm saving your meal?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        methodSubmitMeal();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+
     private void methodSubmitMeal() {
+        getActivity().finish();
 
         Toast.makeText(getContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
 
@@ -189,7 +220,7 @@ public class AddMealSummaryFragment extends Fragment {
 
             viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
 
-            String img_uri = BASE_IMG_URL + (mDataSet.get(position).getPhoto());
+            String img_uri = BASE_IMG_URL + (mDataSet.get(position).getThumb());
             Glide.with(getContext()).load(img_uri).into(viewHolder.imageView_recipeImage);
 
         }
