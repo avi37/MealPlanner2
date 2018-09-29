@@ -77,6 +77,8 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
             username = "";
         }
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         profilePic = findViewById(R.id.myProfile_iv_profilePic);
         //textView_number = findViewById(R.id.myProfile_tv_number);
@@ -89,12 +91,23 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
 
         setUserData();
 
+        checkForFirstPhoto();
+
         imageView_editName.setOnClickListener(this);
         textView_editPwd.setOnClickListener(this);
         button_uploadPhoto.setOnClickListener(this);
 
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void checkForFirstPhoto() {
 
@@ -154,14 +167,6 @@ public class MyProfileActivity extends AppCompatActivity implements View.OnClick
                 break;
         }
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        checkForFirstPhoto();
-    }
-
 
     private void methodUploadPhoto() {
 

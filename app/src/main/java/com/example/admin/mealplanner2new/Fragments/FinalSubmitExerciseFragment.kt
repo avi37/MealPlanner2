@@ -66,7 +66,7 @@ class FinalSubmitExerciseFragment : Fragment() {
             intent22.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent22)
 
-            if (status == "1") {
+            if (status == "0") {
 
                 val intent33 = Intent(activity, FinalImageUploadActivity::class.java)
                 startActivity(intent33)

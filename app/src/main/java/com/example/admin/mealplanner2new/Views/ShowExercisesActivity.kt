@@ -76,7 +76,6 @@ class ShowExercisesActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ArrayList<CategoryMaster>>, t: Throwable) {
                 progress_bar.visibility = View.GONE
 
-
             }
 
             override fun onResponse(call: Call<ArrayList<CategoryMaster>>, response: Response<ArrayList<CategoryMaster>>) {
@@ -149,8 +148,6 @@ class ShowExercisesActivity : AppCompatActivity() {
 
                 tvDate = v.findViewById<TextView>(R.id.tvDate)
                 tvTitle = v.findViewById<TextView>(R.id.tvDay)
-
-
 
 
 

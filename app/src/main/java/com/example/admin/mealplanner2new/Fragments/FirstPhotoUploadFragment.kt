@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.example.admin.mealplanner2new.R
 import kotlinx.android.synthetic.main.fragment_first_photo_upload.*
 import pub.devrel.easypermissions.EasyPermissions
-import pub.devrel.easypermissions.EasyPermissions.hasPermissions
 import android.os.Environment
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.PermissionRequest
@@ -21,8 +20,6 @@ import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.content.Intent
 import android.app.Activity.RESULT_OK
-import android.app.FragmentManager
-import android.app.FragmentTransaction
 import android.app.ProgressDialog
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -92,6 +89,8 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         view_main = inflater?.inflate(R.layout.fragment_first_photo_upload, container, false)!!
 
+        activity.setTitle("Upload photo")
+
 
         return view_main
     }
@@ -106,6 +105,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
         }
 
+        btnUpload.visibility = View.INVISIBLE
 
         btnUpload?.setOnClickListener {
 
@@ -116,105 +116,61 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
                 progressDialog.setCanceledOnTouchOutside(false)
                 progressDialog.show()
 
+                var pelo_status: String = ""
+
+                val file = File(mCurrentPhotoPath)
+
+                compressedFile = Compressor(activity).compressToFile(file)
+
+
+                val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), compressedFile!!)
+                val fileToUpload = MultipartBody.Part.createFormData("file", compressedFile!!.name, requestBody)
+                val filename = RequestBody.create(MediaType.parse("text/plain"), compressedFile!!.name)
 
                 if (from.isNotEmpty() && from == "100") {
-                    // pelo
-
-                    val file = File(mCurrentPhotoPath)
-
-                    compressedFile = Compressor(activity).compressToFile(file)
-
-
-                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), compressedFile!!)
-                    val fileToUpload = MultipartBody.Part.createFormData("file", compressedFile!!.name, requestBody)
-                    val filename = RequestBody.create(MediaType.parse("text/plain"), compressedFile!!.name)
-                    val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
-                    val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
-
-
-                    val token: String = sessionManager.accessToken
-
-                    uploadImageToServer.pelouploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
-
-                        override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
-                            progressDialog.dismiss()
-
-                        }
-
-                        override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
-
-                            if (progressDialog.isShowing) {
-                                progressDialog.dismiss()
-                            }
-
-                            if (response!!.isSuccessful) {
-
-                                if (response!!.body() != null) {
-
-                                    if (response.body()!!.msg == "true") {
-                                        activity.finish()
-
-                                        Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
-                                    }
-
-                                }
-
-                            }
-
-                        }
-
-
-                    })
-
+                    pelo_status = "1"
 
                 } else {
-                    // from profile
+                    pelo_status = "0"
+                }
 
-                    val file = File(mCurrentPhotoPath)
-                    compressedFile = Compressor(activity).compressToFile(file)
-
-
-                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), compressedFile!!)
-                    val fileToUpload = MultipartBody.Part.createFormData("file", compressedFile!!.name, requestBody)
-                    val filename = RequestBody.create(MediaType.parse("text/plain"), compressedFile!!.name)
-                    val firstTime = RequestBody.create(MediaType.parse("text/plain"), "1")
-                    val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
+                val firstTime = RequestBody.create(MediaType.parse("text/plain"), pelo_status)
+                val u_id = RequestBody.create(MediaType.parse("text/plain"), sessionManager.keyUId)
 
 
-                    val token: String = sessionManager.accessToken
+                val token: String = sessionManager.accessToken
 
-                    uploadImageToServer.uploadFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
+                uploadImageToServer.uploadImageFile("Bearer " + token, u_id, fileToUpload, filename, firstTime).enqueue(object : Callback<ResCommon> {
 
-                        override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
+                    override fun onFailure(call: Call<ResCommon>?, t: Throwable?) {
+                        progressDialog.dismiss()
+
+                    }
+
+                    override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
+
+                        if (progressDialog.isShowing) {
                             progressDialog.dismiss()
-
                         }
 
-                        override fun onResponse(call: Call<ResCommon>?, response: Response<ResCommon>?) {
+                        if (response!!.isSuccessful) {
 
-                            progressDialog.dismiss()
+                            if (response!!.body() != null) {
 
-                            if (response!!.isSuccessful) {
+                                if (response.body()!!.msg == "true") {
+                                    activity.finish()
 
-                                if (response!!.body() != null) {
-
-                                    if (response.body()!!.msg == "true") {
-
-                                        Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
-                                        activity.finish()
-
-                                    }
-
+                                    Toast.makeText(activity, "Photo uploaded", Toast.LENGTH_SHORT).show()
                                 }
 
                             }
 
                         }
 
+                    }
 
-                    })
 
-                }
+                })
 
 
             } else {
@@ -228,12 +184,7 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
             Toast.makeText(activity, "Skip uploading photo", Toast.LENGTH_SHORT).show()
 
-            activity.onBackPressed()
-
-            /*val fm: FragmentManager = activity.getFragmentManager()
-            if (fm.getBackStackEntryCount() > 0) {
-                fm.popBackStack()
-            }*/
+            activity.finish()
 
         }
 
@@ -368,28 +319,20 @@ class FirstPhotoUploadFragment : Fragment(), EasyPermissions.PermissionCallbacks
 
         Glide.with(activity).load(BitmapFactory.decodeFile(mCurrentPhotoPath)).into(ivProfile)
 
+        btnUpload.visibility = View.VISIBLE
+
     }
 
     interface UploadImageToServer {
-        @Multipart
-        @Headers("X-Requested-With:XMLHttpRequest")
-        @POST("uploadPhoto")
-        fun uploadFile(@Header("Authorization") token: String,
-                       @Part("user_id") u_id: RequestBody,
-                       @Part file: MultipartBody.Part,
-                       @Part("file") name: RequestBody,
-                       @Part("status") status: RequestBody)
-                : Call<ResCommon>
-
 
         @Multipart
         @Headers("X-Requested-With:XMLHttpRequest")
         @POST("uploadPhoto")
-        fun pelouploadFile(@Header("Authorization") token: String,
-                           @Part("user_id") u_id: RequestBody,
-                           @Part file: MultipartBody.Part,
-                           @Part("file") name: RequestBody,
-                           @Part("pelo") pelo: RequestBody)
+        fun uploadImageFile(@Header("Authorization") token: String,
+                            @Part("user_id") u_id: RequestBody,
+                            @Part file: MultipartBody.Part,
+                            @Part("file") name: RequestBody,
+                            @Part("pelo") status: RequestBody)
                 : Call<ResCommon>
 
     }
