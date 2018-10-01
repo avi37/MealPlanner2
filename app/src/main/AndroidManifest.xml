@@ -157,7 +157,12 @@
             android:name=".Views.StartYogaActivity"
             android:label="Start Yoga"
             android:screenOrientation="portrait"
-            android:theme="@style/ExTheme"/>
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.YogaItemDetailActivity"
+            android:label="Yoga Details"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
     </application>
 
 </manifest>

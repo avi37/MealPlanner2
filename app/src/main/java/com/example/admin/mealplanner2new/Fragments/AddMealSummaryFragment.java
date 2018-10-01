@@ -1,5 +1,6 @@
 package com.example.admin.mealplanner2new.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -22,16 +23,37 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.admin.mealplanner2new.Common.PrefMeal;
+import com.example.admin.mealplanner2new.Common.RetrofitClient;
+import com.example.admin.mealplanner2new.Common.SessionManager;
+import com.example.admin.mealplanner2new.Models.BodyCreateMeal;
+import com.example.admin.mealplanner2new.Models.BodyRegister;
 import com.example.admin.mealplanner2new.Models.Ingredient;
+import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.Models.ResRecipeItem;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 
 
 public class AddMealSummaryFragment extends Fragment {
+
+    private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
+    SaveMealAPI saveMealAPI;
+
+    SessionManager sessionManager;
 
     View view_main;
     RecAdapter recAdapter;
@@ -70,13 +92,16 @@ public class AddMealSummaryFragment extends Fragment {
         mealType = ((AddTodayMealActivity) (context)).mealType;
         mealCategory = ((AddTodayMealActivity) (context)).mealCategory;
 
-
     }
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_add_meal_summary, container, false);
+
+        saveMealAPI = getSaveMealAPIService(BASE_URL);
+
+        sessionManager = new SessionManager(getContext());
 
         tv_mealCat = view_main.findViewById(R.id.mealSummary_tv_mealCat);
         tv_mealTime = view_main.findViewById(R.id.mealSummary_tv_mealTime);
@@ -103,15 +128,16 @@ public class AddMealSummaryFragment extends Fragment {
 
     private void showConfirmDialog() {
 
+        LayoutInflater inflater = getLayoutInflater();
+        final View alertLayout = inflater.inflate(R.layout.layout_dialog_save_meal, null);
+
+        final EditText etMealName = alertLayout.findViewById(R.id.saveMealDialog_et_name);
+
         final AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle("Confirm saving your meal?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        methodSubmitMeal();
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setView(alertLayout)
+                .setTitle("Confirm to submit your meal?")
+                .setPositiveButton("YES", null)   //Set to null. Will be overridden while the onclick
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -119,16 +145,105 @@ public class AddMealSummaryFragment extends Fragment {
                 })
                 .create();
 
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+
+                Button b1 = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                b1.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        boolean wantToCloseDialog = false;
+
+                        String meal_name = etMealName.getText().toString();
+
+                        if (meal_name.equals("")) {
+                            etMealName.setError("Recipe name required");
+                            etMealName.requestFocus();
+                        } else if (meal_name.length() < 3) {
+                            etMealName.setError("add more characters to meal name");
+                            etMealName.requestFocus();
+                        } else {
+                            wantToCloseDialog = true;
+
+                            methodSubmitMeal(meal_name);
+
+                        }
+
+                        //if both fields are validate
+                        if (wantToCloseDialog) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
 
         dialog.setCancelable(false);
         dialog.show();
+
     }
 
 
-    private void methodSubmitMeal() {
-        getActivity().finish();
+    private void methodSubmitMeal(String mealName) {
 
-        Toast.makeText(getContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Saving your meal...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        String recipe_id = "", user_id, meal_type, meal_name, meal_date, meal_time;
+
+        for (int i = 0; i < allItemList.size(); i++) {
+            recipe_id = recipe_id + allItemList.get(i).getId() + ",";
+        }
+
+        user_id = sessionManager.getKeyUId();
+        meal_type = prefMeal.getMealType();
+        meal_name = mealName;
+        meal_date = "100";    // condition for today meal
+        meal_time = prefMeal.getMealTime();
+
+        BodyCreateMeal bodyCreateMeal = new BodyCreateMeal(recipe_id, user_id, meal_type, meal_name, meal_date, meal_time);
+
+        String token = sessionManager.getAccessToken();
+
+        saveMealAPI.createMeal("Bearer " + token, bodyCreateMeal).enqueue(new Callback<ResCommon>() {
+            @Override
+            public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
+
+                progressDialog.dismiss();
+
+                if (response.isSuccessful()) {
+
+                    if (response.body() != null) {
+
+                        if (response.body().equals("true")) {
+
+                            getActivity().finish();
+
+                            Toast.makeText(getContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            // msg != true
+                        }
+
+                    } else {
+                        // response body null
+                    }
+
+                } else {
+                    //response not successful
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResCommon> call, Throwable t) {
+                progressDialog.dismiss();
+            }
+        });
 
     }
 
@@ -165,7 +280,6 @@ public class AddMealSummaryFragment extends Fragment {
 
 
                 for (int i = 0; i < allItemList.size(); i++) {
-
                     proteins = proteins + Double.valueOf(allItemList.get(i).getProteins());
                     calories = calories + Double.valueOf(allItemList.get(i).getCalories());
                     carbs = carbs + Double.valueOf(allItemList.get(i).getCarbs());
@@ -193,6 +307,20 @@ public class AddMealSummaryFragment extends Fragment {
 
     }
 
+
+//---------------------------------------- APIs --------------------------------------------------//
+
+    SaveMealAPI getSaveMealAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(SaveMealAPI.class);
+    }
+
+    interface SaveMealAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @POST("createMeal")
+        Call<ResCommon> createMeal(@Header("Authorization") String token,
+                                   @Body BodyCreateMeal bodyCreateMeal
+        );
+    }
 
 //--------------------------------- Adapter Class -----------------------------------------------//
 

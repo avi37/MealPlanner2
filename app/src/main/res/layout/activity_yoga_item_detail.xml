@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Views.YogaItemDetailActivity">
+
+    <TextView
+        android:id="@+id/yogaDetail_tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Half Pigeon Pose"
+        android:textColor="@color/raisinBlack"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/yogaDetail_iv_image"
+        android:layout_width="250dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@color/bg_card_light1" />
+
+</LinearLayout>

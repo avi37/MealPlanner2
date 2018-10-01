@@ -35,6 +35,31 @@ public class ResCommon {
     private String first_photo;
 
 
+    @SerializedName("thumb")
+    @Expose
+    private String thumb;
+
+    @SerializedName("photo")
+    @Expose
+    private String photo;
+
+
+    public String getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     public String getFirst_photo() {
         return first_photo;
     }

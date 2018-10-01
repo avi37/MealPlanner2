@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Views.YogaListActivity">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/yogaList_revView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="List of all yoga will be shown here"
-        android:textSize="25sp" />
+        android:layout_height="match_parent" />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/yogaList_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>
