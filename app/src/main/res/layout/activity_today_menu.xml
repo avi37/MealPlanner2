@@ -12,7 +12,13 @@
         android:background="@color/main_bg_light_primary"
         android:gravity="center"
         android:text="No meals created"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/todayMenu_revView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:id="@+id/todayMenu_progressbar"

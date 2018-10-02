@@ -61,6 +61,7 @@ public class ResRecipeItem {
     @Expose
     private String updatedAt;
 
+
     public boolean isSelected() {
         return isSelected;
     }

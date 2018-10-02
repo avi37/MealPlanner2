@@ -33,8 +33,10 @@ import com.example.admin.mealplanner2new.Models.ResRecipeItem;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -202,7 +204,7 @@ public class AddMealSummaryFragment extends Fragment {
         user_id = sessionManager.getKeyUId();
         meal_type = prefMeal.getMealType();
         meal_name = mealName;
-        meal_date = "100";    // condition for today meal
+        meal_date = getTodayDate();    // condition for today meal
         meal_time = prefMeal.getMealTime();
 
         BodyCreateMeal bodyCreateMeal = new BodyCreateMeal(recipe_id, user_id, meal_type, meal_name, meal_date, meal_time);
@@ -219,7 +221,7 @@ public class AddMealSummaryFragment extends Fragment {
 
                     if (response.body() != null) {
 
-                        if (response.body().equals("true")) {
+                        if (response.body().getMsg().equals("true")) {
 
                             getActivity().finish();
 
@@ -247,6 +249,13 @@ public class AddMealSummaryFragment extends Fragment {
 
     }
 
+
+    private String getTodayDate() {
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("dd-MM-yyyy");
+        Date today_date = new Date();
+
+        return simpledateformat.format(today_date);
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

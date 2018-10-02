@@ -64,6 +64,10 @@
             android:label="Today&apos;s Menu"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".Views.TodayMenuDetailsActivity"
+            android:label="Meal Details"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Views.MealHistoryActivity"
             android:label="Meal History"
             android:screenOrientation="portrait" />
@@ -163,6 +167,7 @@
             android:label="Yoga Details"
             android:screenOrientation="portrait"
             android:theme="@style/ExTheme" />
+
     </application>
 
 </manifest>
