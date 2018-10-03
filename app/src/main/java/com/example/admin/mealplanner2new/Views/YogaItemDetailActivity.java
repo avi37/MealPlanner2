@@ -12,12 +12,11 @@ import com.example.admin.mealplanner2new.R;
 
 public class YogaItemDetailActivity extends AppCompatActivity {
 
-    private static String BASE_IMG_URL = "";
-
     TextView textView_name;
     ImageView imageView_image;
 
-    private String name, imageUrl;
+    private String name;
+    private int imageUrl;
 
 
     @Override
@@ -32,14 +31,11 @@ public class YogaItemDetailActivity extends AppCompatActivity {
         imageView_image = findViewById(R.id.yogaDetail_iv_image);
 
         name = getIntent().getStringExtra("name");                             //coming from YogaListActivity adapter class
-        //imageUrl = BASE_IMG_URL + getIntent().getStringExtra("imageUrl");
-        imageUrl = getIntent().getStringExtra("imageUrl");
+        imageUrl = getIntent().getIntExtra("imageUrl", 0);
 
-        //setTitle(name + " details");
 
         textView_name.setText(name);
-        // imageView_image.setImageResource(imageUrl);
-        //Glide.with(getApplicationContext()).load(imageUrl).into(imageView_image);
+        imageView_image.setImageResource(imageUrl);
 
     }
 

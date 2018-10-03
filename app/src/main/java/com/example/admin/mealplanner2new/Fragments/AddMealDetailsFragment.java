@@ -9,10 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.admin.mealplanner2new.Common.PrefMeal;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
+import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.Models.ResRecipeItem;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
@@ -38,6 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -46,6 +49,7 @@ import retrofit2.http.POST;
 public class AddMealDetailsFragment extends Fragment {
 
     private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
+    GetCategoriesAPI getCategoriesAPI;
     GetSavedRecipesAPI getSavedRecipesAPI;
 
     SessionManager sessionManager;
@@ -61,8 +65,9 @@ public class AddMealDetailsFragment extends Fragment {
     RecAdapter recAdapter;
     private ArrayList<ResRecipeItem> resRecipeItemArrayList;
 
-
     private String mealCategory, mealTime, mealType;
+
+    private ArrayList<String> cat_name, cat_time;
 
 
     @Override
@@ -90,6 +95,7 @@ public class AddMealDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_add_meal_details, container, false);
 
+        getCategoriesAPI = getGetCategoriesAPIService(BASE_URL);
         getSavedRecipesAPI = getSavedRecipesAPIService(BASE_URL);
 
         sessionManager = new SessionManager(getContext());
@@ -104,6 +110,26 @@ public class AddMealDetailsFragment extends Fragment {
         recyclerView_repeatedRecipes = view_main.findViewById(R.id.addMealDetails_recView_repeatRecipes);
         progressBar = view_main.findViewById(R.id.addMealDetails_progressbar);
 
+
+        getSavedCategories();
+
+        spinner_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (cat_time.size() > 0) {
+                    textView_mealTime.setText(cat_time.get(spinner_category.getSelectedItemPosition()));
+
+                } else {
+                    Toast.makeText(context, "You have not added any Meal Category\nPlease add one from Dashboard navigation menu", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         textView_mealTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,6 +220,70 @@ public class AddMealDetailsFragment extends Fragment {
         return view_main;
     }
 
+    private void getSavedCategories() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        String token = sessionManager.getAccessToken();
+
+        getCategoriesAPI.get_Categories("Bearer " + token).enqueue(new Callback<List<ResCommon>>() {
+            @Override
+            public void onResponse
+                    (Call<List<ResCommon>> call, Response<List<ResCommon>> response) {
+
+                progressBar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+
+                    if (response.body() != null) {
+
+                        if (response.body().size() > 0) {
+
+                            cat_name = new ArrayList<>();
+                            cat_time = new ArrayList<>();
+
+                            for (int i = 0; i < response.body().size(); i++) {
+                                cat_name.add(response.body().get(i).getCat_name());
+                                cat_time.add(response.body().get(i).getCat_time());
+                            }
+
+                            final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, cat_name);
+                            categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                            spinner_category.setAdapter(categoryAdapter);
+
+                            categoryAdapter.notifyDataSetChanged();
+
+                            textView_mealTime.setText(cat_time.get(spinner_category.getSelectedItemPosition()));
+
+
+                        } else {
+                            Toast.makeText(context, "You have not added any Meal Category\nPlease add one from Dashboard navigation menu", Toast.LENGTH_LONG).show();
+                            spinner_category.setClickable(false);
+                            button_next.setVisibility(View.INVISIBLE);
+                            button_next.setClickable(false);
+                        }
+
+
+                    } else {
+                        //response body is null
+
+                    }
+
+                } else {
+                    // response not successful
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ResCommon>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+
+    }
+
 
     public static AddMealDetailsFragment newInstance(int page, String title) {
         AddMealDetailsFragment fragmentAddMealDetails = new AddMealDetailsFragment();
@@ -222,13 +312,24 @@ public class AddMealDetailsFragment extends Fragment {
 
 //---------------------------------------- APIs --------------------------------------------------//
 
+    GetCategoriesAPI getGetCategoriesAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(GetCategoriesAPI.class);
+    }
+
+    interface GetCategoriesAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @GET("getUserMealCat")
+        Call<List<ResCommon>> get_Categories(@Header("Authorization") String token);
+    }
+
+
     GetSavedRecipesAPI getSavedRecipesAPIService(String baseUrl) {
         return RetrofitClient.getClient(baseUrl).create(GetSavedRecipesAPI.class);
     }
 
     interface GetSavedRecipesAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
-        @POST("getSavedRecipes")                // change api name here
+        @POST("getSavedRecipes")
         @FormUrlEncoded
         Call<List<ResRecipeItem>> get_savedRecipes(@Header("Authorization") String token,
                                                    @Field("u_id") String u_id,

@@ -137,8 +137,6 @@ public class YogaListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-            /*String img_uri = BASE_IMG_URL + (yogaArrayList.get(position).getyThumb());
-            Glide.with(getApplicationContext()).load(img_uri).into(holder.iv_thumb);*/
             holder.iv_thumb.setImageResource(yogaArrayList.get(position).getDrwable_image());
             holder.tv_name.setText(yogaArrayList.get(position).getName());
 

@@ -6,12 +6,12 @@
     <string name="nav_header_desc">Navigation header</string>
 
 
-    <string-array name="array_mealType">
+    <!--<string-array name="array_mealType">
         <item>Pre-Workout</item>
         <item>Post-Workout</item>
         <item>Before Bed</item>
         <item>Rest Time</item>
-    </string-array>
+    </string-array>-->
 
     <string-array name="array_mealCat">
         <item>Veg.</item>

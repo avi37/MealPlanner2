@@ -43,6 +43,31 @@ public class ResCommon {
     @Expose
     private String photo;
 
+    @SerializedName("cat_name")
+    @Expose
+    private String cat_name;
+
+    @SerializedName("cat_time")
+    @Expose
+    private String cat_time;
+
+
+
+    public String getCat_name() {
+        return cat_name;
+    }
+
+    public void setCat_name(String cat_name) {
+        this.cat_name = cat_name;
+    }
+
+    public String getCat_time() {
+        return cat_time;
+    }
+
+    public void setCat_time(String cat_time) {
+        this.cat_time = cat_time;
+    }
 
     public String getThumb() {
         return thumb;

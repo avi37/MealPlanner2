@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.admin.mealplanner2new.Adapters.AdapterPagerAddTodayMeal;
 import com.example.admin.mealplanner2new.Common.AddMealViewPager;
+import com.example.admin.mealplanner2new.Common.PrefMeal;
 import com.example.admin.mealplanner2new.Models.Ingredient;
 import com.example.admin.mealplanner2new.R;
 
@@ -17,18 +18,22 @@ import java.util.Date;
 
 public class AddTodayMealActivity extends AppCompatActivity {
 
+    PrefMeal prefMeal;
+
     TextView textView_date, textView_day;
     AddMealViewPager viewPager;
     public Ingredient ingredient = new Ingredient();
     int currentItem;
     public String mealType;
-    public  String mealTime;
+    public String mealTime;
     public String mealCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_today_meal);
+
+        prefMeal = new PrefMeal(this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -143,4 +148,10 @@ public class AddTodayMealActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        prefMeal.deleteMealPref();
+    }
 }
