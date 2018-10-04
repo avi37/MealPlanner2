@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
-        app:cardBackgroundColor="@color/bg_card_light1"
+        app:cardBackgroundColor="@color/bg_yogaCard_light1"
         app:cardCornerRadius="80dp">
 
         <TextView
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        app:cardBackgroundColor="@color/bg_card_light2"
+        app:cardBackgroundColor="@color/bg_yogaCard_light2"
         app:cardCornerRadius="80dp">
 
         <TextView

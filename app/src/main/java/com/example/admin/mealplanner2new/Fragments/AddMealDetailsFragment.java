@@ -65,9 +65,9 @@ public class AddMealDetailsFragment extends Fragment {
     RecAdapter recAdapter;
     private ArrayList<ResRecipeItem> resRecipeItemArrayList;
 
-    private String mealCategory, mealTime, mealType;
+    private String mealCategoryId, mealTime, mealType;
 
-    private ArrayList<String> cat_name, cat_time;
+    private ArrayList<String> cat_id, cat_name, cat_time;
 
 
     @Override
@@ -75,7 +75,7 @@ public class AddMealDetailsFragment extends Fragment {
         super.onAttach(context);
         this.context = context;
 
-        this.mealCategory = ((AddTodayMealActivity) (context)).mealCategory;
+        this.mealCategoryId = ((AddTodayMealActivity) (context)).mealCategory;
         this.mealTime = ((AddTodayMealActivity) (context)).mealTime;
         this.mealType = ((AddTodayMealActivity) (context)).mealType;
 
@@ -85,7 +85,7 @@ public class AddMealDetailsFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        this.mealCategory = ((AddTodayMealActivity) (activity)).mealCategory;
+        this.mealCategoryId = ((AddTodayMealActivity) (activity)).mealCategory;
         this.mealTime = ((AddTodayMealActivity) (activity)).mealTime;
         this.mealType = ((AddTodayMealActivity) (activity)).mealType;
 
@@ -202,7 +202,7 @@ public class AddMealDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                mealCategory = spinner_category.getSelectedItem().toString();
+                mealCategoryId = cat_id.get(spinner_category.getSelectedItemPosition());   //spinner_category.getSelectedItem().toString();
                 mealTime = textView_mealTime.getText().toString();
                 String _mealType = spinner_mealType.getSelectedItem().toString();
 
@@ -211,7 +211,7 @@ public class AddMealDetailsFragment extends Fragment {
                 } else {
                     mealType = "0";
                 }
-                prefMeal.setMealDetails(mealCategory, mealTime, mealType);
+                prefMeal.setMealDetails(mealCategoryId, mealTime, mealType);
                 ((AddTodayMealActivity) getActivity()).setCurrentItem(1, true);
             }
         });
@@ -219,6 +219,7 @@ public class AddMealDetailsFragment extends Fragment {
 
         return view_main;
     }
+
 
     private void getSavedCategories() {
         progressBar.setVisibility(View.VISIBLE);
@@ -238,10 +239,12 @@ public class AddMealDetailsFragment extends Fragment {
 
                         if (response.body().size() > 0) {
 
+                            cat_id = new ArrayList<>();
                             cat_name = new ArrayList<>();
                             cat_time = new ArrayList<>();
 
                             for (int i = 0; i < response.body().size(); i++) {
+                                cat_id.add(response.body().get(i).getCat_id());
                                 cat_name.add(response.body().get(i).getCat_name());
                                 cat_time.add(response.body().get(i).getCat_time());
                             }
@@ -283,7 +286,6 @@ public class AddMealDetailsFragment extends Fragment {
 
 
     }
-
 
     public static AddMealDetailsFragment newInstance(int page, String title) {
         AddMealDetailsFragment fragmentAddMealDetails = new AddMealDetailsFragment();

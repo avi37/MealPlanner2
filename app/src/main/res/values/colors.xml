@@ -33,8 +33,11 @@
     <color name="level_red4">#ff1a1a</color>
     <color name="level_red5">#e60000</color>
 
-    <color name="bg_card_light1">#c32f3458</color>
-    <color name="bg_card_light2">#c3ff3458</color>
+    <color name="bg_exCard_light1">#d2942e27</color>
+    <color name="bg_exCard_light2">#d21565c0</color>
+
+    <color name="bg_yogaCard_light1">#c32f3458</color>
+    <color name="bg_yogaCard_light2">#c3ff3458</color>
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

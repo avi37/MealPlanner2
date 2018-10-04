@@ -167,7 +167,26 @@
             android:label="Yoga Details"
             android:screenOrientation="portrait"
             android:theme="@style/ExTheme" />
-
+        <activity
+            android:name=".Views.ExSectionActivity"
+            android:label="Exercise Section"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.ExCatListActivity"
+            android:label="Exercise Categories"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.ExListOnCatActivity"
+            android:label="Exercise List"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.ExDetailsActivity"
+            android:label="Exercise Details"
+            android:screenOrientation="portrait"
+            android:theme="@style/ExTheme" />
     </application>
 
 </manifest>

@@ -16,6 +16,7 @@ import com.example.admin.mealplanner2new.Adapters.AdapterTipsVP;
 import com.example.admin.mealplanner2new.Common.OnImagePressedListener;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.ExHistoryActivity;
+import com.example.admin.mealplanner2new.Views.ExSectionActivity;
 import com.example.admin.mealplanner2new.Views.ImageGalleryActivity;
 import com.example.admin.mealplanner2new.Views.ShowExercisesActivity;
 import com.example.admin.mealplanner2new.Views.YogaSectionActivity;
@@ -86,7 +87,7 @@ public class ExDashboardFragment extends Fragment implements View.OnClickListene
 
 
     private void methodShowExercises() {
-        Intent i = new Intent(getContext(), ShowExercisesActivity.class);
+        Intent i = new Intent(getContext(), ExSectionActivity.class);
         startActivity(i);
     }
 

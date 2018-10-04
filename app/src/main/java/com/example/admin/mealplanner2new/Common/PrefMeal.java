@@ -15,7 +15,7 @@ public class PrefMeal {
     private static final String MEAL_PREF_NAME = "MealPref";
 
 
-    private static final String MEAL_CATEGORY = "meal_category";
+    private static final String MEAL_CATEGORY_ID = "cat_id";
     private static final String MEAL_TIME = "meal_time";
     private static final String MEAL_TYPE = "meal_type";
 
@@ -31,8 +31,8 @@ public class PrefMeal {
         editor = mealPref.edit();
     }
 
-    public void setMealDetails(String mealCategory, String mealTime, String mealType) {
-        editor.putString(MEAL_CATEGORY, mealCategory);
+    public void setMealDetails(String catId, String mealTime, String mealType) {
+        editor.putString(MEAL_CATEGORY_ID, catId);
         editor.putString(MEAL_TIME, mealTime);
         editor.putString(MEAL_TYPE, mealType);
 
@@ -40,7 +40,7 @@ public class PrefMeal {
     }
 
     public String getMealCategory() {
-        return mealPref.getString(MEAL_CATEGORY, null);
+        return mealPref.getString(MEAL_CATEGORY_ID, null);
     }
 
     public String getMealTime() {

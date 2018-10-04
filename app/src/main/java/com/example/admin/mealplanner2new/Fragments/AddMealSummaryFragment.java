@@ -195,19 +195,20 @@ public class AddMealSummaryFragment extends Fragment {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        String recipe_id = "", user_id, meal_type, meal_name, meal_date, meal_time;
+        String recipe_id = "", user_id, meal_cat, meal_type, meal_name, meal_date, meal_time;
 
         for (int i = 0; i < allItemList.size(); i++) {
             recipe_id = recipe_id + allItemList.get(i).getId() + ",";
         }
 
         user_id = sessionManager.getKeyUId();
+        meal_cat = prefMeal.getMealCategory();
         meal_type = prefMeal.getMealType();
         meal_name = mealName;
         meal_date = getTodayDate();    // condition for today meal
         meal_time = prefMeal.getMealTime();
 
-        BodyCreateMeal bodyCreateMeal = new BodyCreateMeal(recipe_id, user_id, meal_type, meal_name, meal_date, meal_time);
+        BodyCreateMeal bodyCreateMeal = new BodyCreateMeal(recipe_id, user_id, meal_cat, meal_type, meal_name, meal_date, meal_time);
 
         String token = sessionManager.getAccessToken();
 
@@ -226,6 +227,9 @@ public class AddMealSummaryFragment extends Fragment {
                             getActivity().finish();
 
                             Toast.makeText(getContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+
+                        } else if (response.body().getMsg().equals("Meal Already Exist")) {
+                            Toast.makeText(getContext(), "Meal Already Exist", Toast.LENGTH_LONG).show();
 
                         } else {
                             // msg != true

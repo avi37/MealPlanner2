@@ -13,6 +13,10 @@ public class BodyCreateMeal {
     @Expose
     private String user_id;
 
+    @SerializedName("cat_id")
+    @Expose
+    private String cat_id;
+
     @SerializedName("meal_type")
     @Expose
     private String meal_type;
@@ -30,9 +34,10 @@ public class BodyCreateMeal {
     private String meal_time;
 
 
-    public BodyCreateMeal(String recipe_id, String user_id, String meal_type, String meal_name, String meal_date, String meal_time) {
+    public BodyCreateMeal(String recipe_id, String user_id, String cat_id, String meal_type, String meal_name, String meal_date, String meal_time) {
         this.recipe_id = recipe_id;
         this.user_id = user_id;
+        this.cat_id = cat_id;
         this.meal_type = meal_type;
         this.meal_name = meal_name;
         this.meal_date = meal_date;
@@ -53,6 +58,14 @@ public class BodyCreateMeal {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(String cat_id) {
+        this.cat_id = cat_id;
     }
 
     public String getMeal_type() {

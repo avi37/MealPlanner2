@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ResTodayMeals {
 
@@ -28,9 +27,9 @@ public class ResTodayMeals {
     @Expose
     private String meal_time;
 
-    @SerializedName("meal_category")
+    @SerializedName("meal_cat")
     @Expose
-    private String meal_category;
+    private String meal_cat;
 
     @SerializedName("recipe")
     @Expose
@@ -46,11 +45,11 @@ public class ResTodayMeals {
     }
 
     public String getMeal_category() {
-        return meal_category;
+        return meal_cat;
     }
 
     public void setMeal_category(String meal_category) {
-        this.meal_category = meal_category;
+        this.meal_cat = meal_category;
     }
 
     public String getId() {

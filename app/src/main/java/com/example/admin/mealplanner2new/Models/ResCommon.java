@@ -47,14 +47,50 @@ public class ResCommon {
     @Expose
     private String cat_name;
 
+    @SerializedName("cat_id")
+    @Expose
+    private String cat_id;
+
     @SerializedName("cat_time")
     @Expose
     private String cat_time;
 
+    @SerializedName("description")
+    @Expose
+    private String description;
 
+    @SerializedName("video_link")
+    @Expose
+    private String video_link;
+
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getVideo_link() {
+        return video_link;
+    }
+
+    public void setVideo_link(String video_link) {
+        this.video_link = video_link;
+    }
 
     public String getCat_name() {
         return cat_name;
+    }
+
+    public String getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(String cat_id) {
+        this.cat_id = cat_id;
     }
 
     public void setCat_name(String cat_name) {

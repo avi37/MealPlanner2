@@ -2,8 +2,6 @@ package com.example.admin.mealplanner2new.Models;
 
 public class ModelYogaList {
 
-    //private String yName, yThumb, yImage;
-
     private String name;
     private Integer drwable_image;
 
