@@ -3,8 +3,6 @@ package com.example.admin.mealplanner2new.Views
 import android.app.FragmentTransaction
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.example.admin.mealplanner2new.Common.SessionManager
-import com.example.admin.mealplanner2new.Fragments.FirstPhotoUploadFragment
 import com.example.admin.mealplanner2new.Fragments.StartExerciseFragment
 import com.example.admin.mealplanner2new.Models.Exercise
 import com.example.admin.mealplanner2new.R
@@ -33,7 +31,6 @@ class StartExerciseActivity : AppCompatActivity() {
             workOutId = intent.getStringExtra("work_id")
             task_id = intent.getStringExtra("task_id")
             status = intent.getStringExtra("status")
-
 
         }
 

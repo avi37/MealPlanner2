@@ -34,8 +34,10 @@ import com.example.admin.mealplanner2new.Models.ResTodayMeals;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,6 +56,7 @@ public class AddMealDetailsFragment extends Fragment {
     private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
     GetCategoriesAPI getCategoriesAPI;
     GetSavedMealsAPI getSavedMealsAPI;
+    RepeatMealAPI repeatMealAPI;
 
     SessionManager sessionManager;
     PrefMeal prefMeal;
@@ -100,6 +103,7 @@ public class AddMealDetailsFragment extends Fragment {
 
         getCategoriesAPI = getGetCategoriesAPIService(BASE_URL);
         getSavedMealsAPI = getSavedMealsAPIService(BASE_URL);
+        repeatMealAPI = getRepeatMealAPIService(BASE_URL);
 
         sessionManager = new SessionManager(getContext());
         prefMeal = new PrefMeal(getContext());
@@ -145,6 +149,8 @@ public class AddMealDetailsFragment extends Fragment {
         button_repeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                textView_noMeals.setVisibility(View.GONE);
+
                 progressBar.setVisibility(View.VISIBLE);
 
                 String token = sessionManager.getAccessToken();
@@ -230,11 +236,11 @@ public class AddMealDetailsFragment extends Fragment {
     }
 
 
-    private void showConfirmDialog() {
+    private void showConfirmDialog(String id) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
-        alertDialog.setTitle("Confirm Delete...");
+        alertDialog.setTitle("Confirm saving meal...");
 
         alertDialog.setMessage("Are you sure you want to add this meal?");
 
@@ -242,10 +248,8 @@ public class AddMealDetailsFragment extends Fragment {
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
-                // api call here ///////////////////////////////////////////////////////////////
+                repeatTheMeal(id);
 
-                Toast.makeText(context, "You clicked on YES", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
             }
         });
 
@@ -260,6 +264,59 @@ public class AddMealDetailsFragment extends Fragment {
 
         alertDialog.show();
 
+    }
+
+    private void repeatTheMeal(String id) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        String token = sessionManager.getAccessToken();
+        String date = getTodayDate();
+        String time = textView_mealTime.getText().toString();
+
+        repeatMealAPI.repeatSavedMeal("Bearer: " + token, id, date, time).enqueue(new Callback<ResCommon>() {
+            @Override
+            public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
+                progressBar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+
+                    if (response.body() != null) {
+
+                        if (response.body().getMsg().equals("true")) {
+
+                            getActivity().finish();
+
+                            Toast.makeText(getContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+
+
+                        } else {
+                            // error while getting response
+                        }
+
+                    } else {
+                        // response body null
+                    }
+
+                } else {
+                    // response not successful
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResCommon> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+    }
+
+    private String getTodayDate() {
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("dd-MM-yyyy");
+        Date today_date = new Date();
+
+        return simpledateformat.format(today_date);
     }
 
     private void getSavedCategories() {
@@ -386,6 +443,22 @@ public class AddMealDetailsFragment extends Fragment {
     }
 
 
+    RepeatMealAPI getRepeatMealAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(RepeatMealAPI.class);
+    }
+
+    interface RepeatMealAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @POST("repeatMeal")
+        @FormUrlEncoded
+        Call<ResCommon> repeatSavedMeal(@Header("Authorization") String token,
+                                        @Field("id") String id,
+                                        @Field("date") String date,
+                                        @Field("time") String time
+        );
+    }
+
+
 //------------------------------------ Adapter Class --------------------------------------------//
 
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
@@ -428,7 +501,7 @@ public class AddMealDetailsFragment extends Fragment {
             viewHolder.cardView_main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showConfirmDialog();
+                    showConfirmDialog(mDataSet.get(position).getId());
                 }
             });
 
