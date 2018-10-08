@@ -3,9 +3,13 @@ package com.example.admin.mealplanner2new.Fragments;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,19 +19,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.admin.mealplanner2new.Common.PrefMeal;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
 import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.Models.ResRecipeItem;
+import com.example.admin.mealplanner2new.Models.ResTodayMeals;
 import com.example.admin.mealplanner2new.R;
 import com.example.admin.mealplanner2new.Views.AddTodayMealActivity;
 
@@ -50,14 +53,14 @@ public class AddMealDetailsFragment extends Fragment {
 
     private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
     GetCategoriesAPI getCategoriesAPI;
-    GetSavedRecipesAPI getSavedRecipesAPI;
+    GetSavedMealsAPI getSavedMealsAPI;
 
     SessionManager sessionManager;
     PrefMeal prefMeal;
 
     View view_main;
     Spinner spinner_category, spinner_mealType;
-    TextView textView_mealTime, textView_selectInfo;
+    TextView textView_mealTime, textView_selectInfo, textView_noMeals;
     Button button_repeat, button_next;
     RecyclerView recyclerView_repeatedRecipes;
     ProgressBar progressBar;
@@ -96,7 +99,7 @@ public class AddMealDetailsFragment extends Fragment {
         view_main = inflater.inflate(R.layout.fragment_add_meal_details, container, false);
 
         getCategoriesAPI = getGetCategoriesAPIService(BASE_URL);
-        getSavedRecipesAPI = getSavedRecipesAPIService(BASE_URL);
+        getSavedMealsAPI = getSavedMealsAPIService(BASE_URL);
 
         sessionManager = new SessionManager(getContext());
         prefMeal = new PrefMeal(getContext());
@@ -108,6 +111,7 @@ public class AddMealDetailsFragment extends Fragment {
         button_next = view_main.findViewById(R.id.addMealDetails_btn_next);
         textView_selectInfo = view_main.findViewById(R.id.addMealDetails_tv_selectInfo);
         recyclerView_repeatedRecipes = view_main.findViewById(R.id.addMealDetails_recView_repeatRecipes);
+        textView_noMeals = view_main.findViewById(R.id.addMealDetails_tv_noMeals);
         progressBar = view_main.findViewById(R.id.addMealDetails_progressbar);
 
 
@@ -142,10 +146,8 @@ public class AddMealDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                textView_selectInfo.setVisibility(View.VISIBLE);
 
                 String token = sessionManager.getAccessToken();
-                String u_id = sessionManager.getKeyUId();
                 String type;
 
                 if (spinner_mealType.getSelectedItem().toString().equals("Veg.")) {
@@ -157,9 +159,9 @@ public class AddMealDetailsFragment extends Fragment {
 
                 mealType = type;
 
-                getSavedRecipesAPI.get_savedRecipes("Bearer " + token, u_id, type).enqueue(new Callback<List<ResRecipeItem>>() {
+                getSavedMealsAPI.get_savedMeals("Bearer " + token, type).enqueue(new Callback<List<ResTodayMeals>>() {
                     @Override
-                    public void onResponse(Call<List<ResRecipeItem>> call, Response<List<ResRecipeItem>> response) {
+                    public void onResponse(Call<List<ResTodayMeals>> call, Response<List<ResTodayMeals>> response) {
 
                         progressBar.setVisibility(View.GONE);
 
@@ -167,20 +169,27 @@ public class AddMealDetailsFragment extends Fragment {
 
                             if (response.body() != null) {
 
-                                resRecipeItemArrayList = (ArrayList<ResRecipeItem>) response.body();
+                                if (response.body().size() < 1) {
+                                    textView_noMeals.setVisibility(View.VISIBLE);
 
+                                } else {
 
-                                recAdapter = new RecAdapter(resRecipeItemArrayList);
+                                    textView_selectInfo.setVisibility(View.VISIBLE);
 
-                                recyclerView_repeatedRecipes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-                                recyclerView_repeatedRecipes.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+                                    ArrayList<ResTodayMeals> apiResponse = (ArrayList<ResTodayMeals>) response.body();
 
-                                recyclerView_repeatedRecipes.setAdapter(recAdapter);
+                                    recAdapter = new RecAdapter(apiResponse);
 
+                                    recyclerView_repeatedRecipes.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
+                                    recyclerView_repeatedRecipes.setAdapter(recAdapter);
+
+                                    recAdapter.notifyDataSetChanged();
+
+                                }
 
                             } else {
                                 //response body is null
-
                             }
 
                         } else {
@@ -190,7 +199,7 @@ public class AddMealDetailsFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<List<ResRecipeItem>> call, Throwable t) {
+                    public void onFailure(Call<List<ResTodayMeals>> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -220,6 +229,38 @@ public class AddMealDetailsFragment extends Fragment {
         return view_main;
     }
 
+
+    private void showConfirmDialog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+
+        alertDialog.setTitle("Confirm Delete...");
+
+        alertDialog.setMessage("Are you sure you want to add this meal?");
+
+
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                // api call here ///////////////////////////////////////////////////////////////
+
+                Toast.makeText(context, "You clicked on YES", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(context, "You clicked on NO", Toast.LENGTH_SHORT).show();
+                dialog.cancel();
+            }
+        });
+
+
+        alertDialog.show();
+
+    }
 
     private void getSavedCategories() {
         progressBar.setVisibility(View.VISIBLE);
@@ -260,8 +301,14 @@ public class AddMealDetailsFragment extends Fragment {
 
 
                         } else {
-                            Toast.makeText(context, "You have not added any Meal Category\nPlease add one from Dashboard navigation menu", Toast.LENGTH_LONG).show();
+                            Snackbar snackbar = Snackbar.make(view_main, "You have not added any Meal Category\nPlease add one from Dashboard navigation menu", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+
                             spinner_category.setClickable(false);
+
+                            button_repeat.setVisibility(View.INVISIBLE);
+                            button_repeat.setClickable(false);
+
                             button_next.setVisibility(View.INVISIBLE);
                             button_next.setClickable(false);
                         }
@@ -325,17 +372,16 @@ public class AddMealDetailsFragment extends Fragment {
     }
 
 
-    GetSavedRecipesAPI getSavedRecipesAPIService(String baseUrl) {
-        return RetrofitClient.getClient(baseUrl).create(GetSavedRecipesAPI.class);
+    GetSavedMealsAPI getSavedMealsAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(GetSavedMealsAPI.class);
     }
 
-    interface GetSavedRecipesAPI {
+    interface GetSavedMealsAPI {
         @Headers("X-Requested-With:XMLHttpRequest")
-        @POST("getSavedRecipes")
+        @POST("getUserMeal")
         @FormUrlEncoded
-        Call<List<ResRecipeItem>> get_savedRecipes(@Header("Authorization") String token,
-                                                   @Field("u_id") String u_id,
-                                                   @Field("type") String type
+        Call<List<ResTodayMeals>> get_savedMeals(@Header("Authorization") String token,
+                                                 @Field("type") String type
         );
     }
 
@@ -344,17 +390,16 @@ public class AddMealDetailsFragment extends Fragment {
 
     public class RecAdapter extends RecyclerView.Adapter<RecAdapter.ViewHolder> {
 
-        String BASE_IMG_URL = "http://code-fuel.in/healthbotics/storage/app/public/thumb/";
-        private ArrayList<ResRecipeItem> mDataSet;
+        private ArrayList<ResTodayMeals> mDataSet;
 
 
-        RecAdapter(ArrayList<ResRecipeItem> mDataSet) {
+        RecAdapter(ArrayList<ResTodayMeals> mDataSet) {
             this.mDataSet = mDataSet;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_add_recipe, viewGroup, false);
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_list_today_menu, viewGroup, false);
 
             return new ViewHolder(v);
         }
@@ -362,17 +407,30 @@ public class AddMealDetailsFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-            viewHolder.getTextView_name().setText(mDataSet.get(position).getName());
+            viewHolder.getTextView_name().setText(mDataSet.get(position).getMeal_name());
+            viewHolder.textView_meal_category.setVisibility(View.GONE);
+            viewHolder.textView_meal_time.setVisibility(View.GONE);
 
-            viewHolder.getImageView_recipeImage().setBackgroundColor(getResources().getColor(R.color.font_grey));
+            Double protein = 0.0, fats = 0.0, carbs = 0.0, calories = 0.0;
 
-            String img_uri = BASE_IMG_URL + (mDataSet.get(position).getPhoto());
-            Glide.with(getContext()).load(img_uri).into(viewHolder.imageView_recipeImage);
+            for (int i = 0; i < mDataSet.get(position).getRecipe().size(); i++) {
+                protein += Double.parseDouble(mDataSet.get(position).getRecipe().get(i).getProteins());
+                fats += Double.parseDouble(mDataSet.get(position).getRecipe().get(i).getFats());
+                carbs += Double.parseDouble(mDataSet.get(position).getRecipe().get(i).getCarbs());
+                calories += Double.parseDouble(mDataSet.get(position).getRecipe().get(i).getCalorie());
+            }
 
-            viewHolder.tv_protein.setText(mDataSet.get(position).getProteins());
-            viewHolder.tv_fats.setText(mDataSet.get(position).getFats());
-            viewHolder.tv_carbs.setText(mDataSet.get(position).getCarbs());
-            viewHolder.tv_caloreis.setText(mDataSet.get(position).getCalories());
+            viewHolder.tv_protein.setText(String.valueOf(protein));
+            viewHolder.tv_fats.setText(String.valueOf(fats));
+            viewHolder.tv_carbs.setText(String.valueOf(carbs));
+            viewHolder.tv_caloreis.setText(String.valueOf(calories));
+
+            viewHolder.cardView_main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showConfirmDialog();
+                }
+            });
 
         }
 
@@ -383,39 +441,28 @@ public class AddMealDetailsFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            private final TextView textView_name;
-            private final ImageView imageView_recipeImage, imageView_add;
+            private final CardView cardView_main;
+            private final TextView textView_name, textView_meal_category, textView_meal_time;
             private final TextView tv_protein, tv_fats, tv_carbs, tv_caloreis;
 
             ViewHolder(View v) {
                 super(v);
 
-                textView_name = (TextView) v.findViewById(R.id.row_addRecipe_tv_name);
-                imageView_recipeImage = (ImageView) v.findViewById(R.id.row_addRecipe_iv_image);
-                imageView_add = (ImageView) v.findViewById(R.id.row_addRecipe_iv_addBtn);
-                tv_protein = (TextView) v.findViewById(R.id.row_addRecipe_tv_proteins);
-                tv_fats = (TextView) v.findViewById(R.id.row_addRecipe_tv_fats);
-                tv_carbs = (TextView) v.findViewById(R.id.row_addRecipe_tv_carbs);
-                tv_caloreis = (TextView) v.findViewById(R.id.row_addRecipe_tv_calories);
+                cardView_main = (CardView) v.findViewById(R.id.row_todayMenu_list_card);
+                textView_name = (TextView) v.findViewById(R.id.row_todayMenu_tv_name);
+                textView_meal_category = (TextView) v.findViewById(R.id.row_todayMenu_tv_category);
+                textView_meal_time = (TextView) v.findViewById(R.id.row_todayMenu_tv_time);
+                tv_protein = (TextView) v.findViewById(R.id.row_todayMenu_tv_proteins);
+                tv_fats = (TextView) v.findViewById(R.id.row_todayMenu_tv_fats);
+                tv_carbs = (TextView) v.findViewById(R.id.row_todayMenu_tv_carbs);
+                tv_caloreis = (TextView) v.findViewById(R.id.row_todayMenu_tv_calories);
 
-                imageView_add.setClickable(false);
-                imageView_add.setVisibility(View.INVISIBLE);
-
-                v.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getContext(), "Clicked: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
 
             TextView getTextView_name() {
                 return textView_name;
             }
 
-            ImageView getImageView_recipeImage() {
-                return imageView_recipeImage;
-            }
 
         }
 

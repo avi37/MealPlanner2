@@ -5,6 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
 
+    <string name="youTube_api_key">AIzaSyBWBKBDdvr3yPgPZJy_MmEyCWgWLrlAAWA</string>
+
 
     <!--<string-array name="array_mealType">
         <item>Pre-Workout</item>
