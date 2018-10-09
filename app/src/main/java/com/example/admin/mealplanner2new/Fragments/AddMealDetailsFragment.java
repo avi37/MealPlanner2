@@ -274,7 +274,7 @@ public class AddMealDetailsFragment extends Fragment {
         String date = getTodayDate();
         String time = textView_mealTime.getText().toString();
 
-        repeatMealAPI.repeatSavedMeal("Bearer: " + token, id, date, time).enqueue(new Callback<ResCommon>() {
+        repeatMealAPI.repeatSavedMeal("Bearer " + token, id, date, time).enqueue(new Callback<ResCommon>() {
             @Override
             public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
                 progressBar.setVisibility(View.GONE);
@@ -288,6 +288,10 @@ public class AddMealDetailsFragment extends Fragment {
                             getActivity().finish();
 
                             Toast.makeText(getContext(), "Meal Saved", Toast.LENGTH_SHORT).show();
+
+
+                        } else if (response.body().getMsg().equals("false")) {
+                            Toast.makeText(context, "Meal is already created for the selected time", Toast.LENGTH_LONG).show();
 
 
                         } else {

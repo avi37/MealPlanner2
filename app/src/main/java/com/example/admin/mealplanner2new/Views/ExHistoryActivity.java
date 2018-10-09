@@ -199,7 +199,6 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
         Toast.makeText(this, "Refreshing your history list...", Toast.LENGTH_LONG).show();
 
         recyclerView_exList.setAdapter(new CustomAdapter(exerciseArrayList));
-
     }
 
 
@@ -214,19 +213,6 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
         }
 
         return new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(dateTime);
-
-    }
-
-
-//--------------- API ---------------//
-
-    interface GetExerciseHistory {
-
-        @POST("day_excersice_hisotry")
-        @FormUrlEncoded
-        Call<ArrayList<Exercise>> getEXHistory(@Field("u_id") String u_id);
-
-
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -235,16 +221,6 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPostExecute(List<Exercise> exercises) {
             super.onPostExecute(exercises);
-
-//            if (exercises.size() > 0) {
-//                recyclerView_exList.setLayoutManager(new LinearLayoutManager(ExHistoryActivity.this, LinearLayoutManager.VERTICAL, false));
-//
-//                recyclerView_exList.setAdapter(new CustomAdapter((ArrayList<Exercise>) exercises));
-//
-//            } else {
-//                textView_noEx.setVisibility(View.VISIBLE);
-//            }
-
         }
 
         @Override
@@ -254,8 +230,17 @@ public class ExHistoryActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+//---------------------------------------- APIs ----------------------------------------------//
 
-    //--------------- Adapter Class ------------------------//
+    interface GetExerciseHistory {
+        @POST("day_excersice_hisotry")
+        @FormUrlEncoded
+        Call<ArrayList<Exercise>> getEXHistory(@Field("u_id") String u_id);
+    }
+
+
+//--------------------------------- Adapter Class -------------------------------------------//
+
     public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
         private ArrayList<Exercise> mDataSet;

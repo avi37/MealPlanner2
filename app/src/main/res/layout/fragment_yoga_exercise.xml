@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragments.YogaExerciseFragment">
+
+    <TextView
+        android:id="@+id/yogaEx_tv_exName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gs_grey"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="name"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/yogaEx_iv_image"
+        android:layout_width="250dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="18dp"
+        android:background="@color/bg_softGrey" />
+
+    <Button
+        android:id="@+id/yogaEx_btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/bg_exCard_light1"
+        android:text="Done"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</LinearLayout>

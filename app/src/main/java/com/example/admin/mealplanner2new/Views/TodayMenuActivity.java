@@ -1,6 +1,5 @@
 package com.example.admin.mealplanner2new.Views;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
 import com.example.admin.mealplanner2new.Models.ResTodayMeals;
@@ -47,6 +44,7 @@ public class TodayMenuActivity extends AppCompatActivity {
     RecyclerView recyclerView_mealList;
 
     RecAdapter recAdapter;
+    ArrayList<ResTodayMeals> apiResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +80,7 @@ public class TodayMenuActivity extends AppCompatActivity {
 
                     if (response.body() != null) {
 
-                        ArrayList<ResTodayMeals> apiResponse = (ArrayList<ResTodayMeals>) response.body();
+                        apiResponse = (ArrayList<ResTodayMeals>) response.body();
 
                         recAdapter = new RecAdapter(apiResponse);
 
