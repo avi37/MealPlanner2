@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"
+        android:layout_weight="0.6"
+        android:elevation="2dp"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -56,14 +57,14 @@
         android:id="@+id/ll_opt_dash3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.3"
+        android:layout_weight="1.4"
         android:background="@color/db3ColorPrimary">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Body Reports"
+            android:text="Measurement Planner"
             android:textColor="@color/dark_white"
             android:textSize="25dp" />
 

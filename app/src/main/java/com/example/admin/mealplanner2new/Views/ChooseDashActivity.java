@@ -15,7 +15,7 @@ public class ChooseDashActivity extends AppCompatActivity {
 
     SessionManager sessionManager;
 
-    LinearLayout linearLayout_opt_diet, linearLayout_opt_ex;
+    LinearLayout linearLayout_opt_diet, linearLayout_opt_ex, linearLayout_opt_reports;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class ChooseDashActivity extends AppCompatActivity {
 
         linearLayout_opt_diet = findViewById(R.id.ll_opt_dash1);
         linearLayout_opt_ex = findViewById(R.id.ll_opt_dash2);
+        linearLayout_opt_reports = findViewById(R.id.ll_opt_dash3);
 
 
         linearLayout_opt_diet.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +44,15 @@ public class ChooseDashActivity extends AppCompatActivity {
                 startActivity(new Intent(ChooseDashActivity.this, ExNavigationActivity.class));
             }
         });
+
+        linearLayout_opt_reports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                startActivity(new Intent(ChooseDashActivity.this, ReportsNavigationActivity.class));
+            }
+        });
+
 
     }
 

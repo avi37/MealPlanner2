@@ -187,6 +187,20 @@
             android:label="Exercise Details"
             android:screenOrientation="portrait"
             android:theme="@style/ExTheme" />
+        <activity
+            android:name=".Views.ReportsNavigationActivity"
+            android:label="Body Reports"
+            android:theme="@style/Dash3Theme" />
+        <activity
+            android:name=".Views.AddReportActivity"
+            android:label="Add Report"
+            android:screenOrientation="portrait"
+            android:theme="@style/ReportsTheme" />
+        <activity
+            android:name=".Views.ReportHistoryActivity"
+            android:label="Report History"
+            android:screenOrientation="portrait"
+            android:theme="@style/ReportsTheme" />
     </application>
 
 </manifest>

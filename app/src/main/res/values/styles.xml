@@ -36,9 +36,9 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="start_exercise_theme_appbar_overlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="start_exercise_theme_popupoverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="start_exercise_theme_appbar_overlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="start_exercise_theme_popupoverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
     <style name="Dash2Theme" parent="AppTheme.NoActionBar">
@@ -47,10 +47,23 @@
         <item name="colorAccent">@color/db2ColorAccent</item>
     </style>
 
+
+    <style name="Dash3Theme" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/db3ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/db3ColorPrimaryDark</item>
+        <item name="colorAccent">@color/db3ColorAccent</item>
+    </style>
+
     <style name="ExTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/db2ColorPrimary</item>
         <item name="colorPrimaryDark">@color/db2ColorPrimaryDark</item>
         <item name="colorAccent">@color/db2ColorAccent</item>
+    </style>
+
+    <style name="ReportsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/db3ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/db3ColorPrimaryDark</item>
+        <item name="colorAccent">@color/db3ColorAccent</item>
     </style>
 
     <style name="CommonTheme" parent="Theme.AppCompat.Light.NoActionBar">
