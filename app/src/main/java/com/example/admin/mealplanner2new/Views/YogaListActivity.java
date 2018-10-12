@@ -66,16 +66,16 @@ public class YogaListActivity extends AppCompatActivity {
 
         resYogaArrayList = new ArrayList<>();
 
-        resYogaArrayList.add(new ModelYogaList("Crescent Lunge", R.drawable.yoga_crescent_lunge));
-        resYogaArrayList.add(new ModelYogaList("Warrior Pose", R.drawable.yoga_warrior_pose));
-        resYogaArrayList.add(new ModelYogaList("Cobra Pose", R.drawable.yoga_cobra_pose));
-        resYogaArrayList.add(new ModelYogaList("Camel Pose", R.drawable.yoga_camel_pose));
-        resYogaArrayList.add(new ModelYogaList("Pigeon Pose", R.drawable.yoga_pigeon_pose));
-        resYogaArrayList.add(new ModelYogaList("One Legged-King Pigeon", R.drawable.yoga_pigeon_king));
-        resYogaArrayList.add(new ModelYogaList("Low Lunge", R.drawable.yoga_low_lunge));
-        resYogaArrayList.add(new ModelYogaList("Bow Pose", R.drawable.yoga_bow_pose));
-        resYogaArrayList.add(new ModelYogaList("Downward Facing Dog Pose", R.drawable.yoga_downward_dog));
-        resYogaArrayList.add(new ModelYogaList("Warrior Pose on One Foot", R.drawable.yoga_warrior_on_one_leg));
+        resYogaArrayList.add(new ModelYogaList("1","Crescent Lunge", R.drawable.yoga_crescent_lunge));
+        resYogaArrayList.add(new ModelYogaList("2","Warrior Pose", R.drawable.yoga_warrior_pose));
+        resYogaArrayList.add(new ModelYogaList("3","Cobra Pose", R.drawable.yoga_cobra_pose));
+        resYogaArrayList.add(new ModelYogaList("4","Camel Pose", R.drawable.yoga_camel_pose));
+        resYogaArrayList.add(new ModelYogaList("5","Pigeon Pose", R.drawable.yoga_pigeon_pose));
+        resYogaArrayList.add(new ModelYogaList("6","One Legged-King Pigeon", R.drawable.yoga_pigeon_king));
+        resYogaArrayList.add(new ModelYogaList("7","Low Lunge", R.drawable.yoga_low_lunge));
+        resYogaArrayList.add(new ModelYogaList("8","Bow Pose", R.drawable.yoga_bow_pose));
+        resYogaArrayList.add(new ModelYogaList("9","Downward Facing Dog Pose", R.drawable.yoga_downward_dog));
+        resYogaArrayList.add(new ModelYogaList("10","Warrior Pose on One Foot", R.drawable.yoga_warrior_on_one_leg));
 
         adapterYogaList = new AdapterYogaList(this, resYogaArrayList);
 

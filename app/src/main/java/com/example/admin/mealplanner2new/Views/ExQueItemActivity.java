@@ -21,6 +21,7 @@ public class ExQueItemActivity extends AppCompatActivity {
     private int index;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

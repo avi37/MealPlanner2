@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.example.admin.mealplanner2new.R;
 
@@ -13,12 +14,13 @@ import com.example.admin.mealplanner2new.R;
 public class QueAnsFragment extends Fragment {
 
     View view_main;
-
+    WebView webView;
 
 
     private String page_title;
     private int page_index;
 
+    String link = "http://code-fuel.in/healthbotics/ex_que/";
 
     public static QueAnsFragment newInstance(int index, String title) {
         QueAnsFragment fragment = new QueAnsFragment();
@@ -29,6 +31,7 @@ public class QueAnsFragment extends Fragment {
         return fragment;
     }
 
+    // https://www.youtube.com/watch?v=Xg37L5z5r_M
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,11 @@ public class QueAnsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view_main = inflater.inflate(R.layout.fragment_que_ans, container, false);
+
+        webView = view_main.findViewById(R.id.queAns_webView);
+
+        webView.loadUrl(link);
+
 
         return view_main;
     }

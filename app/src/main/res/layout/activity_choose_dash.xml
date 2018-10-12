@@ -3,45 +3,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:weightSum="2"
     tools:context=".Views.ChooseDashActivity">
 
     <LinearLayout
-        android:id="@+id/ll_opt_dash1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/mainColorPrimary"
-        android:orientation="vertical">
+        android:layout_weight="0.7"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/ll_opt_dash1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Diet\nPlanner"
-            android:textColor="@color/dark_white"
-            android:textSize="25dp" />
+            android:layout_weight="1"
+            android:background="@color/mainColorPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Diet\nPlanner"
+                android:textColor="@color/dark_white"
+                android:textSize="25dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_opt_dash2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/db2ColorPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Exercise\nPlanner"
+                android:textColor="@color/dark_white"
+                android:textSize="25dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
     <LinearLayout
-        android:id="@+id/ll_opt_dash2"
+        android:id="@+id/ll_opt_dash3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/db2ColorPrimary"
-        android:orientation="vertical">
+        android:layout_weight="1.3"
+        android:background="@color/db3ColorPrimary">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Exercise\nPlanner"
+            android:text="Body Reports"
             android:textColor="@color/dark_white"
             android:textSize="25dp" />
 
     </LinearLayout>
-
 
 </LinearLayout>

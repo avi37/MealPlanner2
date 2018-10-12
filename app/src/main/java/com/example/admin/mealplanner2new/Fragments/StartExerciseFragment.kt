@@ -214,9 +214,6 @@ class StartExerciseFragment : Fragment() {
                 savedExerciseData.exerciseArrayList = savedArrayList
 
 
-//                val intent = Intent(activity, MyJobIntentService::class.java)
-//                intent.putExtra("data", savedExerciseData)
-//                MyJobIntentService.enqueueWork(activity.applicationContext, intent)
 
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(R.animator.fragment_slide_left_enter,
@@ -249,19 +246,6 @@ class StartExerciseFragment : Fragment() {
                 savedExerciseData.task_id = taslId
 
                 savedExerciseData.exerciseArrayList = savedArrayList
-
-
-//                val intent2 = Intent(activity, MyJobIntentService::class.java)
-//                intent2.putExtra("data", savedExerciseData)
-//                MyJobIntentService.enqueueWork(activity.applicationContext, intent2)
-
-                // insertAsyncTask(roomDb.wordDao()).execute(exerciseList[exerciseId])
-
-//                Toast.makeText(activity!!, "End of Exercise", Toast.LENGTH_LONG).show()
-//
-//                val intent = Intent(activity, ShowExercisesActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent)
 
 
                 val finalSubmitExerciseFragment = FinalSubmitExerciseFragment()
@@ -417,7 +401,6 @@ class StartExerciseFragment : Fragment() {
     }
 
     fun setProgress(startTime: Int, endTime: Int) {
-
 
         progress_bar?.progress = startTime.toFloat()
         progress_bar?.progressMax = endTime.toFloat()

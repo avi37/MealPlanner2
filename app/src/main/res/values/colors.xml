@@ -22,6 +22,11 @@
     <color name="db2Primary_text">#212121</color>
     <color name="db2Secondary_text">#757575</color>
 
+
+    <color name="db3ColorPrimary">#B24C63</color>
+    <color name="db3ColorPrimaryDark">#923F52</color>
+    <color name="db3ColorAccent">#221D23</color>
+
     <color name="bg_myPrfofile">#999999</color>
 
     <color name="gs_blue">#1565C0</color>
