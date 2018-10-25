@@ -14,7 +14,7 @@
         android:drawableStart="@drawable/ic_info"
         android:gravity="center"
         android:padding="10dp"
-        android:textSize="14sp"
+        android:textSize="15sp"
         tools:text="jdasfjlafasfasf" />
 
     <android.support.design.widget.TextInputLayout

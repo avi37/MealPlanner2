@@ -308,14 +308,15 @@ public class AddReportActivity extends AppCompatActivity {
                 @Override
                 public void afterTextChanged(Editable s) {
 
-                    String str = s.toString();
-
-                    double value = Double.parseDouble(viewHolder.getEditText_result().getText().toString());
-                    double max = Double.parseDouble(mDataSet.get(position).getMax());
-                    double min = Double.parseDouble(mDataSet.get(position).getMin());
+                    String str = s.toString().trim();
 
                     try {
-                        if (str.equals("")) {
+                        if (!str.isEmpty()) {
+
+                            double value = Double.parseDouble(viewHolder.getEditText_result().getText().toString());
+                            double max = Double.parseDouble(mDataSet.get(position).getMax());
+                            double min = Double.parseDouble(mDataSet.get(position).getMin());
+
                             if (value < min || value > max) {
                                 viewHolder.getEditText_result().setTextColor(getResources().getColor(R.color.level_red4));
                             } else {
