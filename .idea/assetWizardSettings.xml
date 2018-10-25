@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/D:/android-studio-ide-181.4705630-windows/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_refresh_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/D:/android-studio-ide-181.4705630-windows/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_info_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,10 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="assetType" value="IMAGE" />
-                                      <entry key="outputName" value="ic_refresh" />
+                                      <entry key="outputName" value="ic_info" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="161616" />
+                                      <entry key="themeColor" value="221d23" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -55,6 +54,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

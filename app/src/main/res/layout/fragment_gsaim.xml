@@ -26,7 +26,6 @@
         android:layout_above="@+id/gsAim_btn_next"
         android:layout_below="@+id/tvLable" />
 
-
     <Button
         android:id="@+id/gsAim_btn_next"
         android:layout_width="wrap_content"
@@ -40,6 +39,5 @@
         android:background="@color/mainColorPrimary"
         android:text="Next"
         android:textColor="@color/white" />
-
 
 </RelativeLayout>
