@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +26,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
 import com.example.admin.mealplanner2new.Common.SessionManager;
+import com.example.admin.mealplanner2new.Models.BodyCreateReport;
+import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.Models.ResReDoLa;
 import com.example.admin.mealplanner2new.Models.ResReportFields;
 import com.example.admin.mealplanner2new.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -47,6 +53,7 @@ public class AddReportActivity extends AppCompatActivity {
     private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
     GetReportTypesAPI getReportTypesAPI;
     GetReportFieldsAPI getReportFieldsAPI;
+    CreateReportAPI createReportAPI;
     SessionManager sessionManager;
 
     Spinner spinner_doctorName, spinner_labName, spinner_reportType;
@@ -63,7 +70,8 @@ public class AddReportActivity extends AppCompatActivity {
     ArrayList<ResReportFields> arrayList_reportFields;
     RecAdapter recAdapter;
 
-    private String token;
+
+    private String token, user_id, doctor_id, lab_id, report_id;
 
 
     @Override
@@ -73,6 +81,7 @@ public class AddReportActivity extends AppCompatActivity {
 
         getReportTypesAPI = getGetReportTypesAPIService(BASE_URL);
         getReportFieldsAPI = getGetReportFieldsAPIService(BASE_URL);
+        createReportAPI = getCreateReportAPIService(BASE_URL);
         sessionManager = new SessionManager(this);
 
         token = sessionManager.getAccessToken();
@@ -114,56 +123,6 @@ public class AddReportActivity extends AppCompatActivity {
 
     }
 
-    private void getReportFields(int position) {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Getting fields...");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-
-
-        getReportFieldsAPI.get_reportFiedls("Bearer " + token, arrayList_reportId.get(position)).enqueue(new Callback<List<ResReportFields>>() {
-            @Override
-            public void onResponse(Call<List<ResReportFields>> call, Response<List<ResReportFields>> response) {
-
-                progressDialog.dismiss();
-
-                if (response.isSuccessful()) {
-
-                    if (response.body() != null) {
-
-                        arrayList_reportFields = new ArrayList<>();
-
-                        arrayList_reportFields = (ArrayList<ResReportFields>) response.body();
-
-                        recAdapter = new RecAdapter(arrayList_reportFields);
-
-                        recyclerView_dataEntries.setLayoutManager(new LinearLayoutManager(AddReportActivity.this, LinearLayoutManager.VERTICAL, false));
-                        recyclerView_dataEntries.setAdapter(recAdapter);
-
-                        recAdapter.notifyDataSetChanged();
-
-                    } else {
-                        // response body is null
-                    }
-
-
-                } else {
-                    // response not successful
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<ResReportFields>> call, Throwable t) {
-                progressDialog.dismiss();
-            }
-        });
-
-    }
-
-    private void methodSubmit() {
-        // Submit method
-    }
 
     private void getReportTypes() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -233,6 +192,108 @@ public class AddReportActivity extends AppCompatActivity {
 
     }
 
+    private void getReportFields(int position) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Getting fields...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+
+        getReportFieldsAPI.get_reportFiedls("Bearer " + token, arrayList_reportId.get(position)).enqueue(new Callback<List<ResReportFields>>() {
+            @Override
+            public void onResponse(Call<List<ResReportFields>> call, Response<List<ResReportFields>> response) {
+
+                progressDialog.dismiss();
+
+                if (response.isSuccessful()) {
+
+                    if (response.body() != null) {
+
+                        arrayList_reportFields = new ArrayList<>();
+
+                        arrayList_reportFields = (ArrayList<ResReportFields>) response.body();
+
+                        recAdapter = new RecAdapter(arrayList_reportFields);
+
+                        recyclerView_dataEntries.setLayoutManager(new LinearLayoutManager(AddReportActivity.this, LinearLayoutManager.VERTICAL, false));
+                        recyclerView_dataEntries.setAdapter(recAdapter);
+
+                        recAdapter.notifyDataSetChanged();
+
+                    } else {
+                        // response body is null
+                    }
+
+
+                } else {
+                    // response not successful
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ResReportFields>> call, Throwable t) {
+                progressDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void methodSubmit() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Saving your report...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+
+        user_id = sessionManager.getKeyUId();
+        doctor_id = arrayList_doctorId.get(spinner_doctorName.getSelectedItemPosition());
+        lab_id = arrayList_labId.get(spinner_labName.getSelectedItemPosition());
+        report_id = arrayList_reportId.get(spinner_reportType.getSelectedItemPosition());
+
+        String token = sessionManager.getAccessToken();
+
+        BodyCreateReport bodyCreateReport = new BodyCreateReport(user_id, doctor_id, lab_id, report_id, arrayList_reportFields);
+
+        Log.d("LOG_BodyCreateReport", new Gson().toJson(bodyCreateReport));
+
+        createReportAPI.create_report("Bearer " + token, bodyCreateReport).enqueue(new Callback<ResCommon>() {
+            @Override
+            public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
+
+                progressDialog.dismiss();
+
+                if (response.isSuccessful()) {
+
+                    if (response.body() != null) {
+
+                        if (response.body().getMsg().equals("true")) {
+
+                            finish();
+
+                            Toast.makeText(AddReportActivity.this, "Report added successfully", Toast.LENGTH_LONG).show();
+
+                        }
+
+                    } else {
+                        // response body null
+                    }
+
+                } else {
+                    // response not successful
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResCommon> call, Throwable t) {
+                progressDialog.dismiss();
+            }
+        });
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -270,6 +331,18 @@ public class AddReportActivity extends AppCompatActivity {
         );
     }
 
+    CreateReportAPI getCreateReportAPIService(String baseUrl) {
+        return RetrofitClient.getClient(baseUrl).create(CreateReportAPI.class);
+    }
+
+    interface CreateReportAPI {
+        @Headers("X-Requested-With:XMLHttpRequest")
+        @POST("createUserReport")
+        Call<ResCommon> create_report(@Header("Authorization") String token,
+                                      @Body BodyCreateReport bodyCreateReport
+        );
+    }
+
 
 //----------------------------------- Adapter Class -------------------------------------------//
 
@@ -294,41 +367,8 @@ public class AddReportActivity extends AppCompatActivity {
 
             viewHolder.getTextView_name().setText(mDataSet.get(position).getLabel_name());
 
-            viewHolder.getEditText_result().addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            viewHolder.getEditText_result().setText(mDataSet.get(position).getResult());
 
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                    String str = s.toString().trim();
-
-                    try {
-                        if (!str.isEmpty()) {
-
-                            double value = Double.parseDouble(viewHolder.getEditText_result().getText().toString());
-                            double max = Double.parseDouble(mDataSet.get(position).getMax());
-                            double min = Double.parseDouble(mDataSet.get(position).getMin());
-
-                            if (value < min || value > max) {
-                                viewHolder.getEditText_result().setTextColor(getResources().getColor(R.color.level_red4));
-                            } else {
-                                viewHolder.getEditText_result().setTextColor(getResources().getColor(R.color.mainColorPrimaryDark));
-                            }
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(AddReportActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            });
         }
 
         @Override
@@ -349,6 +389,46 @@ public class AddReportActivity extends AppCompatActivity {
 
                 textView_name = (TextView) v.findViewById(R.id.row_reportFields_tv_name);
                 editText_result = (EditText) v.findViewById(R.id.row_reportFields_et_result);
+
+                getEditText_result().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        String str = s.toString().trim();
+
+                        try {
+                            if (!str.isEmpty()) {
+
+                                double value = Double.parseDouble(getEditText_result().getText().toString());
+                                double max = Double.parseDouble(mDataSet.get(getAdapterPosition()).getMax());
+                                double min = Double.parseDouble(mDataSet.get(getAdapterPosition()).getMin());
+
+                                if (value < min || value > max) {
+                                    getEditText_result().setTextColor(getResources().getColor(R.color.level_red4));
+                                } else {
+                                    getEditText_result().setTextColor(getResources().getColor(R.color.mainColorPrimaryDark));
+                                }
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(AddReportActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        }
+
+                        //listFieldData.add(getAdapterPosition(), new BodyCreateReport.Datum(mDataSet.get(getAdapterPosition()).getId(), str));
+
+                        mDataSet.get(getAdapterPosition()).setResult(str);
+
+                    }
+                });
 
             }
 

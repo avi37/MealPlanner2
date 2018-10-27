@@ -157,7 +157,7 @@ public class SignUpFragment extends Fragment {
 
             BodyRegister bodyRegister = new BodyRegister(place, gender, aim, height, age, weight, tr_level, ex_level, schedule, week_minutes, ex_days, coach_id, address, country, state, city, name, email, number, password1, password2);
 
-            Log.d("LOG_BodyRegister", new Gson().toJson(bodyRegister));
+            //Log.d("LOG_BodyRegister", new Gson().toJson(bodyRegister));
 
             signUpAPI.register_user(bodyRegister).enqueue(new Callback<ResCommon>() {
                 @Override

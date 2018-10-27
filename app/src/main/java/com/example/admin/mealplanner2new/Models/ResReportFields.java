@@ -21,6 +21,10 @@ public class ResReportFields {
     @Expose
     private String max;
 
+    @SerializedName("result")
+    @Expose
+    private String result;
+
     public String getId() {
         return id;
     }
@@ -51,5 +55,13 @@ public class ResReportFields {
 
     public void setMax(String max) {
         this.max = max;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }
