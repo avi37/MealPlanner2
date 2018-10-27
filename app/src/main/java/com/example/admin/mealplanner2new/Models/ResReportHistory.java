@@ -3,54 +3,112 @@ package com.example.admin.mealplanner2new.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ResReportHistory {
 
-    @SerializedName("date")
+    @SerializedName("doctorName")
     @Expose
-    private String date;
+    private String doctorName;
+
+    @SerializedName("labName")
+    @Expose
+    private String labName;
 
     @SerializedName("report_name")
     @Expose
-    private String report_name;
+    private String reportName;
 
-    @SerializedName("doctor_name")
+    @SerializedName("created_at")
     @Expose
-    private String doctor_name;
+    private String createdAt;
 
-    @SerializedName("lab_name")
+    @SerializedName("report_id")
     @Expose
-    private String lab_name;
+    private Integer reportId;
+
+    @SerializedName("data")
+    @Expose
+    private List<ValueData> data = null;
 
 
-    public String getDate() {
-        return date;
+    public String getDoctorName() {
+        return doctorName;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 
-    public String getReport_name() {
-        return report_name;
+    public String getLabName() {
+        return labName;
     }
 
-    public void setReport_name(String report_name) {
-        this.report_name = report_name;
+    public void setLabName(String labName) {
+        this.labName = labName;
     }
 
-    public String getDoctor_name() {
-        return doctor_name;
+    public String getReportName() {
+        return reportName;
     }
 
-    public void setDoctor_name(String doctor_name) {
-        this.doctor_name = doctor_name;
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
     }
 
-    public String getLab_name() {
-        return lab_name;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setLab_name(String lab_name) {
-        this.lab_name = lab_name;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
+
+    public Integer getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(Integer reportId) {
+        this.reportId = reportId;
+    }
+
+    public List<ValueData> getData() {
+        return data;
+    }
+
+    public void setData(List<ValueData> data) {
+        this.data = data;
+    }
+
+
+//--------------------------- Field Data Class ----------------------------------//
+
+    public class ValueData {
+
+        @SerializedName("label_name")
+        @Expose
+        private String labelName;
+        @SerializedName("value")
+        @Expose
+        private Integer value;
+
+        public String getLabelName() {
+            return labelName;
+        }
+
+        public void setLabelName(String labelName) {
+            this.labelName = labelName;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+
+        public void setValue(Integer value) {
+            this.value = value;
+        }
+
+    }
+
+
 }

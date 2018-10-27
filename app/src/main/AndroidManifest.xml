@@ -201,7 +201,11 @@
             android:label="Report History"
             android:screenOrientation="portrait"
             android:theme="@style/ReportsTheme" />
-        <activity android:name=".Views.ReportHistoryDetailActivity"></activity>
+        <activity
+            android:name=".Views.ReportHistoryDetailActivity"
+            android:label="Report Details"
+            android:screenOrientation="portrait"
+            android:theme="@style/ReportsTheme" />
     </application>
 
 </manifest>

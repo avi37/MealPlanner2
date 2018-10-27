@@ -3,7 +3,8 @@
     android:id="@+id/row_list_report_history"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:orientation="vertical">
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:gravity="end"
-        android:padding="8dp"
+        android:padding="5dp"
         android:text="xx/xx/xxxx" />
 
     <LinearLayout
@@ -23,8 +24,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:padding="3dp">
+            android:layout_marginTop="3dp"
+            android:padding="2dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,7 +48,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:padding="3dp">
 
             <TextView
@@ -71,12 +71,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="10dp"
             android:padding="3dp">
 
             <TextView
-                android:id="@+id/row_listHelp_tv_labName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
