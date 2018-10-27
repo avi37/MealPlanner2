@@ -201,6 +201,7 @@
             android:label="Report History"
             android:screenOrientation="portrait"
             android:theme="@style/ReportsTheme" />
+        <activity android:name=".Views.ReportHistoryDetailActivity"></activity>
     </application>
 
 </manifest>
