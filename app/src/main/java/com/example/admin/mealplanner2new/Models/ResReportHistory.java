@@ -3,6 +3,7 @@ package com.example.admin.mealplanner2new.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ResReportHistory {
@@ -83,14 +84,15 @@ public class ResReportHistory {
 
 //--------------------------- Field Data Class ----------------------------------//
 
-    public class ValueData {
+    public class ValueData implements Serializable {
 
         @SerializedName("label_name")
         @Expose
         private String labelName;
+
         @SerializedName("value")
         @Expose
-        private Integer value;
+        private String value;
 
         public String getLabelName() {
             return labelName;
@@ -100,11 +102,11 @@ public class ResReportHistory {
             this.labelName = labelName;
         }
 
-        public Integer getValue() {
+        public String getValue() {
             return value;
         }
 
-        public void setValue(Integer value) {
+        public void setValue(String value) {
             this.value = value;
         }
 

@@ -20,7 +20,9 @@ import com.example.admin.mealplanner2new.Common.SessionManager;
 import com.example.admin.mealplanner2new.Models.ResReportHistory;
 import com.example.admin.mealplanner2new.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -170,6 +172,14 @@ public class ReportHistoryActivity extends AppCompatActivity {
                     i.putExtra("report_name", mDataSet.get(position).getReportName());
                     i.putExtra("doctor_name", mDataSet.get(position).getDoctorName());
                     i.putExtra("lab_name", mDataSet.get(position).getLabName());
+
+
+                    List<ResReportHistory.ValueData> object = new ArrayList<>();
+                    object = mDataSet.get(position).getData();
+                    Bundle args = new Bundle();
+                    args.putSerializable("DataList", (Serializable) object);
+                    i.putExtra("BUNDLE", args);
+
 
                     startActivity(i);
                 }
