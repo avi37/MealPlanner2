@@ -189,7 +189,7 @@
             android:theme="@style/ExTheme" />
         <activity
             android:name=".Views.ReportsNavigationActivity"
-            android:label="Body Reports"
+            android:label="Health Reports"
             android:theme="@style/Dash3Theme" />
         <activity
             android:name=".Views.AddReportActivity"

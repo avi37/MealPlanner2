@@ -163,7 +163,6 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
 
     interface GetExerciseDetail {
-
         @POST("getworkout_detail")
         @FormUrlEncoded
         Call<ArrayList<Exercise>> exerciseDetail(@Field("cat_id") String cat_id);

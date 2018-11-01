@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Measurement Planner"
+            android:text="Health Reports"
             android:textColor="@color/dark_white"
             android:textSize="25dp" />
 
