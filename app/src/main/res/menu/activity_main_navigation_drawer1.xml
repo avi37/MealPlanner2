@@ -10,15 +10,20 @@
             android:icon="@drawable/ic_nav_dashboard"
             android:title="Dashboard" />
 
-        <!--<item
+        <item
             android:id="@+id/nav_my_profile"
             android:icon="@drawable/ic_nav_my_profile"
-            android:title="My Profile" />-->
+            android:title="My Profile" />
 
         <item
             android:id="@+id/nav_meal_times"
             android:icon="@drawable/ic_nav_meal_times"
             android:title="Meal Times" />
+
+        <item
+            android:id="@+id/nav_report_dash"
+            android:icon="@drawable/ic_nav_reports"
+            android:title="Health Reports" />
 
         <group
             android:id="@+id/nav_menu_logoutOpt"

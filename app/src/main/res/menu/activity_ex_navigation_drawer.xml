@@ -16,6 +16,11 @@
             android:title="My Profile" />
 
         <item
+            android:id="@+id/nav2_report_dash"
+            android:icon="@drawable/ic_nav_reports"
+            android:title="Health Reports" />
+
+        <item
             android:id="@+id/nav2_help"
             android:icon="@drawable/ic_nav_help"
             android:title="Help" />

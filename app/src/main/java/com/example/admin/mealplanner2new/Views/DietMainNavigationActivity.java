@@ -201,11 +201,16 @@ public class DietMainNavigationActivity extends AppCompatActivity implements Nav
             setTitle("Diet Manager");
             navigationView.getMenu().getItem(0).setChecked(true);
 
-        } /*else if (id == R.id.nav_my_profile) {
+        } else if (id == R.id.nav_my_profile) {
             startActivity(new Intent(this, MyProfileActivity.class));
             navigationView.getMenu().getItem(0).setChecked(true);
 
-        }*/ else if (id == R.id.nav_meal_times) {
+        } else if (id == R.id.nav_report_dash) {
+            Intent i = new Intent(DietMainNavigationActivity.this, ReportsNavigationActivity.class);
+            startActivity(i);
+            finish();
+
+        } else if (id == R.id.nav_meal_times) {
             startActivity(new Intent(this, MealTimesActivity.class));
             navigationView.getMenu().getItem(0).setChecked(true);
 

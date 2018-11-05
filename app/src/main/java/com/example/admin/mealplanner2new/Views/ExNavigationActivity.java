@@ -44,7 +44,7 @@ public class ExNavigationActivity extends AppCompatActivity implements Navigatio
 
     FragmentTransaction ft;
 
-    String auth_token;
+    private String auth_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +131,11 @@ public class ExNavigationActivity extends AppCompatActivity implements Navigatio
         } else if (id == R.id.nav2_my_profile) {
             startActivity(new Intent(this, MyProfileActivity.class));
             navigationView.getMenu().getItem(0).setChecked(true);
+
+        } else if (id == R.id.nav2_report_dash) {
+            Intent i = new Intent(ExNavigationActivity.this, ReportsNavigationActivity.class);
+            startActivity(i);
+            finish();
 
         } else if (id == R.id.nav2_help) {
             startActivity(new Intent(this, ExHelpActivity.class));

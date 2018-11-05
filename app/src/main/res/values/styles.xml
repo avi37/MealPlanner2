@@ -8,6 +8,17 @@
         <item name="colorAccent">@color/mainColorAccent</item>
     </style>
 
+    <style name="ChooseDash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/mainColorPrimary</item>
+        <item name="colorPrimaryDark">@color/mainColorPrimaryDark</item>
+        <item name="colorAccent">@color/dark_white</item>
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/mainColorPrimary</item>
         <item name="colorPrimaryDark">@color/mainColorPrimaryDark</item>

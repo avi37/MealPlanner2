@@ -37,7 +37,7 @@
         <activity
             android:name=".Views.ChooseDashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme" />
+            android:theme="@style/ChooseDash" />
         <activity
             android:name=".Views.DietMainNavigationActivity"
             android:label="Diet Manager"
