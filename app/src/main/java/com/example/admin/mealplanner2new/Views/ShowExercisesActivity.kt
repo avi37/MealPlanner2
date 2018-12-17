@@ -240,8 +240,6 @@ class ShowExercisesActivity : AppCompatActivity() {
         @POST("getworkout")
         @FormUrlEncoded
         fun getExerciseDayList(@Field("u_id") u_id: String): Call<ArrayList<CategoryMaster>>
-
-
     }
 
     fun getYMDDate(dateString: String): String {

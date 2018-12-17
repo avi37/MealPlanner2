@@ -38,7 +38,7 @@ public class SessionManager {
         editor.putString(KEY_U_ID, u_id);
 
         editor.commit();
-        Toast.makeText(_context, "Session Preference created", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(_context, "Session Preference created", Toast.LENGTH_SHORT).show();
     }
 
 

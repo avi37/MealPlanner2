@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
@@ -40,8 +41,10 @@ public class DietMainNavigationActivity extends AppCompatActivity implements Nav
     private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
     SessionManager sessionManager;
     LogoutAPI logoutAPI;
+
     NavigationView navigationView;
     View header_view;
+    TextView textView_userName;
 
     FragmentTransaction ft;
 
@@ -67,13 +70,19 @@ public class DietMainNavigationActivity extends AppCompatActivity implements Nav
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.diet_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         header_view = navigationView.getHeaderView(0);
+
+
+        textView_userName = header_view.findViewById(R.id.exHeader_tv_userName);
+        textView_userName.setText(sessionManager.getUserName());
 
         switchCompat_dash = header_view.findViewById(R.id.switch_diet);
         switchCompat_dash.setText("Switch Dashboard");
         switchCompat_dash.setChecked(false);
+
+
 
         switchCompat_dash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -90,7 +99,6 @@ public class DietMainNavigationActivity extends AppCompatActivity implements Nav
         setTitle("Diet Manager");
         ft.commit();
         navigationView.getMenu().getItem(0).setChecked(true);
-
 
     }
 

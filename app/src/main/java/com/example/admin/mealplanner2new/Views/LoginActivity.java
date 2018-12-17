@@ -15,6 +15,7 @@ import com.example.admin.mealplanner2new.Common.SessionManager;
 import com.example.admin.mealplanner2new.Models.BodyLogin;
 import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.R;
+import com.example.admin.mealplanner2new.Utils.GifImageView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     SessionManager sessionManager;
 
+    //GifImageView gifImageView;
     EditText editText_email, editText_password;
     Button button_login;
     TextView textView_forget_pwd, textView_signUp_here;
@@ -53,21 +55,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (sessionManager.checkLogin()) {
             Intent i = new Intent(this, ChooseDashActivity.class);
 
-            // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            // Add new Flag to start new Activity
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             startActivity(i);
             finish();
         }
 
+        //gifImageView = findViewById(R.id.login_bg_gif);
         editText_email = findViewById(R.id.login_et_email);
         editText_password = findViewById(R.id.login_et_password);
         button_login = findViewById(R.id.login_btn_login);
         textView_forget_pwd = findViewById(R.id.login_tv_forgot_pwd);
         textView_signUp_here = findViewById(R.id.login_tv_signUp_here);
+
+        //gifImageView.setGifImageResource(R.drawable.login_bg_gif);
 
         button_login.setOnClickListener(this);
         textView_forget_pwd.setOnClickListener(this);

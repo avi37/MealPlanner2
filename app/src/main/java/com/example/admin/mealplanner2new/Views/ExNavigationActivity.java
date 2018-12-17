@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
@@ -41,6 +42,7 @@ public class ExNavigationActivity extends AppCompatActivity implements Navigatio
     NavigationView navigationView;
     View header_view;
     SwitchCompat switchCompat_dash;
+    TextView textView_userName;
 
     FragmentTransaction ft;
 
@@ -64,9 +66,12 @@ public class ExNavigationActivity extends AppCompatActivity implements Navigatio
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.ex_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         header_view = navigationView.getHeaderView(0);
+
+        textView_userName = header_view.findViewById(R.id.exHeader_tv_userName);
+        textView_userName.setText(sessionManager.getUserName());
 
         switchCompat_dash = header_view.findViewById(R.id.switch_ex);
         switchCompat_dash.setText("Switch Dashboard");
@@ -78,6 +83,8 @@ public class ExNavigationActivity extends AppCompatActivity implements Navigatio
         ft.add(R.id.content_ex_navigation, new ExDashboardFragment());
         ft.commit();
         navigationView.getMenu().getItem(0).setChecked(true);
+
+
 
 
         switchCompat_dash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

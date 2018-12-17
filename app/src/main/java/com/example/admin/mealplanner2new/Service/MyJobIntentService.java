@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
+import com.example.admin.mealplanner2new.Common.SessionManager;
 import com.example.admin.mealplanner2new.Models.ResCommon;
 import com.example.admin.mealplanner2new.Models.SavedExerciseData;
 import com.google.gson.Gson;
@@ -17,6 +18,8 @@ import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 /**
@@ -61,11 +64,13 @@ public class MyJobIntentService extends JobIntentService {
 
         if (savedExerciseData != null) {
 
-            try {
-                final ResCommon resCommon = saveExerciseData.sendExercise(savedExerciseData).execute().body();
+            String token = new SessionManager(getApplicationContext()).getAccessToken();
 
-                if ( resCommon!=null && resCommon.getMsg()!=null &&  resCommon.getMsg().equals("true")) {
-                    toast("Saved Exercise");
+            try {
+                final ResCommon resCommon = saveExerciseData.sendExercise("Bearer " + token, savedExerciseData).execute().body();
+
+                if (resCommon != null && resCommon.getMsg() != null && resCommon.getMsg().equals("true")) {
+                    toast("Exercise Saved");
                 }
 
             } catch (IOException e) {
@@ -97,8 +102,11 @@ public class MyJobIntentService extends JobIntentService {
 
 
     interface SaveExerciseData {
+        @Headers("X-Requested-With:XMLHttpRequest")
         @POST("update_workout_status")
-        Call<ResCommon> sendExercise(@Body SavedExerciseData savedExerciseData);
+        Call<ResCommon> sendExercise(@Header("Authorization") String token,
+                                     @Body SavedExerciseData savedExerciseData
+        );
 
 
     }

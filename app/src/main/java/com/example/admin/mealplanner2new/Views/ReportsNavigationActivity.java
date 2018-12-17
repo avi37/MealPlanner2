@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mealplanner2new.Common.RetrofitClient;
@@ -39,6 +40,8 @@ public class ReportsNavigationActivity extends AppCompatActivity implements Navi
     private static final String BASE_URL = "http://code-fuel.in/healthbotics/api/auth/";
 
     NavigationView navigationView;
+    View header_view;
+    TextView textView_userName;
 
     FragmentTransaction ft;
 
@@ -63,15 +66,19 @@ public class ReportsNavigationActivity extends AppCompatActivity implements Navi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.report_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        header_view = navigationView.getHeaderView(0);
 
+        textView_userName = header_view.findViewById(R.id.exHeader_tv_userName);
+        textView_userName.setText(sessionManager.getUserName());
 
         ft = getSupportFragmentManager().beginTransaction();
 
         ft.add(R.id.content_reports_navigation, new ReportsDashboardFragment());
         setTitle("Reports Manager");
         ft.commit();
+
 
     }
 

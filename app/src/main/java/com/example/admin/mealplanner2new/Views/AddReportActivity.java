@@ -240,57 +240,80 @@ public class AddReportActivity extends AppCompatActivity {
     }
 
     private void methodSubmit() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Saving your report...");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+
+        boolean allAdded = true;
+
+        for (int i = 0; i < arrayList_reportFields.size(); i++) {
+
+            if (arrayList_reportFields.get(i).getResult().isEmpty() || arrayList_reportFields.get(i).getResult().equals("")) {
+                allAdded = false;
+                break;
+            }
+
+        }
 
 
-        user_id = sessionManager.getKeyUId();
-        doctor_id = arrayList_doctorId.get(spinner_doctorName.getSelectedItemPosition());
-        lab_id = arrayList_labId.get(spinner_labName.getSelectedItemPosition());
-        report_id = arrayList_reportId.get(spinner_reportType.getSelectedItemPosition());
+        if (allAdded) {
 
-        String token = sessionManager.getAccessToken();
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Saving your report...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
 
-        BodyCreateReport bodyCreateReport = new BodyCreateReport(user_id, doctor_id, lab_id, report_id, arrayList_reportFields);
 
-        Log.d("LOG_BodyCreateReport", new Gson().toJson(bodyCreateReport));
+            user_id = sessionManager.getKeyUId();
+            doctor_id = arrayList_doctorId.get(spinner_doctorName.getSelectedItemPosition());
+            lab_id = arrayList_labId.get(spinner_labName.getSelectedItemPosition());
+            report_id = arrayList_reportId.get(spinner_reportType.getSelectedItemPosition());
 
-        createReportAPI.create_report("Bearer " + token, bodyCreateReport).enqueue(new Callback<ResCommon>() {
-            @Override
-            public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
+            String token = sessionManager.getAccessToken();
 
-                progressDialog.dismiss();
+            BodyCreateReport bodyCreateReport = new BodyCreateReport(user_id, doctor_id, lab_id, report_id, arrayList_reportFields);
 
-                if (response.isSuccessful()) {
+            Log.d("LOG_BodyCreateReport", new Gson().toJson(bodyCreateReport));
 
-                    if (response.body() != null) {
+            createReportAPI.create_report("Bearer " + token, bodyCreateReport).enqueue(new Callback<ResCommon>() {
+                @Override
+                public void onResponse(Call<ResCommon> call, Response<ResCommon> response) {
 
-                        if (response.body().getMsg().equals("true")) {
+                    progressDialog.dismiss();
 
-                            finish();
+                    if (response.isSuccessful()) {
 
-                            Toast.makeText(AddReportActivity.this, "Report added successfully", Toast.LENGTH_LONG).show();
+                        if (response.body() != null) {
 
+                            if (response.body().getMsg().equals("true")) {
+
+                                finish();
+
+                                Toast.makeText(AddReportActivity.this, "Report added successfully", Toast.LENGTH_LONG).show();
+
+                            }
+
+                        } else {
+                            // response body null
                         }
 
                     } else {
-                        // response body null
+                        // response not successful
                     }
 
-                } else {
-                    // response not successful
+
                 }
 
+                @Override
+                public void onFailure(Call<ResCommon> call, Throwable t) {
+                    progressDialog.dismiss();
+                }
+            });
 
-            }
 
-            @Override
-            public void onFailure(Call<ResCommon> call, Throwable t) {
-                progressDialog.dismiss();
-            }
-        });
+
+        } else {
+            Toast.makeText(this, "Please fill all the values", Toast.LENGTH_LONG).show();
+
+        }
+
 
     }
 
